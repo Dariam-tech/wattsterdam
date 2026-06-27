@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connection capacity check — Wattsterdam</title>
+<meta name="description" content="Will your heat pump, EV charger and induction stove fit on your current Dutch electrical connection? Free instant check.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<div class="site-nav">
+  <div class="wrap">
+    <a href="/" class="logo" style="text-decoration:none;">watt<span>sterdam</span></a>
+    <nav>
+      <a href="/">Home</a>
+    </nav>
+  </div>
+</div>
+
+<div class="hero" style="padding-bottom: 8px;">
+  <span class="eyebrow">Tool 01</span>
+  <h1 style="font-size: 30px; max-width: none;">Will your connection handle it?</h1>
+  <p class="lede" style="max-width: 60ch;">Heat pumps and EV chargers don't always need a heavier connection on their own — the problem is usually everything running at once. Set up your situation below.</p>
+</div>
+
+<div class="wrap" style="max-width: 920px; padding-bottom: 60px;">
+  <div class="card">
+
+    <div class="field">
+      <label for="conn">Current connection</label>
+      <select id="conn">
+        <option value="5.75">1x25A — older home (5.75 kW)</option>
+        <option value="8.05">1x35A — standard rowhouse (8.0 kW)</option>
+        <option value="17.25" selected>3x25A — modern home (17.3 kW)</option>
+        <option value="24.15">3x35A — heat pump + fast charger (24.2 kW)</option>
+        <option value="34.5">3x50A — large all-electric home (34.5 kW)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="hp">Heat pump</label>
+      <select id="hp">
+        <option value="0">None</option>
+        <option value="4" selected>Hybrid (alongside gas boiler, ~4 kW)</option>
+        <option value="6">All-electric, smaller home (~6 kW)</option>
+        <option value="10">All-electric, larger home (~10 kW)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="ev">EV charger</label>
+      <select id="ev">
+        <option value="0">None</option>
+        <option value="3.7">3.7 kW (standard socket)</option>
+        <option value="11" selected>11 kW (3-phase home charger)</option>
+        <option value="22">22 kW (fast 3-phase charger)</option>
+      </select>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="balancer">
+      <label for="balancer" style="margin:0;">Charger has a load balancer (backs off automatically when other devices draw power)</label>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="induction" checked>
+      <label for="induction" style="margin:0;">Induction stove</label>
+    </div>
+
+    <div id="result" class="verdict" style="margin-top: 24px;"></div>
+
+    <p class="fine-print">Rough estimate using typical simultaneous-use assumptions, not an official assessment — an installer can confirm your specific groepenkast setup.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap" style="max-width: 920px;">
+    Wattsterdam is an independent project, not affiliated with any grid operator or energy supplier.
+  </div>
+</footer>
+
+<script>
+function calc() {
+  var capacity = parseFloat(document.getElementById('conn').value);
+  var hp = parseFloat(document.getElementById('hp').value);
+  var ev = parseFloat(document.getElementById('ev').value);
+  var hasBalancer = document.getElementById('balancer').checked;
+  var hasInduction = document.getElementById('induction').checked;
+
+  var baseline = 3;
+  var inductionLoad = hasInduction ? 3.5 : 0;
+  var evLoad = (ev > 0 && hasBalancer) ? 0 : ev;
+
+  var total = baseline + hp + inductionLoad + evLoad;
+  var ratio = total / capacity;
+
+  var verdictClass, verdict, advice;
+  if (ratio <= 0.8) {
+    verdictClass = 'ok';
+    verdict = 'Comfortable headroom';
+    advice = 'Your current connection should handle this combination without issue.';
+  } else if (ratio <= 1.0) {
+    verdictClass = 'warn';
+    verdict = 'Tight — load management recommended';
+    advice = 'This is close to your limit. A load balancer on the EV charger (or avoiding running everything at once) should keep you safe without needing to upgrade.';
+  } else {
+    verdictClass = 'bad';
+    verdict = 'Likely exceeds your connection';
+    advice = 'This combination probably exceeds your main fuse. Options: add a load balancer to the EV charger, choose a hybrid instead of an all-electric heat pump, or apply for a heavier connection — and check your regional waiting time before deciding.';
+  }
+
+  var el = document.getElementById('result');
+  el.className = 'verdict ' + verdictClass;
+  el.innerHTML =
+    '<div class="row-split">' +
+      '<span class="readout-label" style="margin:0;">Estimated peak load</span>' +
+      '<span class="readout readout-value">' + total.toFixed(1) + ' kW</span>' +
+    '</div>' +
+    '<div class="row-split" style="margin-bottom:14px;">' +
+      '<span class="readout-label" style="margin:0;">Connection capacity</span>' +
+      '<span class="readout" style="font-size:16px;">' + capacity.toFixed(1) + ' kW</span>' +
+    '</div>' +
+    '<p class="verdict-title">' + verdict + '</p>' +
+    '<p style="margin:0; color: var(--ink-soft);">' + advice + '</p>';
+}
+
+['conn','hp','ev','balancer','induction'].forEach(function(id) {
+  document.getElementById(id).addEventListener('change', calc);
+});
+calc();
+</script>
+
+</body>
+</html>
