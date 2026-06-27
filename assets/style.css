@@ -203,3 +203,36 @@ footer {
 @media (max-width: 600px) {
   .hero h1 { font-size: 30px; }
 }
+
+/* Homepage hero with embedded live tool */
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+  gap: 48px;
+  align-items: start;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 56px 24px 64px;
+}
+.hero-grid h1 {
+  font-size: 36px;
+}
+.hero-grid .lede {
+  font-size: 17px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+}
+.live-tool-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 24px;
+}
+.live-tool-card .field { margin-bottom: 14px; }
+.live-tool-card select { font-size: 14px; padding: 8px 10px; }
+.live-tool-card .checkbox-row { font-size: 13px; margin-bottom: 10px; }
+.live-tool-card .verdict { padding: 16px 18px; }
+@media (max-width: 800px) {
+  .hero-grid { grid-template-columns: 1fr; padding-top: 40px; }
+  .hero-grid h1 { font-size: 28px; }
+}

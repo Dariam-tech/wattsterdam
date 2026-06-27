@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar battery simulator — Wattsterdam</title>
+<meta name="description" content="See what a home battery actually saves you today under saldering, versus after the saldering scheme ends on January 1, 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<div class="site-nav">
+  <div class="wrap">
+    <a href="/" class="logo" style="text-decoration:none;">watt<span>sterdam</span></a>
+    <nav>
+      <a href="/tools/connection-check/">Connection check</a>
+    </nav>
+  </div>
+</div>
+
+<div class="hero" style="padding-bottom: 8px;">
+  <span class="eyebrow">Tool 02</span>
+  <h1 style="font-size: 30px; max-width: none;">Is a battery worth it — now, or after 2027?</h1>
+  <p class="lede" style="max-width: 60ch;">Saldering (1:1 net metering) ends on January 1, 2027. That date matters more than almost any other number here — a battery's value changes completely once it hits. See both sides below.</p>
+</div>
+
+<div class="wrap" style="max-width: 920px; padding-bottom: 60px;">
+  <div class="card">
+
+    <div class="field">
+      <label for="kwp">Solar system size (kWp)</label>
+      <select id="kwp">
+        <option value="2">2 kWp — small</option>
+        <option value="4" selected>4 kWp — typical home</option>
+        <option value="6">6 kWp</option>
+        <option value="8">8 kWp — larger roof</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="consumption">Your annual electricity use (kWh)</label>
+      <select id="consumption">
+        <option value="2000">2,000 kWh — small household</option>
+        <option value="3300" selected>3,300 kWh — average Dutch household</option>
+        <option value="4500">4,500 kWh</option>
+        <option value="6000">6,000+ kWh — electric heating/EV</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="battery">Battery size to compare</label>
+      <select id="battery">
+        <option value="0">None (baseline)</option>
+        <option value="5" selected>5 kWh</option>
+        <option value="10">10 kWh</option>
+        <option value="15">15 kWh</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="rate">Your electricity rate (€/kWh, all-in)</label>
+      <select id="rate">
+        <option value="0.25">€0.25</option>
+        <option value="0.28" selected>€0.28 — typical</option>
+        <option value="0.32">€0.32</option>
+        <option value="0.40">€0.40 — peak dynamic hours</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="feedin">Assumed feed-in rate after saldering ends (€/kWh)</label>
+      <select id="feedin">
+        <option value="0.04">€0.04 — low estimate</option>
+        <option value="0.07" selected>€0.07 — typical estimate</option>
+        <option value="0.10">€0.10 — higher estimate</option>
+      </select>
+      <p class="fine-print" style="margin-top: 6px;">No supplier has fixed this yet — it'll likely track wholesale prices, which move. Treat this as an illustrative range, not a quote.</p>
+    </div>
+
+    <div id="result"></div>
+
+    <p class="fine-print">Simplified model: assumes ~950 kWh/kWp/year (typical Dutch yield), a 30% self-consumption baseline without a battery, and a battery that can complete roughly 280 useful cycles a year. Real production depends on your roof's orientation, shading, and the weather that year — see our <a href="/guides/find-your-connection/">other guides</a> for more precise options later.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap" style="max-width: 920px;">
+    Wattsterdam is an independent project. It may earn a commission from links on this site — that never affects what we recommend.
+  </div>
+</footer>
+
+<script>
+function calc() {
+  var kwp = parseFloat(document.getElementById('kwp').value);
+  var consumption = parseFloat(document.getElementById('consumption').value);
+  var batteryKwh = parseFloat(document.getElementById('battery').value);
+  var rate = parseFloat(document.getElementById('rate').value);
+  var feedin = parseFloat(document.getElementById('feedin').value);
+
+  var YIELD_PER_KWP = 950;
+  var BASELINE_SELF_CONSUMPTION_RATIO = 0.30;
+  var CYCLES_PER_YEAR = 280;
+
+  var production = kwp * YIELD_PER_KWP;
+
+  // Self-consumption without a battery, capped by both production and consumption
+  var baselineSelfConsumption = Math.min(production * BASELINE_SELF_CONSUMPTION_RATIO, consumption, production);
+
+  // Battery shifts some exportable surplus into self-consumption, capped by what's actually exportable
+  var exportableSurplus = Math.max(production - baselineSelfConsumption, 0);
+  var batteryShift = Math.min(batteryKwh * CYCLES_PER_YEAR, exportableSurplus, Math.max(consumption - baselineSelfConsumption, 0));
+  var selfConsumptionWithBattery = baselineSelfConsumption + batteryShift;
+
+  var exportNoBattery = production - baselineSelfConsumption;
+  var exportWithBattery = production - selfConsumptionWithBattery;
+
+  // Today: under 1:1 saldering, export is credited at the same rate as import — battery adds ~0 financial value
+  var savingsTodayNoBattery = production * rate;
+  var savingsTodayWithBattery = production * rate; // identical under true 1:1 saldering
+  var batteryValueToday = savingsTodayWithBattery - savingsTodayNoBattery;
+
+  // After saldering ends: export only earns the (lower) feed-in rate
+  var savingsPost2027NoBattery = (baselineSelfConsumption * rate) + (exportNoBattery * feedin);
+  var savingsPost2027WithBattery = (selfConsumptionWithBattery * rate) + (exportWithBattery * feedin);
+  var batteryValuePost2027 = savingsPost2027WithBattery - savingsPost2027NoBattery;
+
+  var html = '';
+
+  if (batteryKwh === 0) {
+    html += '<div class="verdict warn">';
+    html += '<p class="verdict-title">No battery selected</p>';
+    html += '<p style="margin:0; color: var(--ink-soft);">Pick a battery size above to see what it would actually be worth.</p>';
+    html += '</div>';
+  } else {
+    html += '<div class="verdict ok" style="margin-bottom: 14px;">';
+    html += '<div class="row-split"><span class="readout-label" style="margin:0;">Battery value — today, under saldering</span><span class="readout readout-value">€' + batteryValueToday.toFixed(0) + '/yr</span></div>';
+    html += '<p style="margin:0; color: var(--ink-soft); font-size: 14px;">Close to nothing — your export is already credited at the same rate as your import, so a battery mostly just shifts <em>when</em> you avoid cost, not <em>how much</em>.</p>';
+    html += '</div>';
+
+    html += '<div class="verdict ' + (batteryValuePost2027 > 80 ? 'ok' : 'warn') + '">';
+    html += '<div class="row-split"><span class="readout-label" style="margin:0;">Battery value — from January 2027</span><span class="readout readout-value">€' + batteryValuePost2027.toFixed(0) + '/yr</span></div>';
+    html += '<p style="margin:0; color: var(--ink-soft); font-size: 14px;">This is the real payoff: it comes from converting low-value export (' + feedin.toFixed(2) + '/kWh) into high-value avoided import (' + rate.toFixed(2) + '/kWh) — about ' + batteryShift.toFixed(0) + ' kWh/year shifted with this battery size.</p>';
+    html += '</div>';
+  }
+
+  document.getElementById('result').innerHTML = html;
+}
+
+['kwp','consumption','battery','rate','feedin'].forEach(function(id) {
+  document.getElementById(id).addEventListener('change', calc);
+});
+calc();
+</script>
+
+</body>
+</html>

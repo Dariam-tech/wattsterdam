@@ -16,23 +16,66 @@
     <div class="logo">watt<span>sterdam</span></div>
     <nav>
       <a href="/tools/connection-check/">Connection check</a>
+      <a href="/tools/solar-battery/">Battery simulator</a>
     </nav>
   </div>
 </div>
 
-<div class="hero">
-  <span class="eyebrow">Dutch energy, in plain English</span>
-  <h1>Figure out the Dutch energy system without learning Dutch first.</h1>
-  <p class="lede">Free, practical tools — starting with the question everyone installing a heat pump or EV charger eventually hits: will your current connection actually handle it?</p>
-</div>
+<div class="hero-grid">
 
-<div class="wrap" style="max-width: 920px; padding-bottom: 60px;">
-  <div class="card">
-    <span class="readout-label">Tool 01</span>
-    <h2 style="margin-top: 4px;">Connection capacity check</h2>
-    <p style="color: var(--ink-soft); margin-bottom: 20px;">Heat pump, EV charger, induction stove — see whether they'll fit on your current connection, or whether you need a load balancer before you need a multi-year wait for a grid upgrade.</p>
-    <a href="/tools/connection-check/" style="font-family: var(--font-mono); font-weight: 600;">Run the check →</a>
+  <div>
+    <span class="eyebrow">Dutch energy, in plain English</span>
+    <h1>Figure out the Dutch energy system without learning Dutch first.</h1>
+    <p class="lede">Start right here — change anything on the right and see your answer instantly. Will your heat pump, EV charger and induction stove actually fit on your current connection?</p>
+    <p class="fine-print" style="margin-top: 20px;"><a href="/tools/connection-check/">Open this as a full page →</a></p>
   </div>
+
+  <div class="live-tool-card">
+    <div class="field">
+      <label for="conn">Current connection</label>
+      <p style="margin: -2px 0 8px; font-size: 12px;"><a href="/guides/find-your-connection/">Not sure what you have? →</a></p>
+      <select id="conn">
+        <option value="5.75">1x25A — older home (5.75 kW)</option>
+        <option value="8.05">1x35A — standard rowhouse (8.0 kW)</option>
+        <option value="17.25" selected>3x25A — modern home (17.3 kW)</option>
+        <option value="24.15">3x35A — heat pump + fast charger (24.2 kW)</option>
+        <option value="34.5">3x50A — large all-electric home (34.5 kW)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="hp">Heat pump</label>
+      <select id="hp">
+        <option value="0">None</option>
+        <option value="4" selected>Hybrid (~4 kW)</option>
+        <option value="6">All-electric, smaller home (~6 kW)</option>
+        <option value="10">All-electric, larger home (~10 kW)</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="ev">EV charger</label>
+      <select id="ev">
+        <option value="0">None</option>
+        <option value="3.7">3.7 kW (standard socket)</option>
+        <option value="11" selected>11 kW (3-phase charger)</option>
+        <option value="22">22 kW (fast 3-phase charger)</option>
+      </select>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="balancer">
+      <label for="balancer" style="margin:0;">Charger has a load balancer</label>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="induction" checked>
+      <label for="induction" style="margin:0;">Induction stove</label>
+    </div>
+
+    <div id="result" class="verdict" style="margin-top: 18px;"></div>
+  </div>
+
 </div>
 
 <footer>
@@ -40,6 +83,53 @@
     Wattsterdam is an independent project, not affiliated with any grid operator or energy supplier.
   </div>
 </footer>
+
+<script>
+function calc() {
+  var capacity = parseFloat(document.getElementById('conn').value);
+  var hp = parseFloat(document.getElementById('hp').value);
+  var ev = parseFloat(document.getElementById('ev').value);
+  var hasBalancer = document.getElementById('balancer').checked;
+  var hasInduction = document.getElementById('induction').checked;
+
+  var baseline = 3;
+  var inductionLoad = hasInduction ? 3.5 : 0;
+  var evLoad = (ev > 0 && hasBalancer) ? 0 : ev;
+
+  var total = baseline + hp + inductionLoad + evLoad;
+  var ratio = total / capacity;
+
+  var verdictClass, verdict, advice;
+  if (ratio <= 0.8) {
+    verdictClass = 'ok';
+    verdict = 'Comfortable headroom';
+    advice = 'Should handle this combination without issue.';
+  } else if (ratio <= 1.0) {
+    verdictClass = 'warn';
+    verdict = 'Tight — load management recommended';
+    advice = 'A load balancer on the EV charger should keep you safe without upgrading.';
+  } else {
+    verdictClass = 'bad';
+    verdict = 'Likely exceeds your connection';
+    advice = 'Add a load balancer, choose a hybrid heat pump, or check your upgrade wait time.';
+  }
+
+  var el = document.getElementById('result');
+  el.className = 'verdict ' + verdictClass;
+  el.innerHTML =
+    '<div class="row-split" style="margin-bottom:10px; padding-bottom:10px;">' +
+      '<span class="readout-label" style="margin:0;">Peak load</span>' +
+      '<span class="readout readout-value" style="font-size:20px;">' + total.toFixed(1) + ' kW</span>' +
+    '</div>' +
+    '<p class="verdict-title" style="font-size:14px;">' + verdict + '</p>' +
+    '<p style="margin:0; font-size:13px; color: var(--ink-soft);">' + advice + '</p>';
+}
+
+['conn','hp','ev','balancer','induction'].forEach(function(id) {
+  document.getElementById(id).addEventListener('change', calc);
+});
+calc();
+</script>
 
 </body>
 </html>
