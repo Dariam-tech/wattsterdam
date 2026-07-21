@@ -14,16 +14,14 @@
 <div class="site-nav">
   <div class="wrap">
     <a href="/" class="logo" style="text-decoration:none;">watt<span>sterdam</span></a>
-    <nav>
-      <a href="/">Home</a>
-    </nav>
+    <nav><a href="/">All tools</a></nav>
   </div>
 </div>
 
 <div class="hero" style="padding-bottom: 8px;">
   <span class="eyebrow">Tool 01</span>
   <h1 style="font-size: 30px; max-width: none;">Will your connection handle it?</h1>
-  <p class="lede" style="max-width: 60ch;">Heat pumps and EV chargers don't always need a heavier connection on their own — the problem is usually everything running at once. Set up your situation below.</p>
+  <p class="lede" style="max-width: 60ch;">Heat pumps and EV chargers don't always need a heavier connection on their own — the problem is usually everything running at once.</p>
 </div>
 
 <div class="wrap" style="max-width: 920px; padding-bottom: 60px;">
@@ -79,7 +77,7 @@
 
 <footer>
   <div class="wrap" style="max-width: 920px;">
-    Wattsterdam is an independent project, not affiliated with any grid operator or energy supplier.
+    Wattsterdam is an independent project. It may earn a commission from links on this site — that never affects what we recommend.
   </div>
 </footer>
 
@@ -94,7 +92,6 @@ function calc() {
   var baseline = 3;
   var inductionLoad = hasInduction ? 3.5 : 0;
   var evLoad = (ev > 0 && hasBalancer) ? 0 : ev;
-
   var total = baseline + hp + inductionLoad + evLoad;
   var ratio = total / capacity;
 

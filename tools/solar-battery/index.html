@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Solar battery simulator — Wattsterdam</title>
-<meta name="description" content="See what a home battery actually saves you today under saldering, versus after the saldering scheme ends on January 1, 2027.">
+<title>How much more will you pay in 2027? — Wattsterdam</title>
+<meta name="description" content="Saldering ends January 2027. See the exact extra cost it causes you, and how much a home battery offsets it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
@@ -14,16 +14,14 @@
 <div class="site-nav">
   <div class="wrap">
     <a href="/" class="logo" style="text-decoration:none;">watt<span>sterdam</span></a>
-    <nav>
-      <a href="/tools/connection-check/">Connection check</a>
-    </nav>
+    <nav><a href="/">All tools</a></nav>
   </div>
 </div>
 
 <div class="hero" style="padding-bottom: 8px;">
   <span class="eyebrow">Tool 02</span>
-  <h1 style="font-size: 30px; max-width: none;">Is a battery worth it — now, or after 2027?</h1>
-  <p class="lede" style="max-width: 60ch;">Saldering (1:1 net metering) ends on January 1, 2027. That date matters more than almost any other number here — a battery's value changes completely once it hits. See both sides below.</p>
+  <h1 style="font-size: 30px; max-width: none;">How much more will you pay in 2027?</h1>
+  <p class="lede" style="max-width: 60ch;">Not your full bill — nobody can know that without your exact contract. This shows the <em>increase</em> caused by the saldering change itself, which is the same for everyone regardless of supplier, and how much of it a battery would offset.</p>
 </div>
 
 <div class="wrap" style="max-width: 920px; padding-bottom: 60px;">
@@ -52,7 +50,7 @@
     <div class="field">
       <label for="battery">Battery size to compare</label>
       <select id="battery">
-        <option value="0">None (baseline)</option>
+        <option value="0">None (show impact without battery)</option>
         <option value="5" selected>5 kWh</option>
         <option value="10">10 kWh</option>
         <option value="15">15 kWh</option>
@@ -60,12 +58,12 @@
     </div>
 
     <div class="field">
-      <label for="rate">Your electricity rate (€/kWh, all-in)</label>
+      <label for="rate">Your electricity rate (€/kWh, all-in incl. tax)</label>
       <select id="rate">
         <option value="0.25">€0.25</option>
         <option value="0.28" selected>€0.28 — typical</option>
         <option value="0.32">€0.32</option>
-        <option value="0.40">€0.40 — peak dynamic hours</option>
+        <option value="0.40">€0.40</option>
       </select>
     </div>
 
@@ -76,12 +74,12 @@
         <option value="0.07" selected>€0.07 — typical estimate</option>
         <option value="0.10">€0.10 — higher estimate</option>
       </select>
-      <p class="fine-print" style="margin-top: 6px;">No supplier has fixed this yet — it'll likely track wholesale prices, which move. Treat this as an illustrative range, not a quote.</p>
+      <p class="fine-print" style="margin-top: 6px;">The law sets a floor of 50% of your bare electricity rate (excl. tax/VAT) until 2030 — suppliers may offer more. Treat this as an illustrative range.</p>
     </div>
 
     <div id="result"></div>
 
-    <p class="fine-print">Simplified model: assumes ~950 kWh/kWp/year (typical Dutch yield), a 30% self-consumption baseline without a battery, and a battery that can complete roughly 280 useful cycles a year. Real production depends on your roof's orientation, shading, and the weather that year — see our <a href="/guides/find-your-connection/">other guides</a> for more precise options later.</p>
+    <p class="fine-print">Assumes ~950 kWh/kWp/year (typical Dutch yield) and 30% baseline self-consumption. Tax effect uses the 2026 energiebelasting rate (€0.1108/kWh incl. VAT — set by government each January, identical for every supplier). Real results depend on your roof orientation, shading, and actual usage pattern.</p>
   </div>
 </div>
 
@@ -98,17 +96,14 @@ function calc() {
   var batteryKwh = parseFloat(document.getElementById('battery').value);
   var rate = parseFloat(document.getElementById('rate').value);
   var feedin = parseFloat(document.getElementById('feedin').value);
+  var TAX_RATE = 0.1108; // 2026 energiebelasting incl. BTW — verify each January
 
   var YIELD_PER_KWP = 950;
   var BASELINE_SELF_CONSUMPTION_RATIO = 0.30;
   var CYCLES_PER_YEAR = 280;
 
   var production = kwp * YIELD_PER_KWP;
-
-  // Self-consumption without a battery, capped by both production and consumption
   var baselineSelfConsumption = Math.min(production * BASELINE_SELF_CONSUMPTION_RATIO, consumption, production);
-
-  // Battery shifts some exportable surplus into self-consumption, capped by what's actually exportable
   var exportableSurplus = Math.max(production - baselineSelfConsumption, 0);
   var batteryShift = Math.min(batteryKwh * CYCLES_PER_YEAR, exportableSurplus, Math.max(consumption - baselineSelfConsumption, 0));
   var selfConsumptionWithBattery = baselineSelfConsumption + batteryShift;
@@ -116,32 +111,33 @@ function calc() {
   var exportNoBattery = production - baselineSelfConsumption;
   var exportWithBattery = production - selfConsumptionWithBattery;
 
-  // Today: under 1:1 saldering, export is credited at the same rate as import — battery adds ~0 financial value
-  var savingsTodayNoBattery = production * rate;
-  var savingsTodayWithBattery = production * rate; // identical under true 1:1 saldering
-  var batteryValueToday = savingsTodayWithBattery - savingsTodayNoBattery;
+  // Feed-in value drop: today export credited at full rate, post-2027 at feedin floor
+  var feedinDeltaNoBattery = exportNoBattery * (rate - feedin);
+  var feedinDeltaWithBattery = exportWithBattery * (rate - feedin);
 
-  // After saldering ends: export only earns the (lower) feed-in rate
-  var savingsPost2027NoBattery = (baselineSelfConsumption * rate) + (exportNoBattery * feedin);
-  var savingsPost2027WithBattery = (selfConsumptionWithBattery * rate) + (exportWithBattery * feedin);
-  var batteryValuePost2027 = savingsPost2027WithBattery - savingsPost2027NoBattery;
+  // Tax-base shift: today taxed on annual net shortfall; post-2027 taxed on real-time gross import
+  var taxedTodayNoBattery = Math.max(consumption - production, 0);
+  var taxedPost2027NoBattery = consumption - baselineSelfConsumption;
+  var taxedPost2027WithBattery = consumption - selfConsumptionWithBattery;
+
+  var taxDeltaNoBattery = (taxedPost2027NoBattery - taxedTodayNoBattery) * TAX_RATE;
+  var taxDeltaWithBattery = (taxedPost2027WithBattery - taxedTodayNoBattery) * TAX_RATE;
+
+  var additionalCostNoBattery = feedinDeltaNoBattery + taxDeltaNoBattery;
+  var additionalCostWithBattery = feedinDeltaWithBattery + taxDeltaWithBattery;
+  var batteryValuePost2027 = additionalCostNoBattery - additionalCostWithBattery;
 
   var html = '';
 
-  if (batteryKwh === 0) {
-    html += '<div class="verdict warn">';
-    html += '<p class="verdict-title">No battery selected</p>';
-    html += '<p style="margin:0; color: var(--ink-soft);">Pick a battery size above to see what it would actually be worth.</p>';
-    html += '</div>';
-  } else {
-    html += '<div class="verdict ok" style="margin-bottom: 14px;">';
-    html += '<div class="row-split"><span class="readout-label" style="margin:0;">Battery value — today, under saldering</span><span class="readout readout-value">€' + batteryValueToday.toFixed(0) + '/yr</span></div>';
-    html += '<p style="margin:0; color: var(--ink-soft); font-size: 14px;">Close to nothing — your export is already credited at the same rate as your import, so a battery mostly just shifts <em>when</em> you avoid cost, not <em>how much</em>.</p>';
-    html += '</div>';
+  html += '<div class="verdict warn" style="margin-bottom: 14px;">';
+  html += '<div class="row-split"><span class="readout-label" style="margin:0;">Estimated extra cost from 2027 — no battery</span><span class="readout readout-value">+€' + additionalCostNoBattery.toFixed(0) + '/yr</span></div>';
+  html += '<p style="margin:0; color: var(--ink-soft); font-size: 14px;">Two causes: about €' + taxDeltaNoBattery.toFixed(0) + ' from energy tax now applying to your full gross grid use (instead of just your annual net shortfall), and about €' + feedinDeltaNoBattery.toFixed(0) + ' from export dropping to the post-saldering rate.</p>';
+  html += '</div>';
 
-    html += '<div class="verdict ' + (batteryValuePost2027 > 80 ? 'ok' : 'warn') + '">';
-    html += '<div class="row-split"><span class="readout-label" style="margin:0;">Battery value — from January 2027</span><span class="readout readout-value">€' + batteryValuePost2027.toFixed(0) + '/yr</span></div>';
-    html += '<p style="margin:0; color: var(--ink-soft); font-size: 14px;">This is the real payoff: it comes from converting low-value export (' + feedin.toFixed(2) + '/kWh) into high-value avoided import (' + rate.toFixed(2) + '/kWh) — about ' + batteryShift.toFixed(0) + ' kWh/year shifted with this battery size.</p>';
+  if (batteryKwh > 0) {
+    html += '<div class="verdict ' + (batteryValuePost2027 > 50 ? 'ok' : 'warn') + '">';
+    html += '<div class="row-split"><span class="readout-label" style="margin:0;">With a ' + batteryKwh + ' kWh battery, that becomes</span><span class="readout readout-value">+€' + Math.max(additionalCostWithBattery, 0).toFixed(0) + '/yr</span></div>';
+    html += '<p style="margin:0; color: var(--ink-soft); font-size: 14px;">The battery saves about €' + batteryValuePost2027.toFixed(0) + '/year against the 2027 rules — by shifting roughly ' + batteryShift.toFixed(0) + ' kWh/year from low-value export into self-consumption, which is both tax-free and avoids the feed-in floor entirely.</p>';
     html += '</div>';
   }
 
