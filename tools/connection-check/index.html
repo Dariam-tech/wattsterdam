@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="/assets/style.css">
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
+<meta property="article:modified_time" content="2026-10-27">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is a 3x25A connection enough for a heat pump and an EV charger?", "acceptedAnswer": {"@type": "Answer", "text": "Usually yes, if the EV charger has a load balancer. A 3x25A connection gives about 17 kW; a hybrid heat pump, induction stove and 11 kW charger with a load balancer peak around 10.5 kW. Without a load balancer the same set can exceed 20 kW."}}, {"@type": "Question", "name": "Can a 1x35A connection handle a heat pump?", "acceptedAnswer": {"@type": "Answer", "text": "A hybrid heat pump fits on a 1x35A (about 8 kW) connection only tightly, and adding an induction stove usually exceeds it. An upgrade or a hybrid without induction is often needed."}}]}</script>
 </head>
 <body>
 
@@ -82,6 +84,53 @@
 
     <p class="fine-print">Rough estimate using typical simultaneous-use assumptions, not an official assessment — an installer can confirm your specific groepenkast setup.</p>
   </div>
+</div>
+
+<div class="wrap" style="max-width: 760px;">
+<section class="answer" id="answer">
+  <p class="updated">Last updated 27 October 2026</p>
+  <h2>Quick answer</h2>
+  <p>Many newer Dutch homes have a <strong>3x25A connection (about 17 kW)</strong>. That is enough for an all-electric heat pump, an induction stove and an 11 kW EV charger at the same time, <strong>as long as the charger has a load balancer</strong>. Without one, the same combination can draw over 20 kW and trip your main fuse. Older homes with a single-phase <strong>1x35A connection (about 8 kW)</strong> usually can't add a heat pump and an induction stove without an upgrade.</p>
+
+  <h2>Connection sizes in Dutch homes</h2>
+  <div class="table-scroll">
+  <table class="facts">
+    <thead><tr><th>Connection</th><th>Capacity</th><th>Typical home</th></tr></thead>
+    <tbody>
+      <tr><td>1x25A</td><td>5.75 kW</td><td>Older apartment or small home</td></tr>
+      <tr><td>1x35A</td><td>8.0 kW</td><td>Older rowhouse</td></tr>
+      <tr><td>3x25A</td><td>17.3 kW</td><td>Many newer homes</td></tr>
+      <tr><td>3x35A</td><td>24.2 kW</td><td>Heat pump plus fast charger</td></tr>
+      <tr><td>3x50A</td><td>34.5 kW</td><td>Large all-electric home</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="fine-print">Not sure which one you have? <a href="/guides/find-your-connection/">Find your connection in 2 minutes</a>.</p>
+
+  <h2>Common combinations</h2>
+  <div class="table-scroll">
+  <table class="facts">
+    <thead><tr><th>Connection</th><th>Equipment</th><th>Peak load</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>3x25A</td><td>Hybrid heat pump, induction, 11 kW charger without load balancer</td><td>21.5 kW</td><td>Exceeds</td></tr>
+      <tr><td>3x25A</td><td>Same, with load balancer</td><td>10.5 kW</td><td>Comfortable</td></tr>
+      <tr><td>3x25A</td><td>All-electric heat pump (larger home), induction, 11 kW charger with load balancer</td><td>16.5 kW</td><td>Tight</td></tr>
+      <tr><td>1x35A</td><td>Hybrid heat pump, induction</td><td>10.5 kW</td><td>Exceeds</td></tr>
+      <tr><td>1x35A</td><td>Hybrid heat pump, gas stove</td><td>7.0 kW</td><td>Tight</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h2>What to do if you're over the limit</h2>
+  <ul>
+    <li><strong>Add a load balancer to the EV charger.</strong> It slows charging when the rest of the house needs power. It's the cheapest fix and often makes an upgrade unnecessary.</li>
+    <li><strong>Choose a hybrid heat pump</strong> instead of an all-electric one. It keeps the gas boiler for the coldest days and draws much less power.</li>
+    <li><strong>Apply for a heavier connection</strong> with your grid operator (netbeheerder: Liander, Stedin or Enexis, depending on your region). In areas with grid congestion this can take a long time, so check before you order equipment.</li>
+  </ul>
+
+  <h2>How this calculator works</h2>
+  <p>It adds a 3 kW baseline for everyday appliances, 3.5 kW for an induction stove, the heat pump's peak draw and the EV charger's power (zero if a load balancer is fitted), then compares the total with your connection's capacity. Up to 80% of capacity counts as comfortable, 80 to 100% as tight, and above 100% as likely to exceed. It's a rough estimate, not an official assessment; an installer can confirm your specific setup.</p>
+</section>
 </div>
 
 <footer>
