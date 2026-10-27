@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -79,6 +81,13 @@
 
     <div id="result"></div>
 
+    <div class="partner-box" data-partner="battery" hidden>
+      <span class="partner-label">Partner</span>
+      <h3 class="partner-title"></h3>
+      <p class="partner-text"></p>
+      <a class="partner-btn" href="#" rel="sponsored noopener" target="_blank"></a>
+    </div>
+
     <p class="fine-print">Assumes ~950 kWh/kWp/year (typical Dutch yield) and 30% baseline self-consumption. Tax effect uses the 2026 energiebelasting rate (€0.1108/kWh incl. VAT — set by government each January, identical for every supplier). Real results depend on your roof orientation, shading, and actual usage pattern.</p>
   </div>
 </div>
@@ -89,6 +98,7 @@
   </div>
 </footer>
 
+<script src="/assets/partner.js"></script>
 <script>
 function calc() {
   var kwp = parseFloat(document.getElementById('kwp').value);
@@ -142,6 +152,7 @@ function calc() {
   }
 
   document.getElementById('result').innerHTML = html;
+  showPartner('battery');
 }
 
 ['kwp','consumption','battery','rate','feedin'].forEach(function(id) {
