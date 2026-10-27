@@ -6,82 +6,107 @@
 <title>How much more will you pay in 2027? — Wattsterdam</title>
 <meta name="description" content="Saldering ends January 2027. See the exact extra cost it causes you, and how much a home battery offsets it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <meta property="article:modified_time" content="2026-10-27">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much more will I pay when saldering ends in 2027?", "acceptedAnswer": {"@type": "Answer", "text": "A typical Dutch home with 4 kWp of solar panels and 3,300 kWh of yearly use pays about €565 more per year from 1 January 2027, at €0.28/kWh all-in and €0.07/kWh feed-in. Depending on the feed-in rate the increase is roughly €480 to €700 a year."}}, {"@type": "Question", "name": "Does a home battery pay off after saldering ends?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not on saldering savings alone. A 10 kWh battery costs about €3,300 to €7,000 installed and saves a typical 4 kWp home about €290 a year, a simple payback of roughly 11 to 24 years."}}, {"@type": "Question", "name": "What is the minimum feed-in rate from 2027?", "acceptedAnswer": {"@type": "Answer", "text": "From 2027 to 2030 suppliers must pay at least 50% of the bare supply rate (excluding tax and VAT) for exported electricity, about €0.055/kWh at a €0.24 all-in rate."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much more will I pay when saldering ends in 2027?", "acceptedAnswer": {"@type": "Answer", "text": "A typical Dutch home with 10 solar panels (about 4 kWp) and 3,300 kWh of yearly use pays about €565 more per year from 1 January 2027, at €0.28/kWh all-in and €0.07/kWh feed-in. Depending on the feed-in rate the increase is roughly €480 to €700 a year."}}, {"@type": "Question", "name": "Does a home battery pay off after saldering ends?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not on saldering savings alone. A 10 kWh battery costs about €3,300 to €7,000 installed and saves a typical 4 kWp home about €290 a year, a simple payback of roughly 11 to 24 years."}}, {"@type": "Question", "name": "What is the minimum feed-in rate from 2027?", "acceptedAnswer": {"@type": "Answer", "text": "From 2027 to 2030 suppliers must pay at least 50% of the bare supply rate (excluding tax and VAT) for exported electricity, about €0.055/kWh at a €0.24 all-in rate."}}]}</script>
 </head>
 <body>
 
-<div class="site-nav">
+<header class="site-nav">
   <div class="wrap">
-    <a href="/" class="logo" style="text-decoration:none;">watt<span>sterdam</span></a>
+    <a href="/" class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1f5fbf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Wattsterdam</a>
     <nav><a href="/">All tools</a></nav>
   </div>
+</header>
+
+<div class="hero">
+  <span class="eyebrow">Saldering ends 1 January 2027</span>
+  <h1>How much more will you pay in 2027?</h1>
+  <p class="lede">Not your full bill — nobody can know that without your exact contract. This shows the <em>increase</em> caused by the saldering change itself, and how much of it a battery would offset.</p>
 </div>
 
-<div class="hero" style="padding-bottom: 8px;">
-  <span class="eyebrow">Tool 02</span>
-  <h1 style="font-size: 30px; max-width: none;">How much more will you pay in 2027?</h1>
-  <p class="lede" style="max-width: 60ch;">Not your full bill — nobody can know that without your exact contract. This shows the <em>increase</em> caused by the saldering change itself, and how much of it a battery would offset.</p>
-</div>
-
-<div class="wrap" style="max-width: 920px; padding-bottom: 60px;">
-  <div class="card">
-
+<div class="wrap">
+  <div class="card" style="margin-top: 20px;">
     <div class="field">
-      <label for="kwp">Solar system size (kWp)</label>
-      <select id="kwp">
-        <option value="2">2 kWp — small</option>
-        <option value="4" selected>4 kWp — typical home</option>
-        <option value="6">6 kWp</option>
-        <option value="8">8 kWp — larger roof</option>
-      </select>
+      <span class="field-label" id="mode-label">What do you know about your solar panels?</span>
+      <div class="seg" id="solar-mode" role="group" aria-labelledby="mode-label">
+        <button type="button" data-mode="panels" aria-pressed="true">How many panels</button>
+        <button type="button" data-mode="export" aria-pressed="false">Yearly export</button>
+      </div>
+      <div id="panels-box">
+        <div class="stepper">
+          <button type="button" id="panels-minus" aria-label="One panel fewer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+          <output id="panels-count" aria-live="polite">10</output>
+          <button type="button" id="panels-plus" aria-label="One panel more"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+          <span class="hint" style="margin:0;">panels</span>
+        </div>
+        <p class="hint">Count them on your roof. We assume about 400 Wp each, typical for panels installed in recent years.</p>
+      </div>
+      <div id="export-box" hidden>
+        <div class="input-row">
+          <input class="short" type="number" id="exported" inputmode="numeric" min="0" step="100" value="2700" aria-label="Electricity exported per year in kWh">
+          <span>kWh exported per year</span>
+        </div>
+        <p class="hint">Look for "teruglevering" on your yearly bill (jaarafrekening), or add up meter readings 2.8.1 and 2.8.2. This gives the most accurate answer.</p>
+      </div>
     </div>
 
     <div class="field">
-      <label for="consumption">Your annual electricity use (kWh)</label>
-      <select id="consumption">
-        <option value="2000">2,000 kWh — small household</option>
-        <option value="3300" selected>3,300 kWh — average Dutch household</option>
-        <option value="4500">4,500 kWh</option>
-        <option value="6000">6,000+ kWh — electric heating/EV</option>
-      </select>
+      <label for="use">Electricity use per year</label>
+      <div class="input-row">
+        <input class="short" type="number" id="use" inputmode="numeric" min="0" step="100" value="3300">
+        <span>kWh</span>
+      </div>
+      <p class="hint">It's on your yearly bill. Not sure? Pick one:</p>
+      <div class="chips">
+        <button type="button" data-use="2000">Low · 2,000</button>
+        <button type="button" data-use="3300">Average · 3,300</button>
+        <button type="button" data-use="5000">High · 5,000</button>
+      </div>
     </div>
-
     <div class="field">
       <label for="battery">Battery size to compare</label>
       <select id="battery">
-        <option value="0">None (show impact without battery)</option>
-        <option value="5" selected>5 kWh</option>
-        <option value="10">10 kWh</option>
+        <option value="0">No battery</option>
+        <option value="5">5 kWh</option>
+        <option value="10" selected>10 kWh</option>
         <option value="15">15 kWh</option>
       </select>
     </div>
 
-    <div class="field">
-      <label for="rate">Your electricity rate (€/kWh, all-in incl. tax)</label>
-      <select id="rate">
-        <option value="0.25">€0.25</option>
-        <option value="0.28" selected>€0.28 — typical</option>
-        <option value="0.32">€0.32</option>
-        <option value="0.40">€0.40</option>
-      </select>
-    </div>
+    <details class="advanced">
+      <summary>Use my own rates</summary>
+      <div class="field">
+        <label for="rate">Your electricity rate (all-in, incl. tax), €/kWh</label>
+        <input type="number" id="rate" inputmode="decimal" min="0" step="0.01" value="0.28">
+        <p class="hint">On your contract or bill. €0.28 is typical in 2026.</p>
+      </div>
+      <div class="field" style="margin-bottom: 0;">
+        <label for="feedin">Feed-in rate after 2027, minus any feed-in fee, €/kWh</label>
+        <input type="number" id="feedin" inputmode="decimal" min="0" step="0.01" value="0.07">
+        <p class="hint">By law at least 50% of the bare supply rate (excl. tax and VAT) until 2030. Many fixed contracts subtract terugleverkosten, so your net rate can be close to zero.</p>
+      </div>
+    </details>
 
-    <div class="field">
-      <label for="feedin">Assumed feed-in rate after saldering ends (€/kWh)</label>
-      <select id="feedin">
-        <option value="0.04">€0.04 — low estimate</option>
-        <option value="0.07" selected>€0.07 — typical estimate</option>
-        <option value="0.10">€0.10 — higher estimate</option>
-      </select>
-      <p class="fine-print" style="margin-top: 6px;">The law sets a floor of 50% of your bare electricity rate (excl. tax/VAT) until 2030 — suppliers may offer more. Treat this as an illustrative range.</p>
+    <div class="big-result" aria-live="polite">
+      <span class="label">You'll pay about</span>
+      <span class="big-number"><span id="extra">+€565</span><small> more a year</small></span>
+      <p id="explain">from 2027, because exported solar power no longer cancels out what you buy.</p>
     </div>
-
-    <div id="result"></div>
+      <div class="bars">
+        <div class="bar-row">
+          <div class="bar-head"><span>No battery</span><strong id="no-battery">+€565/yr</strong></div>
+          <div class="bar-track"><div class="bar-fill muted" style="width:100%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-head"><span id="battery-label">With a 10 kWh battery</span><strong id="with-battery">+€274/yr</strong></div>
+          <div class="bar-track"><div class="bar-fill" id="bar-battery" style="width:48%"></div></div>
+        </div>
+      </div>
+    <p class="hint" style="margin-top: 0;">A battery stores about <strong id="shifted">1,390</strong> kWh of daytime solar a year for the evening. In winter there is little surplus to store, which is why a bigger battery adds less than you might expect.</p>
 
     <div class="partner-box" data-partner="battery" hidden>
       <span class="partner-label">Partner</span>
@@ -94,11 +119,11 @@
   </div>
 </div>
 
-<div class="wrap" style="max-width: 760px;">
+<div class="wrap">
 <section class="answer" id="answer">
   <p class="updated">Last updated 27 October 2026</p>
   <h2>Quick answer</h2>
-  <p>A typical Dutch home with 4 kWp of solar panels and 3,300 kWh of annual use will pay <strong>about €565 more per year</strong> once saldering ends on 1 January 2027 (at an all-in rate of €0.28/kWh and a feed-in rate of €0.07/kWh). Depending on what your supplier pays for exported electricity, the increase ranges from roughly <strong>€480 to €700 a year</strong>.</p>
+  <p>A typical Dutch home with 10 solar panels (about 4 kWp) and 3,300 kWh of annual use will pay <strong>about €565 more per year</strong> once saldering ends on 1 January 2027 (at an all-in rate of €0.28/kWh and a feed-in rate of €0.07/kWh). Depending on what your supplier pays for exported electricity, the increase ranges from roughly <strong>€480 to €700 a year</strong>.</p>
   <p>The reason: today every kWh you export cancels out a kWh you buy at the full price, including energy tax and VAT. From 2027 an exported kWh only earns the feed-in rate, which is a fraction of that.</p>
 
   <h2>Extra cost from 2027 for common homes</h2>
@@ -106,10 +131,10 @@
   <table class="facts">
     <thead><tr><th>Solar / yearly use</th><th>No battery</th><th>With 5 kWh</th><th>With 10 kWh</th></tr></thead>
     <tbody>
-      <tr><td>2 kWp / 2,000 kWh</td><td>+€262</td><td>+€103</td><td>+€103</td></tr>
-      <tr><td>4 kWp / 3,300 kWh</td><td>+€565</td><td>+€313</td><td>+€274</td></tr>
-      <tr><td>6 kWp / 4,500 kWh</td><td>+€874</td><td>+€606</td><td>+€461</td></tr>
-      <tr><td>8 kWp / 6,000 kWh</td><td>+€1,165</td><td>+€891</td><td>+€653</td></tr>
+      <tr><td>5 panels (2 kWp) / 2,000 kWh</td><td>+€262</td><td>+€103</td><td>+€103</td></tr>
+      <tr><td>10 panels (4 kWp) / 3,300 kWh</td><td>+€565</td><td>+€313</td><td>+€274</td></tr>
+      <tr><td>15 panels (6 kWp) / 4,500 kWh</td><td>+€874</td><td>+€606</td><td>+€461</td></tr>
+      <tr><td>20 panels (8 kWp) / 6,000 kWh</td><td>+€1,165</td><td>+€891</td><td>+€653</td></tr>
     </tbody>
   </table>
   </div>
@@ -133,7 +158,7 @@
   </ul>
 
   <h2>How this calculator works</h2>
-  <p>It estimates your solar output at 950 kWh per kWp per year, spread over the months as a typical Dutch system produces it. Each day, solar first covers your daytime use (assumed 35% of your daily consumption); a battery can then store the remaining surplus, up to 90% of its rated size, for that evening and night. The extra cost is every exported kWh times the difference between your all-in rate and the feed-in rate. It does not include battery trading on dynamic prices, and real results depend on your roof direction, shading and usage pattern.</p>
+  <p>If you enter your yearly export, the extra cost is simply that export times the difference between your all-in rate and the feed-in rate. If you enter panels, it assumes about 400 Wp per panel and estimates your solar output at 950 kWh per kWp per year, spread over the months as a typical Dutch system produces it. Each day, solar first covers your daytime use (assumed 35% of your daily consumption); a battery can then store the remaining surplus, up to 90% of its rated size, for that evening and night. The extra cost is every exported kWh times the difference between your all-in rate and the feed-in rate. It does not include battery trading on dynamic prices, and real results depend on your roof direction, shading and usage pattern.</p>
 </section>
 </div>
 
@@ -144,70 +169,7 @@
 </footer>
 
 <script src="/assets/partner.js"></script>
-<script>
-function calc() {
-  var kwp = parseFloat(document.getElementById('kwp').value);
-  var consumption = parseFloat(document.getElementById('consumption').value);
-  var batteryKwh = parseFloat(document.getElementById('battery').value);
-  var rate = parseFloat(document.getElementById('rate').value);
-  var feedin = parseFloat(document.getElementById('feedin').value);
-
-  var YIELD_PER_KWP = 950;      // typical Dutch yield, kWh per kWp per year
-  var DAYTIME_SHARE = 0.35;     // share of daily use that falls in daylight hours
-  var USABLE_DOD = 0.9;         // usable share of nominal battery capacity
-  // Share of annual solar output per month (NL), and relative household use per month
-  var SOLAR = [0.025, 0.045, 0.08, 0.115, 0.135, 0.135, 0.135, 0.115, 0.09, 0.065, 0.035, 0.025];
-  var USE   = [1.2, 1.15, 1.05, 0.95, 0.9, 0.85, 0.85, 0.85, 0.9, 1.0, 1.1, 1.2];
-  var DAYS  = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
-  var production = kwp * YIELD_PER_KWP;
-  var useWeight = 0;
-  for (var i = 0; i < 12; i++) useWeight += USE[i] * DAYS[i];
-
-  // Day-by-day: solar first covers daytime use; a battery can store
-  // what's left (up to its usable size) for that evening and night.
-  var direct = 0, shifted = 0;
-  for (var m = 0; m < 12; m++) {
-    var p = production * SOLAR[m] / DAYS[m];
-    var c = consumption * USE[m] / useWeight;
-    var d = Math.min(p, c * DAYTIME_SHARE);
-    var s = Math.min(batteryKwh * USABLE_DOD, p - d, c - d);
-    direct += d * DAYS[m];
-    shifted += Math.max(s, 0) * DAYS[m];
-  }
-
-  // Under saldering every exported kWh cancels a kWh bought at the full
-  // all-in rate (incl. energy tax and VAT). From 2027 it earns only the
-  // feed-in rate, so each exported kWh loses (rate - feedin).
-  var exportNoBattery = production - direct;
-  var exportWithBattery = exportNoBattery - shifted;
-  var lossPerKwh = rate - feedin;
-  var extraNoBattery = exportNoBattery * lossPerKwh;
-  var extraWithBattery = exportWithBattery * lossPerKwh;
-  var batterySaving = extraNoBattery - extraWithBattery;
-
-  var html = '';
-  html += '<div class="verdict warn" style="margin-top: 24px;">';
-  html += '  <div class="row-split"><span class="readout-label">Estimated extra cost from 2027 — no battery</span><span class="readout readout-value">+€' + extraNoBattery.toFixed(0) + '/yr</span></div>';
-  html += '  <p style="margin:0;">You export about ' + exportNoBattery.toFixed(0) + ' kWh a year. Today each of those cancels a kWh you would buy at €' + rate.toFixed(2) + '; from 2027 it earns about €' + feedin.toFixed(2) + ', so you lose roughly €' + lossPerKwh.toFixed(2) + ' per exported kWh.</p>';
-  html += '</div>';
-
-  if (batteryKwh > 0) {
-    html += '<div class="verdict ' + (batterySaving > 50 ? 'ok' : 'warn') + '" style="margin-top: 16px;">';
-    html += '  <div class="row-split"><span class="readout-label">With a ' + batteryKwh + ' kWh battery, that becomes</span><span class="readout readout-value">+€' + Math.max(extraWithBattery, 0).toFixed(0) + '/yr</span></div>';
-    html += '  <p style="margin:0;">The battery saves about €' + batterySaving.toFixed(0) + ' a year by storing roughly ' + shifted.toFixed(0) + ' kWh of daytime solar for the evening. In winter there is little surplus to store, which is why a bigger battery adds less than you might expect.</p>';
-    html += '</div>';
-  }
-
-  document.getElementById('result').innerHTML = html;
-  showPartner('battery');
-}
-
-['kwp','consumption','battery','rate','feedin'].forEach(function(id) {
-  document.getElementById(id).addEventListener('change', calc);
-});
-calc();
-</script>
+<script src="/assets/calc2027.js"></script>
 
 </body>
 </html>
