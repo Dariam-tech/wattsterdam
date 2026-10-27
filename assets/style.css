@@ -171,3 +171,21 @@ footer {
   border-radius: 4px;
 }
 .partner-btn:hover { text-decoration: none; opacity: 0.9; }
+
+/* Answer sections: static text with concrete numbers (read by people and by search/AI crawlers) */
+.answer { margin-top: 56px; }
+.answer h2 { font-size: 22px; margin: 36px 0 10px; }
+.answer h2:first-of-type { margin-top: 8px; }
+.answer p, .answer li { font-size: 16px; color: var(--ink-soft); }
+.answer ul { padding-left: 20px; }
+.answer li { margin-bottom: 8px; }
+.answer strong { color: var(--ink); }
+.updated { font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); margin: 0; }
+.table-scroll { overflow-x: auto; }
+table.facts { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); font-size: 15px; }
+table.facts th, table.facts td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.facts th { font-weight: 600; background: var(--paper-dim); }
+@media (max-width: 700px) {
+  table.facts { font-size: 14px; }
+  table.facts th, table.facts td { padding: 8px; }
+}
