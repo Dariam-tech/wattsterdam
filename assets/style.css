@@ -147,3 +147,27 @@ footer {
   .tools-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 30px; }
 }
+
+/* Partner block (shown only when a partner URL is configured in /assets/partner.js) */
+.partner-box {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+}
+.partner-box[hidden] { display: none; }
+.partner-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-soft); }
+.partner-title { font-size: 18px; margin: 4px 0 6px; }
+.partner-text { margin: 0 0 14px; font-size: 15px; color: var(--ink-soft); }
+.partner-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 4px;
+}
+.partner-btn:hover { text-decoration: none; opacity: 0.9; }

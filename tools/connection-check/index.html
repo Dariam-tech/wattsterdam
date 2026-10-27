@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -71,6 +73,13 @@
 
     <div id="result" class="verdict" style="margin-top: 24px;"></div>
 
+    <div class="partner-box" data-partner="installer" hidden>
+      <span class="partner-label">Partner</span>
+      <h3 class="partner-title"></h3>
+      <p class="partner-text"></p>
+      <a class="partner-btn" href="#" rel="sponsored noopener" target="_blank"></a>
+    </div>
+
     <p class="fine-print">Rough estimate using typical simultaneous-use assumptions, not an official assessment — an installer can confirm your specific groepenkast setup.</p>
   </div>
 </div>
@@ -81,6 +90,7 @@
   </div>
 </footer>
 
+<script src="/assets/partner.js"></script>
 <script>
 function calc() {
   var capacity = parseFloat(document.getElementById('conn').value);
@@ -112,6 +122,7 @@ function calc() {
 
   var el = document.getElementById('result');
   el.className = 'verdict ' + verdictClass;
+  showPartner('installer', verdictClass !== 'ok');
   el.innerHTML =
     '<div class="row-split">' +
       '<span class="readout-label" style="margin:0;">Estimated peak load</span>' +
