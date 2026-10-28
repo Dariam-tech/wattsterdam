@@ -1,93 +1,134 @@
 /*
  * 2027 saldering calculator — shared by the homepage and /tools/solar-battery/.
+ * Every rule and default comes from a public source (see the Sources section
+ * on /tools/solar-battery/).
  *
- * Model: solar output 950 kWh per kWp per year, spread over a typical Dutch
- * monthly profile. Each day solar first covers daytime use (35% of daily use);
- * a battery stores what's left, up to 90% of its size, for that evening.
- * Under saldering every exported kWh cancels a kWh bought at the all-in rate;
- * from 2027 it only earns the feed-in rate, so each exported kWh loses
- * (rate - feed-in).
+ * RULES (ACM ConsuWijzer, "Salderen en terugleveren")
+ *  - Until 31 Dec 2026, what you feed back is netted against what you take
+ *    from the grid over the year: netted = min(import, export). Each netted
+ *    kWh is worth your full all-in rate (supply + energy tax + VAT).
+ *  - From 1 Jan 2027 netting stops. Every exported kWh earns the feed-in
+ *    payment; every imported kWh is paid in full.
+ *  - Until 2030 the feed-in payment is at least 50% of the supply price
+ *    excluding energy tax and VAT.
+ *  - Suppliers may charge feed-in costs (terugleverkosten) per kWh exported.
+ *
+ * So the extra cost caused by the end of saldering is
+ *    min(import, export) x (all-in rate - feed-in payment).
+ * Feed-in costs are charged on all exported kWh in both years, so they
+ * cancel out of that difference; they do change what your export earns and
+ * what a battery is worth.
  */
 (function () {
-  var YIELD_PER_KWP = 950;
-  var WP_PER_PANEL = 400;
-  var DAYTIME_SHARE = 0.35;
-  var USABLE = 0.9;
-  var SOLAR = [0.025, 0.045, 0.08, 0.115, 0.135, 0.135, 0.135, 0.115, 0.09, 0.065, 0.035, 0.025];
-  var USE = [1.2, 1.15, 1.05, 0.95, 0.9, 0.85, 0.85, 0.85, 0.9, 1.0, 1.1, 1.2];
-  var DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-  var USE_WEIGHT = 0;
-  for (var i = 0; i < 12; i++) USE_WEIGHT += USE[i] * DAYS[i];
+  // Milieu Centraal, "Kosten en opbrengst zonnepanelen": 10 panels of 435 Wp
+  // produce about 3,800 kWh a year.
+  var KWH_PER_PANEL = 380;
+  // Milieu Centraal: without steering, a household uses about 30% of its
+  // solar power directly.
+  var SELF_USE = 0.30;
+  // Milieu Centraal, "Thuisbatterij": a home battery raises direct use from
+  // about 30% to just over 50% (used only if the profile file is missing).
+  var SELF_USE_WITH_BATTERY = 0.50;
+  // Belastingplan 2027, fiscale sleuteltabel: energy tax on electricity,
+  // 0-10,000 kWh, 8.80 cent per kWh excluding VAT.
+  var ENERGY_TAX_2027_EXCL = 0.0880;
+  var VAT = 1.21;
+  // Typical manufacturer round-trip efficiency for a home battery.
+  var ROUND_TRIP = 0.9;
 
-  function model(kwp, consumption, batteryKwh) {
-    var production = kwp * YIELD_PER_KWP, direct = 0, shifted = 0;
-    for (var m = 0; m < 12; m++) {
-      var p = production * SOLAR[m] / DAYS[m];
-      var c = consumption * USE[m] / USE_WEIGHT;
-      var d = Math.min(p, c * DAYTIME_SHARE);
-      direct += d * DAYS[m];
-      shifted += Math.max(Math.min(batteryKwh * USABLE, p - d, c - d), 0) * DAYS[m];
-    }
-    return { production: production, exported: production - direct, shifted: shifted };
+  var profile = null; // E1B AMI import (A) and injection (I) shares, loaded below
+
+  function legalMinimumFeedIn(allInRate) {
+    var bareSupply = Math.max(allInRate / VAT - ENERGY_TAX_2027_EXCL, 0);
+    return 0.5 * bareSupply;
   }
 
-  // Find the system size whose modelled export matches a known export.
-  function kwpFromExport(exported, consumption) {
-    var lo = 0, hi = 40;
-    for (var k = 0; k < 40; k++) {
-      var mid = (lo + hi) / 2;
-      if (model(mid, consumption, 0).exported < exported) lo = mid; else hi = mid;
+  // Simulate a battery over the year on the E1B AMI profiles: it charges from
+  // exported power and discharges into imported power, hour by hour.
+  function simulateBattery(imp, exp, capacity) {
+    if (!profile || capacity <= 0) return null;
+    var A = profile.A, I = profile.I, n = A.length, sumA = profile.sumA, sumI = profile.sumI;
+    var soc = 0, charged = 0, delivered = 0;
+    for (var t = 0; t < n; t++) {
+      var e = exp * I[t] / sumI;
+      var i = imp * A[t] / sumA;
+      var c = Math.min(e, capacity - soc);
+      soc += c; charged += c;
+      var d = Math.min(i, soc * ROUND_TRIP);
+      soc -= d / ROUND_TRIP; delivered += d;
     }
-    return (lo + hi) / 2;
+    return { charged: charged, delivered: delivered };
+  }
+
+  function batteryFallback(production, use, imp, exp, capacity) {
+    if (capacity <= 0 || !production) return { charged: 0, delivered: 0 };
+    var delivered = Math.min((SELF_USE_WITH_BATTERY - SELF_USE) * production, imp, exp * ROUND_TRIP);
+    return { charged: delivered / ROUND_TRIP, delivered: delivered };
   }
 
   function $(id) { return document.getElementById(id); }
-  function eur(x) { return '€' + Math.round(x).toLocaleString('en-US'); }
+  function eur(x) { return (x < 0 ? '−€' : '€') + Math.abs(Math.round(x)).toLocaleString('en-US'); }
   function num(x) { return Math.round(x).toLocaleString('en-US'); }
-
-  var state = { mode: 'panels', panels: 10 };
-
   function readNumber(id, fallback) {
     var el = $(id);
-    if (!el) return fallback;
-    var v = parseFloat(el.value);
+    if (!el || el.value === '') return fallback;
+    var v = parseFloat(String(el.value).replace(',', '.'));
     return isNaN(v) ? fallback : v;
   }
 
+  var state = { mode: 'panels', panels: 10, feedinEdited: false };
+
   function update() {
-    var consumption = Math.max(readNumber('use', 3300), 0);
-    var battery = readNumber('battery', 10);
-    var rate = readNumber('rate', 0.28);
-    var feedin = readNumber('feedin', 0.07);
-    var loss = Math.max(rate - feedin, 0);
+    var rate = readNumber('rate', 0.26);
+    var minFeedIn = legalMinimumFeedIn(rate);
+    if ($('feedin') && !state.feedinEdited) $('feedin').value = minFeedIn.toFixed(3);
+    var feedin = state.feedinEdited ? readNumber('feedin', minFeedIn) : minFeedIn;
+    var fees = readNumber('tlk', 0);
+    var capacity = readNumber('battery', 10);
+    if ($('feedin-min')) $('feedin-min').textContent = '€' + minFeedIn.toFixed(3);
 
-    var kwp, exported;
-    if (state.mode === 'export') {
-      exported = Math.max(readNumber('exported', 0), 0);
-      kwp = kwpFromExport(exported, consumption);
+    var imp, exp, production = null, use = null;
+    if (state.mode === 'bill') {
+      imp = Math.max(readNumber('bill-import', 2200), 0);
+      exp = Math.max(readNumber('bill-export', 2700), 0);
     } else {
-      kwp = state.panels * WP_PER_PANEL / 1000;
+      use = Math.max(readNumber('use', 3300), 0);
+      production = state.panels * KWH_PER_PANEL;
+      var direct = Math.min(SELF_USE * production, use);
+      exp = production - direct;
+      imp = use - direct;
     }
-    var r = model(kwp, consumption, battery);
-    if (state.mode !== 'export') exported = r.exported;
-    var shifted = Math.min(r.shifted, exported);
 
-    var extra = exported * loss;
-    var withBattery = (exported - shifted) * loss;
-    var saving = extra - withBattery;
+    var netted = Math.min(imp, exp);
+    var lossPerKwh = Math.max(rate - feedin, 0);
+    var extra = netted * lossPerKwh;
+
+    // Without the profile file, estimate production from the bill's export
+    // using the same 30% direct-use share.
+    var b = simulateBattery(imp, exp, capacity) ||
+      batteryFallback(production !== null ? production : exp / (1 - SELF_USE), use, imp, exp, capacity);
+    var batteryValue = b.delivered * rate - b.charged * (feedin - fees);
+    var withBattery = extra - batteryValue;
 
     $('extra').textContent = '+' + eur(extra);
     if ($('explain')) {
-      $('explain').textContent = state.mode === 'export'
-        ? 'You export ' + num(exported) + ' kWh a year. From 2027 each of those earns about €' + feedin.toFixed(2) + ' instead of cancelling a kWh you buy at €' + rate.toFixed(2) + '.'
-        : 'Your ' + state.panels + ' panels export about ' + num(exported) + ' kWh a year. From 2027 each of those earns about €' + feedin.toFixed(2) + ' instead of cancelling a kWh you buy at €' + rate.toFixed(2) + '.';
+      $('explain').textContent = (state.mode === 'bill'
+        ? 'You take ' + num(imp) + ' kWh from the grid and feed back ' + num(exp) + ' kWh.'
+        : 'Your ' + state.panels + ' panels feed back about ' + num(exp) + ' kWh a year and you take about ' + num(imp) + ' kWh from the grid.')
+        + ' Today ' + num(netted) + ' kWh of that is netted at your full rate of €' + rate.toFixed(2)
+        + '. From 2027 it earns about €' + feedin.toFixed(2) + ' per kWh instead.';
     }
     $('no-battery').textContent = '+' + eur(extra) + '/yr';
-    $('battery-label').textContent = battery > 0 ? 'With a ' + battery + ' kWh battery' : 'No battery selected';
-    $('with-battery').textContent = '+' + eur(withBattery) + '/yr';
-    $('bar-battery').style.width = (extra > 0 ? Math.round(withBattery / extra * 100) : 0) + '%';
-    if ($('saving')) $('saving').textContent = eur(saving) + ' a year';
-    if ($('shifted')) $('shifted').textContent = num(shifted);
+    $('battery-label').textContent = capacity > 0 ? 'With a ' + capacity + ' kWh battery' : 'No battery selected';
+    $('with-battery').textContent = (withBattery < 0 ? '' : '+') + eur(withBattery) + '/yr';
+    $('bar-battery').style.width = (extra > 0 ? Math.max(Math.min(Math.round(withBattery / extra * 100), 100), 0) : 0) + '%';
+    if ($('saving')) $('saving').textContent = eur(batteryValue) + ' a year';
+    if ($('shifted')) $('shifted').textContent = num(b.delivered);
+    if ($('export-earn')) {
+      var earn = exp * (feedin - fees);
+      $('export-earn').textContent = eur(earn) + ' a year';
+      $('export-earn-note').textContent = num(exp) + ' kWh × (€' + feedin.toFixed(3) + ' feed-in − €' + fees.toFixed(3) + ' feed-in costs)';
+    }
     if (window.showPartner) window.showPartner('battery');
   }
 
@@ -96,7 +137,7 @@
     var buttons = document.querySelectorAll('#solar-mode button');
     for (var i = 0; i < buttons.length; i++) buttons[i].setAttribute('aria-pressed', buttons[i].dataset.mode === mode ? 'true' : 'false');
     $('panels-box').hidden = mode !== 'panels';
-    $('export-box').hidden = mode !== 'export';
+    $('bill-box').hidden = mode !== 'bill';
     update();
   }
 
@@ -112,6 +153,18 @@
     for (var i = 0; i < chips.length; i++) chips[i].setAttribute('aria-pressed', chips[i].dataset.use === v ? 'true' : 'false');
   }
 
+  function loadProfile() {
+    if (!window.fetch) return;
+    fetch('/assets/profile-e1b-ami.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (p) {
+      if (!p || !p.A || !p.I) return;
+      var sumA = 0, sumI = 0;
+      for (var t = 0; t < p.A.length; t++) { sumA += p.A[t]; sumI += p.I[t]; }
+      p.sumA = sumA; p.sumI = sumI;
+      profile = p;
+      update();
+    }).catch(function () {});
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     if (!$('extra')) return;
     var modeButtons = document.querySelectorAll('#solar-mode button');
@@ -124,13 +177,22 @@
     for (var j = 0; j < chips.length; j++) {
       chips[j].addEventListener('click', function () { $('use').value = this.dataset.use; markChips(); update(); });
     }
-    ['use', 'exported', 'battery', 'rate', 'feedin'].forEach(function (id) {
+    ['use', 'bill-import', 'bill-export', 'battery', 'rate', 'feedin', 'tlk'].forEach(function (id) {
       var el = $(id);
       if (!el) return;
-      el.addEventListener('input', function () { if (id === 'use') markChips(); update(); });
+      el.addEventListener('input', function () {
+        if (id === 'feedin') state.feedinEdited = el.value !== '';
+        if (id === 'use') markChips();
+        update();
+      });
       el.addEventListener('change', update);
     });
     markChips();
     setMode('panels');
+    loadProfile();
   });
+
+  // Exposed for testing.
+  window.Wattsterdam2027 = { legalMinimumFeedIn: legalMinimumFeedIn, simulateBattery: simulateBattery,
+    setProfile: function (p) { var a = 0, b = 0; for (var t = 0; t < p.A.length; t++) { a += p.A[t]; b += p.I[t]; } p.sumA = a; p.sumI = b; profile = p; } };
 })();

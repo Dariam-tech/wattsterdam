@@ -29,45 +29,61 @@
 <div class="wrap">
   <div class="card" style="margin-top: 20px;">
     <div class="field">
-      <span class="field-label" id="mode-label">What do you know about your solar panels?</span>
+      <span class="field-label" id="mode-label">How do you want to start?</span>
       <div class="seg" id="solar-mode" role="group" aria-labelledby="mode-label">
-        <button type="button" data-mode="panels" aria-pressed="true">How many panels</button>
-        <button type="button" data-mode="export" aria-pressed="false">Yearly export</button>
+        <button type="button" data-mode="panels" aria-pressed="true">Count my panels</button>
+        <button type="button" data-mode="bill" aria-pressed="false">Use my yearly bill</button>
       </div>
-      <div id="panels-box">
+    </div>
+
+    <div id="panels-box">
+      <div class="field">
+        <span class="field-label">How many solar panels do you have?</span>
         <div class="stepper">
           <button type="button" id="panels-minus" aria-label="One panel fewer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
           <output id="panels-count" aria-live="polite">10</output>
           <button type="button" id="panels-plus" aria-label="One panel more"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
           <span class="hint" style="margin:0;">panels</span>
         </div>
-        <p class="hint">Count them on your roof. We assume about 400 Wp each, typical for panels installed in recent years.</p>
+        <p class="hint">We use about 380 kWh a year per panel and assume you use 30% of your solar power directly (Milieu Centraal). Older, smaller panels produce less.</p>
       </div>
-      <div id="export-box" hidden>
+      <div class="field">
+        <label for="use">Household electricity use per year</label>
         <div class="input-row">
-          <input class="short" type="number" id="exported" inputmode="numeric" min="0" step="100" value="2700" aria-label="Electricity exported per year in kWh">
-          <span>kWh exported per year</span>
+          <input class="short" type="number" id="use" inputmode="numeric" min="0" step="100" value="3300">
+          <span>kWh</span>
         </div>
-        <p class="hint">Look for "teruglevering" on your yearly bill (jaarafrekening), or add up meter readings 2.8.1 and 2.8.2. This gives the most accurate answer.</p>
+        <p class="hint">Roughly what you would use without solar panels. Not sure? Pick one:</p>
+        <div class="chips">
+          <button type="button" data-use="2000">Low · 2,000</button>
+          <button type="button" data-use="3300">Average · 3,300</button>
+          <button type="button" data-use="5000">High · 5,000</button>
+        </div>
       </div>
     </div>
 
-    <div class="field">
-      <label for="use">Electricity use per year</label>
-      <div class="input-row">
-        <input class="short" type="number" id="use" inputmode="numeric" min="0" step="100" value="3300">
-        <span>kWh</span>
+    <div id="bill-box" hidden>
+      <div class="field">
+        <label for="bill-import">Taken from the grid per year</label>
+        <div class="input-row">
+          <input class="short" type="number" id="bill-import" inputmode="numeric" min="0" step="100" value="2200">
+          <span>kWh</span>
+        </div>
+        <p class="hint">On your yearly bill (jaarafrekening) as "levering": add up normaal and dal.</p>
       </div>
-      <p class="hint">It's on your yearly bill. Not sure? Pick one:</p>
-      <div class="chips">
-        <button type="button" data-use="2000">Low · 2,000</button>
-        <button type="button" data-use="3300">Average · 3,300</button>
-        <button type="button" data-use="5000">High · 5,000</button>
+      <div class="field">
+        <label for="bill-export">Fed back to the grid per year</label>
+        <div class="input-row">
+          <input class="short" type="number" id="bill-export" inputmode="numeric" min="0" step="100" value="2700">
+          <span>kWh</span>
+        </div>
+        <p class="hint">On the same bill as "teruglevering", or meter readings 2.8.1 + 2.8.2. This gives the most accurate answer.</p>
       </div>
     </div>
+
     <div class="big-result" aria-live="polite">
       <span class="label">You'll pay about</span>
-      <span class="big-number"><span id="extra">+€565</span><small> more a year</small></span>
+      <span class="big-number"><span id="extra">+€425</span><small> more a year</small></span>
       <p id="explain">from 2027, because exported solar power no longer cancels out what you buy.</p>
     </div>
     <a class="btn" href="/tools/solar-battery/">Fine-tune with my exact rates</a>
@@ -76,15 +92,15 @@
   <h2 class="section-title">Would a home battery help?</h2>
       <div class="bars">
         <div class="bar-row">
-          <div class="bar-head"><span>No battery</span><strong id="no-battery">+€565/yr</strong></div>
+          <div class="bar-head"><span>No battery</span><strong id="no-battery">+€425/yr</strong></div>
           <div class="bar-track"><div class="bar-fill muted" style="width:100%"></div></div>
         </div>
         <div class="bar-row">
-          <div class="bar-head"><span id="battery-label">With a 10 kWh battery</span><strong id="with-battery">+€274/yr</strong></div>
-          <div class="bar-track"><div class="bar-fill" id="bar-battery" style="width:48%"></div></div>
+          <div class="bar-head"><span id="battery-label">With a 10 kWh battery</span><strong id="with-battery">+€281/yr</strong></div>
+          <div class="bar-track"><div class="bar-fill" id="bar-battery" style="width:66%"></div></div>
         </div>
       </div>
-  <p style="color: var(--ink-soft); margin: 0;">It saves about <strong style="color: var(--ink);" id="saving">€291 a year</strong>, but a 10 kWh battery costs €3,300 to €7,000 installed. For most homes, using more solar power during the day is the cheaper fix.</p>
+  <p style="color: var(--ink-soft); margin: 0;">It saves about <strong style="color: var(--ink);" id="saving">€144 a year</strong>, but a 10 kWh battery costs €3,300 to €7,000 installed. For most homes, using more solar power during the day is the cheaper fix.</p>
 
   <h2 class="section-title">Other questions</h2>
   <div class="tools-grid">
@@ -103,11 +119,11 @@
   <section class="answer">
     <h2>What changes for your energy bill in 2027</h2>
     <ul>
-      <li><strong>Saldering ends on 1 January 2027.</strong> A typical home with 10 solar panels (about 4 kWp) and 3,300 kWh of yearly use pays about €565 more a year.</li>
-      <li><strong>Exported solar power earns at least 50% of the bare supply rate</strong> until 2030, but many fixed contracts subtract a feed-in fee.</li>
+      <li><strong>Saldering ends on 1 January 2027.</strong> A typical home with 10 solar panels and 3,300 kWh of yearly use pays about €426 more a year.</li>
+      <li><strong>Exported solar power earns at least 50% of the supply price without tax</strong> until 2030 (ACM), but most suppliers also charge feed-in costs.</li>
       <li><strong>Heat pumps and EV chargers</strong> usually fit on a 3x25A connection if the charger has a load balancer. <a href="/tools/connection-check/">Check your home</a>.</li>
     </ul>
-    <p class="updated">Last updated 27 October 2026</p>
+    <p class="updated">Last updated 28 October 2026</p>
   </section>
 </div>
 </main>
