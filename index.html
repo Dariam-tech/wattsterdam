@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How much more will your solar panels cost in 2027? — Wattsterdam</title>
-<meta name="description" content="Saldering ends on 1 January 2027. Count your solar panels and see how much more you'll pay, and whether a home battery helps. Free, in plain English.">
+<meta name="description" content="Saldering ends on 1 January 2027. Enter two numbers from your energy bill and see how much more you'll pay, and whether a home battery helps. Free, in plain English.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
@@ -23,72 +23,38 @@
 <div class="hero">
   <span class="eyebrow">Dutch energy, in plain English</span>
   <h1>How much more will your solar panels cost you?</h1>
-  <p class="lede">Saldering ends on 1 January 2027. Count your panels, enter your yearly use, and get the answer instantly.</p>
+  <p class="lede">Saldering ends on 1 January 2027. Enter two numbers from your yearly energy bill and get the answer instantly.</p>
 </div>
 
 <div class="wrap">
   <div class="card" style="margin-top: 20px;">
+    <p class="hint" style="margin: 0 0 16px;">You need two numbers from your yearly bill (jaarafrekening). Both are measured at your meter.</p>
     <div class="field">
-      <span class="field-label" id="mode-label">How do you want to start?</span>
-      <div class="seg" id="solar-mode" role="group" aria-labelledby="mode-label">
-        <button type="button" data-mode="panels" aria-pressed="true">Count my panels</button>
-        <button type="button" data-mode="bill" aria-pressed="false">Use my yearly bill</button>
+      <label for="bill-import">Taken from the grid per year (levering)</label>
+      <div class="input-row">
+        <input class="short" type="number" id="bill-import" inputmode="numeric" min="0" step="100" value="2200">
+        <span>kWh</span>
       </div>
+      <p class="hint">Add up normaal and dal.</p>
     </div>
-
-    <div id="panels-box">
-      <div class="field">
-        <span class="field-label">How many solar panels do you have?</span>
-        <div class="stepper">
-          <button type="button" id="panels-minus" aria-label="One panel fewer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
-          <output id="panels-count" aria-live="polite">10</output>
-          <button type="button" id="panels-plus" aria-label="One panel more"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
-          <span class="hint" style="margin:0;">panels</span>
-        </div>
-        <p class="hint">We use about 380 kWh a year per panel and assume you use 30% of your solar power directly (Milieu Centraal). Older, smaller panels produce less.</p>
+    <div class="field">
+      <label for="bill-export">Fed back to the grid per year (teruglevering)</label>
+      <div class="input-row">
+        <input class="short" type="number" id="bill-export" inputmode="numeric" min="0" step="100" value="2700">
+        <span>kWh</span>
       </div>
-      <div class="field">
-        <label for="use">Household electricity use per year</label>
-        <div class="input-row">
-          <input class="short" type="number" id="use" inputmode="numeric" min="0" step="100" value="3300">
-          <span>kWh</span>
-        </div>
-        <p class="hint">Roughly what you would use without solar panels. Not sure? Pick one:</p>
-        <div class="chips">
-          <button type="button" data-use="2000">Low · 2,000</button>
-          <button type="button" data-use="3300">Average · 3,300</button>
-          <button type="button" data-use="5000">High · 5,000</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="bill-box" hidden>
-      <div class="field">
-        <label for="bill-import">Taken from the grid per year</label>
-        <div class="input-row">
-          <input class="short" type="number" id="bill-import" inputmode="numeric" min="0" step="100" value="2200">
-          <span>kWh</span>
-        </div>
-        <p class="hint">On your yearly bill (jaarafrekening) as "levering": add up normaal and dal.</p>
-      </div>
-      <div class="field">
-        <label for="bill-export">Fed back to the grid per year</label>
-        <div class="input-row">
-          <input class="short" type="number" id="bill-export" inputmode="numeric" min="0" step="100" value="2700">
-          <span>kWh</span>
-        </div>
-        <p class="hint">On the same bill as "teruglevering", or meter readings 2.8.1 + 2.8.2. This gives the most accurate answer.</p>
-      </div>
+      <p class="hint">Add up normaal and dal, or meter readings 2.8.1 and 2.8.2.</p>
     </div>
 
     <div class="big-result" aria-live="polite">
       <span class="label">You'll pay about</span>
-      <span class="big-number"><span id="extra">+€425</span><small> more a year</small></span>
-      <p id="explain">from 2027, because exported solar power no longer cancels out what you buy.</p>
+      <span class="big-number"><span id="extra">+€432</span><small> more a year</small></span>
+      <p id="explain">from 2027, because what you feed back is no longer netted against what you take from the grid.</p>
     </div>
     <a class="btn" href="/tools/solar-battery/">Fine-tune with my exact rates</a>
   </div>
 
+  <section data-needs-profile hidden>
   <h2 class="section-title">Would a home battery help?</h2>
       <div class="bars">
         <div class="bar-row">
@@ -101,6 +67,7 @@
         </div>
       </div>
   <p style="color: var(--ink-soft); margin: 0;">It saves about <strong style="color: var(--ink);" id="saving">€144 a year</strong>, but a 10 kWh battery costs €3,300 to €7,000 installed. For most homes, using more solar power during the day is the cheaper fix.</p>
+  </section>
 
   <h2 class="section-title">Other questions</h2>
   <div class="tools-grid">
@@ -119,7 +86,7 @@
   <section class="answer">
     <h2>What changes for your energy bill in 2027</h2>
     <ul>
-      <li><strong>Saldering ends on 1 January 2027.</strong> A typical home with 10 solar panels and 3,300 kWh of yearly use pays about €426 more a year.</li>
+      <li><strong>Saldering ends on 1 January 2027.</strong> A home that takes 2,200 kWh from the grid and feeds back 2,700 kWh pays about €432 more a year.</li>
       <li><strong>Exported solar power earns at least 50% of the supply price without tax</strong> until 2030 (ACM), but most suppliers also charge feed-in costs.</li>
       <li><strong>Heat pumps and EV chargers</strong> usually fit on a 3x25A connection if the charger has a load balancer. <a href="/tools/connection-check/">Check your home</a>.</li>
     </ul>

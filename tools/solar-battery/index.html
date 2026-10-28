@@ -11,7 +11,7 @@
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <meta property="article:modified_time" content="2026-10-28">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much more will I pay when saldering ends in 2027?", "acceptedAnswer": {"@type": "Answer", "text": "A typical Dutch home with 10 solar panels and 3,300 kWh of yearly use pays about €425 more per year from 1 January 2027 if its supplier pays the legal minimum feed-in payment, or about €346 at 10 cents per kWh. Only the part that is netted today (the smaller of grid import and feed-back) is affected."}}, {"@type": "Question", "name": "Does a home battery pay off after saldering ends?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. A 10 kWh battery costs about €3,300 to €7,000 installed and saves a typical 10-panel home about €144 a year."}}, {"@type": "Question", "name": "What is the minimum feed-in payment from 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Until 2030 suppliers must pay at least 50% of the price you pay for electricity without energy tax and VAT (ACM). At an average all-in rate of €0.26 per kWh that is about €0.06 per kWh."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much more will I pay when saldering ends in 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Only the part that is netted today is affected: the smaller of what you take from the grid and what you feed back. A home that takes 2,200 kWh and feeds back 2,700 kWh pays about €432 more per year from 1 January 2027 at the legal minimum feed-in payment, or about €352 at 10 cents per kWh."}}, {"@type": "Question", "name": "What is the minimum feed-in payment from 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Until 2030 suppliers must pay at least 50% of the price you pay for electricity without energy tax and VAT (ACM). At an average all-in rate of €0.26 per kWh that is about €0.06 per kWh."}}, {"@type": "Question", "name": "Does a home battery pay off after saldering ends?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. A 10 kWh battery costs about €3,300 to €7,000 installed, and Milieu Centraal concludes a home battery will most likely not pay for itself through savings on the electricity bill."}}]}</script>
 </head>
 <body>
 
@@ -30,59 +30,25 @@
 
 <div class="wrap">
   <div class="card" style="margin-top: 20px;">
+    <p class="hint" style="margin: 0 0 16px;">You need two numbers from your yearly bill (jaarafrekening). Both are measured at your meter.</p>
     <div class="field">
-      <span class="field-label" id="mode-label">How do you want to start?</span>
-      <div class="seg" id="solar-mode" role="group" aria-labelledby="mode-label">
-        <button type="button" data-mode="panels" aria-pressed="true">Count my panels</button>
-        <button type="button" data-mode="bill" aria-pressed="false">Use my yearly bill</button>
+      <label for="bill-import">Taken from the grid per year (levering)</label>
+      <div class="input-row">
+        <input class="short" type="number" id="bill-import" inputmode="numeric" min="0" step="100" value="2200">
+        <span>kWh</span>
       </div>
+      <p class="hint">Add up normaal and dal.</p>
+    </div>
+    <div class="field">
+      <label for="bill-export">Fed back to the grid per year (teruglevering)</label>
+      <div class="input-row">
+        <input class="short" type="number" id="bill-export" inputmode="numeric" min="0" step="100" value="2700">
+        <span>kWh</span>
+      </div>
+      <p class="hint">Add up normaal and dal, or meter readings 2.8.1 and 2.8.2.</p>
     </div>
 
-    <div id="panels-box">
-      <div class="field">
-        <span class="field-label">How many solar panels do you have?</span>
-        <div class="stepper">
-          <button type="button" id="panels-minus" aria-label="One panel fewer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
-          <output id="panels-count" aria-live="polite">10</output>
-          <button type="button" id="panels-plus" aria-label="One panel more"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f1b2d" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
-          <span class="hint" style="margin:0;">panels</span>
-        </div>
-        <p class="hint">We use about 380 kWh a year per panel and assume you use 30% of your solar power directly (Milieu Centraal). Older, smaller panels produce less.</p>
-      </div>
-      <div class="field">
-        <label for="use">Household electricity use per year</label>
-        <div class="input-row">
-          <input class="short" type="number" id="use" inputmode="numeric" min="0" step="100" value="3300">
-          <span>kWh</span>
-        </div>
-        <p class="hint">Roughly what you would use without solar panels. Not sure? Pick one:</p>
-        <div class="chips">
-          <button type="button" data-use="2000">Low · 2,000</button>
-          <button type="button" data-use="3300">Average · 3,300</button>
-          <button type="button" data-use="5000">High · 5,000</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="bill-box" hidden>
-      <div class="field">
-        <label for="bill-import">Taken from the grid per year</label>
-        <div class="input-row">
-          <input class="short" type="number" id="bill-import" inputmode="numeric" min="0" step="100" value="2200">
-          <span>kWh</span>
-        </div>
-        <p class="hint">On your yearly bill (jaarafrekening) as "levering": add up normaal and dal.</p>
-      </div>
-      <div class="field">
-        <label for="bill-export">Fed back to the grid per year</label>
-        <div class="input-row">
-          <input class="short" type="number" id="bill-export" inputmode="numeric" min="0" step="100" value="2700">
-          <span>kWh</span>
-        </div>
-        <p class="hint">On the same bill as "teruglevering", or meter readings 2.8.1 + 2.8.2. This gives the most accurate answer.</p>
-      </div>
-    </div>
-
+    <div data-needs-profile hidden>
     <div class="field">
       <label for="battery">Battery size to compare</label>
       <select id="battery">
@@ -91,6 +57,7 @@
         <option value="10" selected>10 kWh</option>
         <option value="15">15 kWh</option>
       </select>
+    </div>
     </div>
 
     <details class="advanced">
@@ -114,9 +81,10 @@
 
     <div class="big-result" aria-live="polite">
       <span class="label">You'll pay about</span>
-      <span class="big-number"><span id="extra">+€425</span><small> more a year</small></span>
-      <p id="explain">from 2027, because exported solar power no longer cancels out what you buy.</p>
+      <span class="big-number"><span id="extra">+€432</span><small> more a year</small></span>
+      <p id="explain">from 2027, because what you feed back is no longer netted against what you take from the grid.</p>
     </div>
+    <div data-needs-profile hidden>
       <div class="bars">
         <div class="bar-row">
           <div class="bar-head"><span>No battery</span><strong id="no-battery">+€425/yr</strong></div>
@@ -134,6 +102,7 @@
     </div>
 
     <p class="hint" style="margin-top: 0;">A battery supplies about <strong id="shifted">1,000</strong> kWh a year of stored solar power in the evening. In winter there is little surplus to store, which is why a bigger battery adds less than you might expect.</p>
+    </div>
 
     <div class="partner-box" data-partner="battery" hidden>
       <span class="partner-label">Partner</span>
@@ -150,25 +119,25 @@
 <section class="answer" id="answer">
   <p class="updated">Last updated 28 October 2026</p>
   <h2>Quick answer</h2>
-  <p>A typical Dutch home with 10 solar panels and 3,300 kWh of yearly use will pay <strong>about €425 more per year</strong> once saldering ends on 1 January 2027, if its supplier pays the legal minimum for exported power. If the supplier pays 10 cents per kWh, the increase is about €346.</p>
+  <p>A home that takes 2,200 kWh from the grid and feeds back 2,700 kWh a year will pay <strong>about €432 more per year</strong> once saldering ends on 1 January 2027, if its supplier pays the legal minimum for what it feeds back. If the supplier pays 10 cents per kWh, the increase is about €352.</p>
   <p>The reason: until the end of 2026, the electricity you feed back is netted against what you take from the grid, up to the amount you take. Each netted kWh is worth your full rate of about €0.26, including energy tax and VAT. From 2027 every kWh you feed back only earns the feed-in payment, which by law is at least half the supply price excluding tax: about €0.06 per kWh at today's average prices.</p>
 
   <h2>Extra cost from 2027 for common homes</h2>
   <div class="table-scroll">
   <table class="facts">
-    <thead><tr><th>Panels / yearly use</th><th>No battery</th><th>With 5 kWh</th><th>With 10 kWh</th></tr></thead>
+    <thead><tr><th>From the grid / fed back</th><th>Legal minimum feed-in</th><th>Feed-in 10 ct</th></tr></thead>
     <tbody>
-      <tr><td>5 panels / 2,000 kWh</td><td>+€261</td><td>+€189</td><td>+€189</td></tr>
-      <tr><td>10 panels / 3,300 kWh</td><td>+€425</td><td>+€281</td><td>+€281</td></tr>
-      <tr><td>15 panels / 4,500 kWh</td><td>+€548</td><td>+€332</td><td>+€332</td></tr>
-      <tr><td>20 panels / 6,000 kWh</td><td>+€731</td><td>+€443</td><td>+€443</td></tr>
+      <tr><td>3,000 / 1,500 kWh</td><td>+€295</td><td>+€240</td></tr>
+      <tr><td>2,200 / 2,700 kWh</td><td>+€432</td><td>+€352</td></tr>
+      <tr><td>1,500 / 3,500 kWh</td><td>+€295</td><td>+€240</td></tr>
+      <tr><td>3,500 / 5,000 kWh</td><td>+€688</td><td>+€560</td></tr>
     </tbody>
   </table>
   </div>
-  <p class="fine-print">Per year, at €0.26/kWh all-in, the legal minimum feed-in payment and no feed-in costs. Use the calculator above for your own numbers.</p>
+  <p class="fine-print">Per year, at €0.26/kWh all-in. Use the calculator above for your own numbers.</p>
 
   <h2>Does a home battery pay off after 2027?</h2>
-  <p>Usually not. A 10 kWh battery costs about <strong>€3,300 to €7,000 installed</strong> (Trustoo, October 2026) and saves a typical 10-panel home about <strong>€144 a year</strong>. Milieu Centraal also concludes that a home battery will most likely not pay for itself through savings on your electricity bill. A battery is worth more if your supplier charges high feed-in costs, if you use a lot of power in the evening, or if you let it trade on hourly prices with a dynamic contract.</p>
+  <p>Usually not. A 10 kWh battery costs about <strong>€3,300 to €7,000 installed</strong> (Trustoo, October 2026). Milieu Centraal also concludes that a home battery will most likely not pay for itself through savings on your electricity bill. A battery is worth more if your supplier charges high feed-in costs, if you use a lot of power in the evening, or if you let it trade on hourly prices with a dynamic contract.</p>
 
   <h2>Cheaper ways to limit the increase</h2>
   <ul>
@@ -188,9 +157,8 @@
 
   <h2>How this calculator works</h2>
   <p><strong>The saldering effect</strong> is the amount that is netted today, the smaller of what you take from the grid and what you feed back, times the difference between your all-in rate and the feed-in payment. Feed-in costs are left out of this comparison because suppliers charge them on everything you feed back, before and after 2027.</p>
-  <p><strong>If you count panels</strong>, we estimate 380 kWh per panel per year and assume you use 30% of it directly, both figures from Milieu Centraal. <strong>If you use your bill</strong>, we take your actual "levering" and "teruglevering".</p>
-  <p><strong>The battery</strong> follows Milieu Centraal: a home battery raises the share of solar power you use directly from about 30% to just over 50%. We assume a round-trip efficiency of 90%. Each kWh the battery supplies saves your full rate; each kWh it stores no longer earns the feed-in payment minus feed-in costs.</p>
-  <p>It does not include battery trading on dynamic prices, and real results depend on your roof direction, shading and usage pattern.</p>
+  <p>It only uses what your yearly bill shows: "levering" and "teruglevering", both measured at your meter. It makes no assumptions about how much solar power you produce or use directly behind the meter.</p>
+  <p>It does not include battery trading on dynamic prices.</p>
 
   <h2>Sources</h2>
   <ul class="sources">
@@ -198,8 +166,7 @@
     <li><a href="https://www.acm.nl/system/files/documents/besluit-vaststelling-modelcontracten.pdf" rel="noopener">ACM: Besluit vaststelling modelcontracten (12 December 2025)</a>: feed-in costs per kWh and publication on the supplier's Modelcontract page.</li>
     <li><a href="https://www.rijksfinancien.nl/sites/default/files/bestanden/belastingplan-2027/pakket-belastingplan-2027/Fiscale-sleuteltabel-2027-incl-correctie-tarieven-energiebelasting-zelfstandigenaftrek.pdf" rel="noopener">Rijksfinanciën: Fiscale sleuteltabel Belastingplan 2027</a>: energy tax on electricity in 2027.</li>
     <li><a href="https://data.overheid.nl/dataset/41213-gemiddelde-energietarieven-voor-consumenten" rel="noopener">CBS 85592NED: Gemiddelde energietarieven voor consumenten</a>: average variable supply price, September 2026.</li>
-    <li><a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/kosten-en-opbrengst-zonnepanelen/" rel="noopener">Milieu Centraal: Kosten en opbrengst zonnepanelen</a> and <a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/verbruik-zelf-meer-zonnestroom/" rel="noopener">Meer zonnestroom zelf verbruiken</a>: yield per panel and direct use.</li>
-    <li><a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/thuisbatterij-zonne-energie-opslaan/" rel="noopener">Milieu Centraal: Thuisbatterij</a>: effect of a battery on direct use, and payback.</li>
+    <li><a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/thuisbatterij-zonne-energie-opslaan/" rel="noopener">Milieu Centraal: Thuisbatterij</a>: battery payback.</li>
     <li><a href="https://trustoo.nl/kosten/thuisbatterij-kosten/" rel="noopener">Trustoo: Wat kost een thuisbatterij?</a>: installed battery prices, October 2026.</li>
     <li><a href="https://zonnesaldo.nl/terugleverkosten-2027" rel="noopener">Zonnesaldo: Terugleverkosten 2027 per leverancier</a>: overview of published 2027 supplier rates.</li>
   </ul>
