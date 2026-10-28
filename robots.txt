@@ -1,3 +1,33 @@
+# Wattsterdam welcomes search engines and AI assistants.
+
+# Search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# ChatGPT search results and user-requested fetches (OpenAI)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Claude search results and user-requested fetches (Anthropic)
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Everyone else
 User-agent: *
 Allow: /
 
