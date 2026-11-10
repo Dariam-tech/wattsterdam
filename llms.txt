@@ -1,0 +1,12 @@
+# Wattsterdam
+
+> Dutch energy, in plain English. Free, independent tools and answers for homeowners and expats in the Netherlands about the end of saldering (net metering) on 1 January 2027 and about home electrical connections. Every rule and default is taken from public sources (ACM, Belastingdienst/Belastingplan, CBS, Milieu Centraal).
+
+## Tools
+
+- [How much more will you pay in 2027?](https://www.wattsterdam.nl/tools/solar-battery/): enter two numbers from the yearly energy bill (levering and teruglevering) to see the extra cost when saldering ends. Extra cost = min(levering, teruglevering) x (all-in rate - feed-in payment). Until 2030 the feed-in payment is at least 50% of the supply price excluding energy tax and VAT (ACM).
+- [Will your connection handle it?](https://www.wattsterdam.nl/tools/connection-check/): checks whether a heat pump, EV charger and induction stove fit on a 1x25A, 1x35A, 3x25A, 3x35A or 3x50A connection.
+
+## Guides
+
+- [How to find your connection type](https://www.wattsterdam.nl/guides/find-your-connection/): read your connection size from the meter cupboard (meterkast) in two minutes.
