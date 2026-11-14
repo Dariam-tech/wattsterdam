@@ -11,4 +11,4 @@
 
 - [How to find your connection type](https://www.wattsterdam.nl/guides/find-your-connection/): read your connection size from the meter cupboard (meterkast) in two minutes.
 - [How to read your Dutch energy bill](https://www.wattsterdam.nl/guides/read-your-energy-bill/): every line of a Dutch energy bill in English (levering, teruglevering, netbeheerkosten, energiebelasting, the €628.69 tax credit in 2027), with a worked 2027 example for a 2,500 kWh electricity-only apartment.
-- [Terugleverkosten explained](https://www.wattsterdam.nl/guides/terugleverkosten/): what Dutch suppliers charge for solar power fed back, the three charging methods (per kWh, tiers, higher fixed fee), and what changes on 1 January 2027.
+- [Terugleverkosten explained](https://www.wattsterdam.nl/guides/terugleverkosten/): what Dutch suppliers charge for solar power fed back, the three charging methods (per kWh, tiers, higher fixed fee), and 2027 rules and offers: most 1-year fixed contracts charge about €0.04-€0.07 per kWh, net payment after costs about €0.0025-€0.042 per kWh.
