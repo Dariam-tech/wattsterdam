@@ -29,7 +29,7 @@
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <meta property="article:modified_time" content="2026-10-28">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much more will I pay when saldering ends in 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Only the part that is netted today is affected: the smaller of what you take from the grid and what you feed back. A home that takes 2,200 kWh and feeds back 2,700 kWh pays about €432 more per year from 1 January 2027 at the legal minimum feed-in payment, or about €352 at 10 cents per kWh."}}, {"@type": "Question", "name": "What is the minimum feed-in payment from 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Until 2030 suppliers must pay at least 50% of the price you pay for electricity without energy tax and VAT (ACM). At an average all-in rate of €0.26 per kWh that is about €0.06 per kWh."}}, {"@type": "Question", "name": "Does a home battery pay off after saldering ends?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. A 10 kWh battery costs about €3,300 to €7,000 installed, and Milieu Centraal concludes a home battery will most likely not pay for itself through savings on the electricity bill."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much more will I pay when saldering ends in 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Only the part that is netted today is affected: the smaller of what you take from the grid and what you feed back. A home that takes 2,200 kWh and feeds back 2,700 kWh pays about €284 more per year from 1 January 2027 at the legal minimum feed-in payment, or about €226 at 9 cents per kWh. That includes lower feed-in costs: about €0.055 per kWh in 2027 instead of about €0.11 in 2026."}}, {"@type": "Question", "name": "What is the minimum feed-in payment from 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Until 2030 suppliers must pay at least 50% of the price you pay for electricity without energy tax and VAT (ACM). At an average all-in rate of €0.26 per kWh that is about €0.06 per kWh."}}, {"@type": "Question", "name": "Does a home battery pay off after saldering ends?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. A 10 kWh battery costs about €3,300 to €7,000 installed, and Milieu Centraal concludes a home battery will most likely not pay for itself through savings on the electricity bill."}}]}</script>
 </head>
 <body>
 
@@ -90,16 +90,21 @@
         <input type="number" id="feedin" inputmode="decimal" min="0" step="0.005">
         <p class="hint">Filled in with the legal minimum for your rate: 50% of the supply price without energy tax and VAT (ACM), now <strong id="feedin-min">€0.061</strong>. Your supplier may pay more; check its "Modelcontract" page.</p>
       </div>
+      <div class="field">
+        <label for="tlk-2026">Feed-in costs (terugleverkosten) today, in 2026, €/kWh</label>
+        <input type="number" id="tlk-2026" inputmode="decimal" min="0" step="0.005" value="0.11">
+        <p class="hint">Default: €0.11, the low end of what 2026 contracts charge per kWh fed back (€0.11 to €0.18). Set it to 0 if your contract has no feed-in costs.</p>
+      </div>
       <div class="field" style="margin-bottom: 0;">
-        <label for="tlk">Feed-in costs (terugleverkosten), €/kWh</label>
-        <input type="number" id="tlk" inputmode="decimal" min="0" step="0.005" value="0">
-        <p class="hint">Per kWh you feed back, as listed on your supplier's "Modelcontract" page. They don't change the saldering effect above, but they lower what your export earns and make a battery worth more.</p>
+        <label for="tlk">Feed-in costs (terugleverkosten) in 2027, €/kWh</label>
+        <input type="number" id="tlk" inputmode="decimal" min="0" step="0.005" value="0.055">
+        <p class="hint">Default: €0.055, typical for 2027 fixed and variable contracts (mostly €0.045 to €0.07). Most dynamic contracts charge none. Check your supplier's "Modelcontract" page.</p>
       </div>
     </details>
 
     <div class="big-result" aria-live="polite">
       <span class="label">You'll pay about</span>
-      <span class="big-number"><span id="extra">+€432</span><small> more a year</small></span>
+      <span class="big-number"><span id="extra">+€284</span><small> more a year</small></span>
       <p id="explain">from 2027, because what you feed back is no longer netted against what you take from the grid.</p>
     </div>
     <div data-needs-profile hidden>
@@ -135,24 +140,25 @@
 
 <div class="wrap">
 <section class="answer" id="answer">
-  <p class="updated">Last updated 28 October 2026</p>
+  <p class="updated">Last updated 14 November 2026</p>
   <h2>Quick answer</h2>
-  <p>A home that takes 2,200 kWh from the grid and feeds back 2,700 kWh a year will pay <strong>about €432 more per year</strong> once saldering ends on 1 January 2027, if its supplier pays the legal minimum for what it feeds back. If the supplier pays 10 cents per kWh, the increase is about €352.</p>
-  <p>The reason: until the end of 2026, the electricity you feed back is netted against what you take from the grid, up to the amount you take. Each netted kWh is worth your full rate of about €0.26, including energy tax and VAT. From 2027 every kWh you feed back only earns the feed-in payment, which by law is at least half the supply price excluding tax: about €0.06 per kWh at today's average prices.</p>
+  <p>A home that takes 2,200 kWh from the grid and feeds back 2,700 kWh a year will pay <strong>about €284 more per year</strong> once saldering ends on 1 January 2027, if its supplier pays the legal minimum for what it feeds back. If the supplier pays 9 cents per kWh, a typical 2027 offer, the increase is about €226.</p>
+  <p>The reason: until the end of 2026, the electricity you feed back is netted against what you take from the grid, up to the amount you take. Each netted kWh is worth your full rate of about €0.26, including energy tax and VAT. From 2027 every kWh you feed back only earns the feed-in payment, which by law is at least half the supply price excluding tax: about €0.06 per kWh at today's average prices. That costs this home about €432 a year.</p>
+  <p>Part of that is offset because <strong>feed-in costs drop in 2027</strong>: from roughly €0.11 to €0.18 per kWh fed back in 2026 to about €0.045 to €0.07 for most 2027 contracts. At €0.11 today and €0.055 in 2027, this home saves about €149 on feed-in costs.</p>
 
   <h2>Extra cost from 2027 for common homes</h2>
   <div class="table-scroll">
   <table class="facts">
-    <thead><tr><th>From the grid / fed back</th><th>Legal minimum feed-in</th><th>Feed-in 10 ct</th></tr></thead>
+    <thead><tr><th>From the grid / fed back</th><th>Legal minimum feed-in</th><th>Feed-in 9 ct</th></tr></thead>
     <tbody>
-      <tr><td>3,000 / 1,500 kWh</td><td>+€295</td><td>+€240</td></tr>
-      <tr><td>2,200 / 2,700 kWh</td><td>+€432</td><td>+€352</td></tr>
-      <tr><td>1,500 / 3,500 kWh</td><td>+€295</td><td>+€240</td></tr>
-      <tr><td>3,500 / 5,000 kWh</td><td>+€688</td><td>+€560</td></tr>
+      <tr><td>3,000 / 1,500 kWh</td><td>+€212</td><td>+€173</td></tr>
+      <tr><td>2,200 / 2,700 kWh</td><td>+€284</td><td>+€226</td></tr>
+      <tr><td>1,500 / 3,500 kWh</td><td>+€102</td><td>+€63</td></tr>
+      <tr><td>3,500 / 5,000 kWh</td><td>+€413</td><td>+€320</td></tr>
     </tbody>
   </table>
   </div>
-  <p class="fine-print">Per year, at €0.26/kWh all-in. Use the calculator above for your own numbers.</p>
+  <p class="fine-print">Per year, at €0.26/kWh all-in, with feed-in costs of €0.11 per kWh in 2026 and €0.055 in 2027. Use the calculator above for your own numbers.</p>
 
   <h2>Does a home battery pay off after 2027?</h2>
   <p>Usually not. A 10 kWh battery costs about <strong>€3,300 to €7,000 installed</strong> (Trustoo, October 2026). Milieu Centraal also concludes that a home battery will most likely not pay for itself through savings on your electricity bill. A battery is worth more if your supplier charges high feed-in costs, if you use a lot of power in the evening, or if you let it trade on hourly prices with a dynamic contract.</p>
@@ -160,7 +166,7 @@
   <h2>Cheaper ways to limit the increase</h2>
   <ul>
     <li><strong>Use your own solar power during the day.</strong> Run the dishwasher, washing machine or EV charger when the sun is out. Every kWh you use directly saves your full rate instead of earning the feed-in payment.</li>
-    <li><strong>Compare suppliers on the net feed-in rate.</strong> Most large suppliers have published their 2027 rates for new fixed contracts: what you get per kWh minus the feed-in costs ranges from about 0.25 to 5 cents (Zonnesaldo overview, October 2026). Every supplier must list both on its "Modelcontract" page.</li>
+    <li><strong>Compare suppliers on the net feed-in rate.</strong> Most large suppliers have published their 2027 rates for new fixed contracts: what you get per kWh minus the feed-in costs ranges from about 0.25 to 4.2 cents for 1-year fixed contracts (Zonnesaldo overview, November 2026). Every supplier must list both on its "Modelcontract" page.</li>
     <li><strong>Consider a dynamic contract</strong> if you can shift usage to cheap hours. Feed-in then follows the hourly market price, and several dynamic suppliers charge no feed-in costs.</li>
   </ul>
 
@@ -169,14 +175,18 @@
     <li>Saldering (net metering) ends on <strong>1 January 2027</strong>. Your supplier splits your usage and feed-in into the period up to 31 December 2026 and the period after.</li>
     <li>Until 2030, suppliers must pay at least <strong>50% of the price you pay for electricity without energy tax and VAT</strong> for what you feed back.</li>
     <li>You pay energy tax and VAT on <strong>all</strong> electricity you take from the grid. Solar power you use directly is not taxed.</li>
-    <li>Suppliers may charge <strong>feed-in costs (terugleverkosten)</strong>. In the model contract they are a fixed amount per kWh, and they can be higher than the feed-in payment.</li>
+    <li>Suppliers may charge <strong>feed-in costs (terugleverkosten)</strong>, from 2027 only to customers with solar panels and shown per kWh fed back on the invoice. They can be higher than the feed-in payment. See <a href="/guides/terugleverkosten/">terugleverkosten explained</a>.</li>
     <li>The energy tax on electricity is set at <strong>8.80 cents per kWh excluding VAT for 2027</strong> (about 10.6 cents including VAT) in the Belastingplan 2027, down from 9.16 cents in 2026.</li>
   </ul>
 
   <h2>How this calculator works</h2>
-  <p><strong>The saldering effect</strong> is the amount that is netted today, the smaller of what you take from the grid and what you feed back, times the difference between your all-in rate and the feed-in payment. Feed-in costs are left out of this comparison because suppliers charge them on everything you feed back, before and after 2027.</p>
+  <p><strong>The saldering effect</strong> is the amount that is netted today, the smaller of what you take from the grid and what you feed back, times the difference between your all-in rate and the feed-in payment.</p>
+  <p><strong>The feed-in cost change</strong> is everything you feed back times the difference between 2027 and 2026 feed-in costs per kWh. Suppliers charge them on everything you feed back in both years, but most charge much less in 2027, so this part is usually a saving. If your contract has no feed-in costs today, set the 2026 field to 0.</p>
+  <p><strong>Extra cost</strong> = min(levering, teruglevering) × (rate − feed-in payment) + teruglevering × (feed-in costs 2027 − feed-in costs 2026).</p>
   <p>It only uses what your yearly bill shows: "levering" and "teruglevering", both measured at your meter. It makes no assumptions about how much solar power you produce or use directly behind the meter.</p>
   <p>It does not include battery trading on dynamic prices.</p>
+
+  <p>Not sure where to find these numbers? See <a href="/guides/read-your-energy-bill/">how to read your Dutch energy bill</a>. For what suppliers charge for the power you feed back, see <a href="/guides/terugleverkosten/">terugleverkosten explained</a>.</p>
 
   <h2>Sources</h2>
   <ul class="sources">
@@ -186,7 +196,9 @@
     <li><a href="https://data.overheid.nl/dataset/41213-gemiddelde-energietarieven-voor-consumenten" rel="noopener">CBS 85592NED: Gemiddelde energietarieven voor consumenten</a>: average variable supply price, September 2026.</li>
     <li><a href="https://www.milieucentraal.nl/energie-besparen/zonnepanelen/thuisbatterij-zonne-energie-opslaan/" rel="noopener">Milieu Centraal: Thuisbatterij</a>: battery payback.</li>
     <li><a href="https://trustoo.nl/kosten/thuisbatterij-kosten/" rel="noopener">Trustoo: Wat kost een thuisbatterij?</a>: installed battery prices, October 2026.</li>
-    <li><a href="https://zonnesaldo.nl/terugleverkosten-2027" rel="noopener">Zonnesaldo: Terugleverkosten 2027 per leverancier</a>: overview of published 2027 supplier rates.</li>
+    <li><a href="https://zonnesaldo.nl/terugleverkosten-2027" rel="noopener">Zonnesaldo: Terugleverkosten 2027 per leverancier</a>: published 2027 payments and feed-in costs for 1-year fixed contracts, checked September to 13 November 2026.</li>
+    <li><a href="https://www.energievergelijk.nl/nieuws/bij-deze-energieleveranciers-betaal-je-geen-terugleverkosten-in-2027" rel="noopener">Energievergelijk.nl: Geen terugleverkosten in 2027</a>: 2027 feed-in costs of €0.045 to €0.065 per kWh for fixed and variable contracts.</li>
+    <li><a href="https://www.energievergelijk.nl/nieuws/de-hoogste-en-laagste-terugleverkosten-van-2026-deze-leveranciers-maken-het-verschil" rel="noopener">Energievergelijk.nl: Hoogste en laagste terugleverkosten 2026</a>: 2026 feed-in costs per kWh by contract.</li>
   </ul>
 </section>
 </div>

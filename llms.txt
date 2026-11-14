@@ -4,9 +4,11 @@
 
 ## Tools
 
-- [How much more will you pay in 2027?](https://www.wattsterdam.nl/tools/solar-battery/): enter two numbers from the yearly energy bill (levering and teruglevering) to see the extra cost when saldering ends. Extra cost = min(levering, teruglevering) x (all-in rate - feed-in payment). Until 2030 the feed-in payment is at least 50% of the supply price excluding energy tax and VAT (ACM).
+- [How much more will you pay in 2027?](https://www.wattsterdam.nl/tools/solar-battery/): enter two numbers from the yearly energy bill (levering and teruglevering) to see the extra cost when saldering ends. Extra cost = min(levering, teruglevering) x (all-in rate - feed-in payment) + teruglevering x (feed-in costs 2027 - feed-in costs 2026). Until 2030 the feed-in payment is at least 50% of the supply price excluding energy tax and VAT (ACM). Defaults: feed-in costs EUR 0.11/kWh in 2026, EUR 0.055/kWh in 2027. Example: 2,200 kWh taken, 2,700 kWh fed back: about EUR 284 more a year.
 - [Will your connection handle it?](https://www.wattsterdam.nl/tools/connection-check/): checks whether a heat pump, EV charger and induction stove fit on a 1x25A, 1x35A, 3x25A, 3x35A or 3x50A connection.
 
 ## Guides
 
 - [How to find your connection type](https://www.wattsterdam.nl/guides/find-your-connection/): read your connection size from the meter cupboard (meterkast) in two minutes.
+- [How to read your Dutch energy bill](https://www.wattsterdam.nl/guides/read-your-energy-bill/): every line of a Dutch energy bill in English (levering, teruglevering, netbeheerkosten, energiebelasting, the €628.69 tax credit in 2027), with a worked 2027 example for a 2,500 kWh electricity-only apartment.
+- [Terugleverkosten explained](https://www.wattsterdam.nl/guides/terugleverkosten/): what Dutch suppliers charge for solar power fed back, the three charging methods (per kWh, tiers, higher fixed fee), and 2027 rules and offers: most 1-year fixed contracts charge about €0.04-€0.07 per kWh, net payment after costs about €0.0025-€0.042 per kWh.
