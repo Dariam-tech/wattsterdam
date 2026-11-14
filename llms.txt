@@ -4,7 +4,7 @@
 
 ## Tools
 
-- [How much more will you pay in 2027?](https://www.wattsterdam.nl/tools/solar-battery/): enter two numbers from the yearly energy bill (levering and teruglevering) to see the extra cost when saldering ends. Extra cost = min(levering, teruglevering) x (all-in rate - feed-in payment). Until 2030 the feed-in payment is at least 50% of the supply price excluding energy tax and VAT (ACM).
+- [How much more will you pay in 2027?](https://www.wattsterdam.nl/tools/solar-battery/): enter two numbers from the yearly energy bill (levering and teruglevering) to see the extra cost when saldering ends. Extra cost = min(levering, teruglevering) x (all-in rate - feed-in payment) + teruglevering x (feed-in costs 2027 - feed-in costs 2026). Until 2030 the feed-in payment is at least 50% of the supply price excluding energy tax and VAT (ACM). Defaults: feed-in costs EUR 0.11/kWh in 2026, EUR 0.055/kWh in 2027. Example: 2,200 kWh taken, 2,700 kWh fed back: about EUR 284 more a year.
 - [Will your connection handle it?](https://www.wattsterdam.nl/tools/connection-check/): checks whether a heat pump, EV charger and induction stove fit on a 1x25A, 1x35A, 3x25A, 3x35A or 3x50A connection.
 
 ## Guides
