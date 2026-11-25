@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Can a home battery make money trading on hourly prices? Not yet in the Netherlands — Wattsterdam</title>
-<meta name="description" content="Buying cheap power at night and using or selling it at expensive hours with a home battery: why day-ahead trading does not pay back in the Netherlands in 2026–2027, with worked numbers, and what could change it.">
+<meta name="description" content="A home battery can store your own solar power (zero on the meter, NOM) or trade: buy cheap power and use or sell it when power is expensive. In plain English with pictures: why trading does not pay yet in the Netherlands, and the energy tax trap.">
 <link rel="canonical" href="https://www.wattsterdam.nl/guides/home-battery-trading/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Wattsterdam">
@@ -29,8 +29,25 @@
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <meta property="article:modified_time" content="2026-11-25">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Can a home battery make money on hourly prices? Not yet in the Netherlands", "datePublished": "2026-11-25", "dateModified": "2026-11-25", "inLanguage": "en", "author": {"@type": "Organization", "name": "Wattsterdam", "url": "https://www.wattsterdam.nl/"}, "publisher": {"@id": "https://www.wattsterdam.nl/#org"}, "mainEntityOfPage": "https://www.wattsterdam.nl/guides/home-battery-trading/"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can a home battery make money trading on day-ahead prices in the Netherlands?", "acceptedAnswer": {"@type": "Answer", "text": "Not on its own, yet. The gap between cheap and expensive hours leaves about €0.08 per kWh on a normal day and about €0.02 in winter after losses, while wear on a €5,000, 10 kWh battery costs about €0.09 per kWh it delivers. A typical home earns roughly €90 to €200 a year this way, a payback of 25 years or more."}}, {"@type": "Question", "name": "Can I sell stored grid power back for a profit after 2027?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. From 2027 you pay energy tax (about €0.11 per kWh including VAT) and VAT on power you charge from the grid, and you get no tax back when you send it back. Charging at €0.06 and selling at €0.15 loses about €0.04 per kWh before wear."}}, {"@type": "Question", "name": "What could make battery trading pay in the future?", "acceptedAnswer": {"@type": "Answer", "text": "Time-of-use grid tariffs for households, planned from 2029; a fix for double energy tax on stored power, which the government is studying; cheaper batteries; and bigger price gaps between sunny middays and winter evenings."}}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Can a home battery make you money by trading? Not yet", "datePublished": "2026-11-25", "dateModified": "2026-11-25", "inLanguage": "en", "author": {"@type": "Organization", "name": "Wattsterdam", "url": "https://www.wattsterdam.nl/"}, "publisher": {"@id": "https://www.wattsterdam.nl/#org"}, "mainEntityOfPage": "https://www.wattsterdam.nl/guides/home-battery-trading/"}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is NOM (nul op de meter) for a home battery?", "acceptedAnswer": {"@type": "Answer", "text": "NOM means 'zero on the meter'. The battery stores the solar power your home doesn't need during the day and gives it back in the evening, so almost nothing goes in or out of your meter. From 2027 that is the main way a home battery saves money."}}, {"@type": "Question", "name": "Can a home battery make money trading on hourly prices in the Netherlands?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. The difference between cheap and expensive hours is small most of the year, the battery wears out a little with every charge, and from 2027 you pay energy tax on power you charge but get nothing back when you sell it. A typical home earns about €90 to €200 a year from trading, while a battery costs about €5,000."}}, {"@type": "Question", "name": "What is double energy tax on a home battery?", "acceptedAnswer": {"@type": "Answer", "text": "You pay energy tax (about 11 cents a unit in 2027) when you charge your battery from the grid. If you sell that power back, you don't get the tax back, and the household that uses it pays energy tax on it again. The same unit is taxed twice. The government is studying a fix."}}]}]}</script>
+<style>
+.pic{margin:18px 0 8px;background:#f6f8fb;border:1px solid #e3e8ef;border-radius:14px;padding:14px}
+.pic svg{display:block;width:100%;height:auto}
+.pic figcaption{font-size:14px;color:#5b6b7d;margin-top:8px;line-height:1.5}
+.big-answer{background:#e8f0fb;border-radius:14px;padding:16px 18px;font-size:18px;line-height:1.55}
+.verdict{display:inline-block;font-weight:700;border-radius:999px;padding:3px 10px;font-size:14px}
+.yes{background:#dff3e4;color:#17603a}.no{background:#fde7e4;color:#9a2a1c}
+</style>
 </head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a href="/" class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1f5fbf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Wattsterdam</a>
+    <nav><a href="/">All tools</a></nav>
+  </div>
+</header>
+
 <body>
 
 <header class="site-nav">
@@ -42,74 +59,99 @@
 
 <div class="hero">
   <span class="eyebrow">Guide · Home batteries</span>
-  <h1>Can a home battery make money trading on hourly prices? Not yet</h1>
-  <p class="lede">The idea sounds great: charge your battery when power is cheap, use it or sell it when power is expensive. In the Netherlands, in 2026 and 2027, the numbers don't add up on their own. Here's why, with real figures.</p>
+  <h1>Can a home battery make you money by trading? Not yet</h1>
+  <p class="lede">Battery sellers often promise extra income from "trading". Here's what that means, in plain words and pictures, and why in the Netherlands it doesn't pay off yet.</p>
 </div>
 
 <div class="wrap" style="max-width: 760px; padding-bottom: 60px;">
 <section class="answer" style="margin-top: 0;">
   <p class="updated">Last updated 25 November 2026</p>
 
-  <h2>Quick answer</h2>
-  <p><strong>Trading alone doesn't pay back a home battery yet.</strong> With a contract where the price changes every hour (a dynamic contract), a battery can charge in the cheapest hours and cover your use in the most expensive ones. After charging losses, that leaves about <strong>€0.08 per unit (kWh) on a normal day, and about €0.02 in winter</strong>.</p>
-  <p>Wear on the battery costs about as much. A €5,000 battery of 10 kWh that lasts 6,000 cycles costs about <strong>€0.09 per unit it delivers</strong>. A typical home earns roughly <strong>€90 to €200 a year</strong> from trading. That's a payback of 25 years or more, longer than the battery lasts.</p>
-  <p>Selling stored grid power back is worse. From 2027 you pay energy tax when you charge from the grid and get none of it back when you sell.</p>
+  <p class="big-answer"><strong>Short answer:</strong> a home battery is worth having mainly to <strong>store your own solar power</strong>. Using it to <strong>trade</strong> earns a typical home only about <strong>€90 to €200 a year</strong>. With a battery costing around €5,000, that takes 25 years or more to earn back, longer than the battery lasts.</p>
 
-  <h2>Two ways a battery "trades"</h2>
+  <h2>Two ways to use a home battery</h2>
+
+  <h3>1. Store your own solar power (NOM)</h3>
+  <figure class="pic"><svg viewBox="0 0 360 210" role="img" aria-label="Zero on the meter: daytime solar power goes into the battery, in the evening the battery powers the house, the meter to the grid stays near zero"><defs><marker id="ahf2b01e" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 10 5 0 10z" fill="#f2b01e"/></marker><marker id="ah3bb273" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 10 5 0 10z" fill="#3bb273"/></marker></defs>
+<text x="90" y="22" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="700" fill="#0f1b2d" text-anchor="middle">Daytime</text><text x="270" y="22" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="700" fill="#0f1b2d" text-anchor="middle">Evening</text>
+<line x1="40" y1="62" x2="62.0" y2="62.0" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="62" x2="55.562541921678395" y2="77.55015398431806" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="62" x2="40.01751918763613" y2="83.99999302450036" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="62" x2="24.462243813959887" y2="77.5749199902655" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="62" x2="18.00002790199413" y2="62.03503836416271" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="62" x2="24.41271181777" y2="46.47465146529351" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="62" x2="39.947442481529805" y2="40.000062779470205" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><line x1="40" y1="62" x2="55.5129310381853" y2="46.40035351027123" stroke="#f2b01e" stroke-width="3" stroke-linecap="round"/><circle cx="40" cy="62" r="13" fill="#f9c83e"/><line x1="62" y1="74" x2="100" y2="100" stroke="#f2b01e" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ahf2b01e)"/><text x="52" y="122" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="500" fill="#5b6b7d" text-anchor="middle">spare solar</text>
+<g transform="translate(108,88)"><rect x="0" y="6" width="34" height="50" rx="6" fill="#fff" stroke="#0f1b2d" stroke-width="2.5"/><rect x="11" y="0" width="12" height="7" rx="2" fill="#0f1b2d"/><rect x="4" y="16" width="26" height="37" rx="3" fill="#3bb273"/></g>
+<line x1="150" y1="118" x2="215" y2="118" stroke="#3bb273" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah3bb273)"/><text x="182" y="108" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="500" fill="#5b6b7d" text-anchor="middle">stored power</text>
+<g transform="translate(225,84)"><path d="M0 34 32 8l32 26v40H0z" fill="#fff" stroke="#0f1b2d" stroke-width="2.5" stroke-linejoin="round"/><path d="M-4 36 32 6l36 30" fill="none" stroke="#0f1b2d" stroke-width="3" stroke-linecap="round"/><rect x="24" y="48" width="16" height="26" fill="#cfd9e6" stroke="#0f1b2d" stroke-width="2"/></g>
+<g transform="translate(305,104)"><rect x="0" y="0" width="44" height="34" rx="6" fill="#fff" stroke="#0f1b2d" stroke-width="2"/><text x="22" y="23" font-family="Inter,system-ui,sans-serif" font-size="16" font-weight="800" fill="#1f5fbf" text-anchor="middle">0</text></g>
+<text x="327" y="152" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="500" fill="#5b6b7d" text-anchor="middle">meter</text>
+<text x="180" y="196" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600" fill="#1f5fbf" text-anchor="middle">Almost nothing goes in or out of your meter</text>
+</svg><figcaption>NOM stands for <em>nul op de meter</em>, Dutch for "zero on the meter".</figcaption></figure>
+  <p>In the daytime your solar panels often make more power than your home uses. The battery soaks up that spare power. In the evening, when the sun is gone, the battery powers your home. So you hardly take anything from the grid, and hardly send anything back. That's why it's called "zero on the meter". Most batteries call this setting <strong>NOM</strong> or <strong>self-consumption</strong>.</p>
+  <p><span class="verdict yes">Worth it from 2027</span> From 2027, solar power you send to the grid earns you only a few cents, but power you'd otherwise buy costs about 26 cents. Every unit the battery saves for you is worth about 26 cents.</p>
+
+  <h3>2. Trading: buy cheap, use or sell expensive</h3>
+  <figure class="pic"><svg viewBox="0 0 360 230" role="img" aria-label="Trading: the battery charges from the grid when power is cheap and gives power back when it is expensive"><defs><marker id="ah3bb273" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 10 5 0 10z" fill="#3bb273"/></marker><marker id="ahd9452b" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 10 5 0 10z" fill="#d9452b"/></marker></defs>
+<rect x="8" y="8" width="164" height="190" rx="12" fill="#eaf6ee"/><rect x="188" y="8" width="164" height="190" rx="12" fill="#fdeeea"/>
+<text x="90" y="32" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="700" fill="#17603a" text-anchor="middle">Cheap hour</text><text x="90" y="50" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" fill="#5b6b7d" text-anchor="middle">night or sunny afternoon</text>
+<text x="270" y="32" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="700" fill="#9a2a1c" text-anchor="middle">Expensive hour</text><text x="270" y="50" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" fill="#5b6b7d" text-anchor="middle">winter evening</text>
+<g transform="translate(22,90)" stroke="#5b6b7d" stroke-width="2.5" fill="none" stroke-linejoin="round"><path d="M10 74 22 0l12 74M14 50h16M17 30h10M6 14h32"/></g><line x1="70" y1="128" x2="104" y2="128" stroke="#3bb273" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah3bb273)"/><g transform="translate(110,98)"><rect x="0" y="6" width="34" height="50" rx="6" fill="#fff" stroke="#0f1b2d" stroke-width="2.5"/><rect x="11" y="0" width="12" height="7" rx="2" fill="#0f1b2d"/><rect x="4" y="14" width="26" height="39" rx="3" fill="#3bb273"/></g>
+<g transform="translate(40,66)"><rect width="60" height="24" rx="12" fill="#3bb273"/><text x="30" y="17" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">6¢</text></g>
+<g transform="translate(198,98)"><rect x="0" y="6" width="34" height="50" rx="6" fill="#fff" stroke="#0f1b2d" stroke-width="2.5"/><rect x="11" y="0" width="12" height="7" rx="2" fill="#0f1b2d"/><rect x="4" y="38" width="26" height="15" rx="3" fill="#3bb273"/></g><line x1="238" y1="128" x2="270" y2="128" stroke="#d9452b" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ahd9452b)"/><g transform="translate(276,92)"><path d="M0 34 32 8l32 26v40H0z" fill="#fff" stroke="#0f1b2d" stroke-width="2.5" stroke-linejoin="round"/><path d="M-4 36 32 6l36 30" fill="none" stroke="#0f1b2d" stroke-width="3" stroke-linecap="round"/><rect x="24" y="48" width="16" height="26" fill="#cfd9e6" stroke="#0f1b2d" stroke-width="2"/></g>
+<g transform="translate(250,66)"><rect width="60" height="24" rx="12" fill="#d9452b"/><text x="30" y="17" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">30¢</text></g>
+<text x="180" y="220" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600" fill="#1f5fbf" text-anchor="middle">Buy low, use or sell high. The gap is your profit.</text>
+</svg><figcaption>Trading needs a contract where the price changes every hour (a "dynamic contract"). Prices on the picture are examples.</figcaption></figure>
+  <p>With a dynamic contract, power is cheap at some hours and expensive at others. A trading battery charges from the grid in the cheap hours. In the expensive hours it either powers your home, or sells the power back to the grid. The battery's app usually does this for you automatically.</p>
+  <p><span class="verdict no">Doesn't pay yet</span> Sounds clever, but three things eat the profit.</p>
+
+  <h2>Why trading doesn't pay yet</h2>
+  <ol>
+    <li><strong>The price gap is small most of the year.</strong> After the power lost in charging, the difference between cheap and expensive hours is about 8 cents a unit on a normal day, and only about 2 cents in winter, exactly when you use the most power.</li>
+    <li><strong>The battery wears out a little every time.</strong> Like a phone battery, it can only be charged so many times. For a €5,000 battery, each unit it gives back "uses up" about 9 cents of the battery. That's about as much as you earn.</li>
+    <li><strong>The tax trap when you sell back.</strong> See the picture below.</li>
+  </ol>
+
+  <h3>The tax trap ("double energy tax")</h3>
+  <figure class="pic"><svg viewBox="0 0 360 250" role="img" aria-label="The tax trap: you pay about 18 cents to charge one unit, you get about 13 cents when you sell it back, so you lose about 5 cents"><defs><marker id="ah0f1b2d" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 10 5 0 10z" fill="#0f1b2d"/></marker></defs>
+<text x="60" y="24" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" fill="#0f1b2d" text-anchor="middle">1. You charge</text><text x="180" y="24" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" fill="#0f1b2d" text-anchor="middle">2. Battery</text><text x="300" y="24" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" fill="#0f1b2d" text-anchor="middle">3. You sell back</text>
+<g transform="translate(14,40)"><rect width="92" height="30" rx="8" fill="#e8f0fb"/><text x="46" y="20" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600" fill="#0f1b2d" text-anchor="middle">power 7¢</text></g>
+<g transform="translate(14,76)"><rect width="92" height="30" rx="8" fill="#fde7e4"/><text x="46" y="20" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="700" fill="#9a2a1c" text-anchor="middle">tax 11¢</text></g>
+<text x="60" y="132" font-family="Inter,system-ui,sans-serif" font-size="14" font-weight="800" fill="#0f1b2d" text-anchor="middle">you pay 18¢</text>
+<line x1="112" y1="80" x2="150" y2="80" stroke="#0f1b2d" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah0f1b2d)"/><g transform="translate(163,50)"><rect x="0" y="6" width="34" height="50" rx="6" fill="#fff" stroke="#0f1b2d" stroke-width="2.5"/><rect x="11" y="0" width="12" height="7" rx="2" fill="#0f1b2d"/><rect x="4" y="18" width="26" height="35" rx="3" fill="#3bb273"/></g><line x1="208" y1="80" x2="246" y2="80" stroke="#0f1b2d" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah0f1b2d)"/>
+<text x="180" y="132" font-family="Inter,system-ui,sans-serif" font-size="11" font-weight="500" fill="#5b6b7d" text-anchor="middle">a little is lost</text>
+<g transform="translate(254,40)"><rect width="92" height="30" rx="8" fill="#e8f0fb"/><text x="46" y="20" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600" fill="#0f1b2d" text-anchor="middle">you get 13¢</text></g>
+<g transform="translate(254,76)"><rect width="92" height="30" rx="8" fill="#f1f3f6" stroke="#c4ccd6" stroke-dasharray="4 3"/><text x="46" y="20" font-family="Inter,system-ui,sans-serif" font-size="13" font-weight="600" fill="#5b6b7d" text-anchor="middle">tax back: 0¢</text></g>
+<g transform="translate(60,160)"><rect width="240" height="40" rx="12" fill="#d9452b"/><text x="120" y="26" font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="800" fill="#fff" text-anchor="middle">You lose about 5¢ per unit</text></g>
+<text x="180" y="232" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="500" fill="#5b6b7d" text-anchor="middle">The next home that uses this power pays tax on it again.</text>
+</svg><figcaption>Example from 2027: power bought at 6¢ before tax, sold back at 15¢. Rounded.</figcaption></figure>
+  <p>Every unit of power you take from the grid includes <strong>energy tax</strong>: about 11 cents in 2027, more than the power itself. When you charge your battery from the grid, you pay that tax. When you sell that power back, you get the market price, but <strong>not the tax</strong>. The next household that uses your power pays energy tax on it again. The same unit is taxed twice. That's why people call it "double energy tax".</p>
+  <p>Until the end of 2026 you don't notice this, because the power you send back cancels out power you take (<em>saldering</em>). From 1 January 2027 that stops, so selling stored grid power back usually <strong>loses</strong> money.</p>
+  <p>This trap doesn't apply to <strong>using</strong> the stored power yourself. You pay the tax when you charge, but you don't buy that power again later, so it evens out.</p>
+
+  <h2>Why "not yet"? What could change</h2>
   <ul>
-    <li><strong>Charge cheap, use it yourself later.</strong> The battery fills up at night or on a sunny afternoon when prices are low, and powers your home in the expensive evening hours. You pay energy tax and VAT when you charge, and avoid them when you use the stored power instead of grid power, so the taxes cancel out. What's left is the price gap between the two hours, minus losses.</li>
-    <li><strong>Charge cheap, sell back expensive.</strong> The battery sends stored power back to the grid when prices peak. Until the end of 2026, offsetting (saldering) hides the tax on this. From 2027 you pay energy tax and VAT on what you charge, and get only the market price for what you send back.</li>
+    <li><strong>Grid costs by time of day.</strong> Today you pay a fixed amount for the grid. From 2029, the regulator ACM plans to make the grid cheaper at quiet times and more expensive at busy times. A battery could then save on that too.</li>
+    <li><strong>A fix for the tax trap.</strong> Parliament asked the government to come up with one, and it's being studied.</li>
+    <li><strong>Cheaper batteries.</strong> If a battery costs half, the wear costs half too.</li>
   </ul>
-  <p>This is different from storing your <strong>own solar power</strong> for the evening. That is the main reason to buy a battery from 2027, and our <a href="/#builder">house builder</a> shows what it's worth for a typical home.</p>
 
-  <h2>The numbers for a typical home</h2>
-  <p>A 10 kWh battery bought for €5,000, on an hourly-price contract, without solar panels. The home uses about 4 units a day in the expensive evening hours, typical for a terraced house using 2,800 units a year.</p>
+  <h2>What to do</h2>
+  <ul>
+    <li><strong>Judge a battery on storing your own solar power,</strong> not on trading. Ask the seller: "How much do I save <em>without</em> trading?" If it only pays back with trading, be careful.</li>
+    <li><strong>No solar panels?</strong> Then a battery only has trading to earn from. That doesn't pay yet.</li>
+    <li><strong>See it for a home like yours:</strong> add a battery in our <a href="/#builder">house builder</a> and look at the saving and the payback time.</li>
+  </ul>
+
+  <details class="advanced" style="margin-top:24px"><summary>How we calculate this (the detailed numbers)</summary>
+  <p>Example: a 10 kWh battery bought for €5,000, no solar panels, on a dynamic contract. The home uses about 4 units a day in the expensive evening hours (a terraced house using 2,800 units a year).</p>
   <div class="table-scroll">
   <table class="facts">
-    <thead><tr><th></th><th>Covers your evening use (4 kWh a day)</th><th>Full battery every day (9 kWh)</th></tr></thead>
+    <thead><tr><th></th><th>Covers evening use (4 kWh a day)</th><th>Full battery every day (9 kWh)</th></tr></thead>
     <tbody>
       <tr><td>Gain from the price gap</td><td>€90 a year</td><td>€200 a year</td></tr>
       <tr><td>Wear on the battery</td><td>€135 a year</td><td>€305 a year</td></tr>
       <tr><td><strong>Result</strong></td><td><strong>−€45 a year</strong></td><td><strong>−€105 a year</strong></td></tr>
-      <tr><td>Payback on €5,000, ignoring wear</td><td>about 55 years</td><td>about 25 years</td></tr>
     </tbody>
   </table>
   </div>
-  <p>The second column needs a home that uses 9 units every evening, or selling the rest back to the grid, which loses money from 2027 (see below). Comparison sites come to the same conclusion: a 5 kWh battery without solar panels earns at most about €110 to €150 a year, and only if it hits the cheapest and the most expensive hour every single day.</p>
-
-  <h2>Why it doesn't pay yet</h2>
-  <ul>
-    <li><strong>The daily price gap is small most of the year.</strong> It's big on sunny spring and summer days, when midday prices drop, sometimes below zero. In winter, when you use the most power, cheap and expensive hours are close together.</li>
-    <li><strong>You can only save on power you actually use.</strong> A home that uses 4 units in the evening can only replace 4 units, however big the battery is.</li>
-    <li><strong>Every cycle wears the battery.</strong> Batteries come with a warranty of about 10 years or a set number of cycles. Cycling every day for a few cents a unit uses that up for very little.</li>
-    <li><strong>Selling back is taxed twice from 2027.</strong> Example: you charge at €0.06 a unit before tax. With energy tax (€0.1065 including VAT in 2027) and VAT on the price, you pay about €0.18. You sell 0.9 units back at €0.15 and get €0.135. That's <strong>a loss of about €0.04 for every unit you charge</strong>, before wear. Parliament has asked the government for a fix for this "double energy tax". There isn't one yet.</li>
-    <li><strong>Big batteries are taking the gaps.</strong> Large grid batteries trade the same price differences, so the gaps get smaller. In a year-long test by the homeowners' association Vereniging Eigen Huis, a few households earned up to €900 by trading with a 20 kWh battery. The researchers expect that income to drop by about two-thirds.</li>
-  </ul>
-
-  <h2>Where batteries do earn money</h2>
-  <ul>
-    <li><strong>Storing your own solar power.</strong> From 2027, a unit you store and use yourself saves you about €0.26. The same unit sent back earns only a few cents. This is the battery's real job after the end of offsetting.</li>
-    <li><strong>Balancing the grid, through a provider.</strong> Some battery providers let their software react to the grid's minute-by-minute balancing needs (the imbalance market). The energy consultancy DNV found this was the only earning model that gave a positive return in 2025. That income is under pressure too, and depends entirely on the provider's software and terms.</li>
-  </ul>
-
-  <h2>What could change: why "not yet"</h2>
-  <ul>
-    <li><strong>Grid costs that depend on the time of day.</strong> Today households pay a fixed amount for the grid, whatever time they use it. The regulator ACM plans grid tariffs that depend on volume and time of day from 1 January 2029, with a final decision expected early 2027. A battery that avoids the expensive hours could then save on grid costs as well.</li>
-    <li><strong>A fix for double energy tax</strong> on power that is stored and sent back. The government is looking at options.</li>
-    <li><strong>Cheaper batteries.</strong> At half today's price, the wear cost per unit halves too.</li>
-    <li><strong>More solar power</strong> on the grid means deeper price drops at midday, at least in summer.</li>
-  </ul>
-
-  <h2>What you can do</h2>
-  <ul>
-    <li><strong>Judge a battery on your own solar power, not on trading.</strong> Ask the installer for the saving <em>without</em> trading income. If the payback is only short with trading, be careful.</li>
-    <li><strong>Check the warranty</strong>: years and cycles, and whether trading counts against it.</li>
-    <li><strong>Try it for your home</strong> in the <a href="/#builder">house builder</a>: add a battery and see the saving and payback. Have your yearly bill? Use the <a href="/tools/solar-battery/">exact calculator</a>.</li>
-    <li><strong>Waiting is a real option.</strong> The rules that decide whether trading pays (grid tariffs, energy tax on storage) change in the next two to three years.</li>
-  </ul>
-
-  <h2>How we calculate this</h2>
-  <p>Gain = days × units shifted per day × price gap after losses. We use about €0.08 per unit on 245 normal days and €0.02 on 120 winter days, from Energievergelijk's analysis of July 2025 to June 2026 prices. Wear = battery price ÷ (cycles × capacity × 90% round trip) = €5,000 ÷ (6,000 × 10 kWh × 0.9) ≈ €0.093 per unit delivered. The 6,000 cycles and €5,000 price are typical assumptions for a 10 kWh battery, within the €3,300 to €7,000 we use across the site. Energy tax 2027: €0.0880 per unit excluding VAT (Belastingplan 2027). Results rounded to €5.</p>
+  <p>Gain = days × units per day × price gap after losses: about €0.08 on 245 normal days and €0.02 on 120 winter days (Energievergelijk, prices July 2025 to June 2026). Wear = €5,000 ÷ (6,000 cycles × 10 kWh × 90% round trip) ≈ €0.093 per unit delivered. The 6,000 cycles is a typical assumption, not a figure from a source. Tax trap: charge at €0.06 + 21% VAT + energy tax €0.0880 + VAT (€0.1065) ≈ €0.18; sell 0.9 units at €0.15 = €0.135; loss ≈ €0.045 per unit charged, before wear. Results rounded to €5.</p>
+  <p>Comparison sites reach the same conclusion: a 5 kWh battery without solar panels earns at most about €110 to €150 a year, and only if it hits the cheapest and most expensive hour every day. In a year-long test by Vereniging Eigen Huis, a few households earned up to €900 trading with a 20 kWh battery, but the researchers expect that to drop by about two-thirds as big grid batteries take the same price gaps. The energy consultancy DNV found that only trading on the grid's balancing market (through a provider's software) gave a positive return in 2025.</p>
+  </details>
 
   <h2>Sources</h2>
   <ul class="sources">
