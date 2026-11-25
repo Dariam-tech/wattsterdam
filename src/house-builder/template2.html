@@ -102,6 +102,7 @@ a{color:#2a6a50}a:hover{color:#12442f}
       <div style="display: flex; justify-content: space-between; font-size: 15px"><span style="color: #d7e9dc">This year (2026 rules)</span><strong>{{ today26 }}</strong></div>
       <div style="display: flex; justify-content: space-between; font-size: 15px"><span style="color: #d7e9dc">From 2027</span><strong style="color: #e2f57c">{{ today27 }}</strong></div>
       <p style="margin: 4px 0 0; padding-top: 10px; border-top: 1px dashed #507065; font-size: 14px; line-height: 1.5; color: #d7e9dc">{{ nettingLine }}</p>
+      <a href="/tools/solar-battery/" style="font-size: 14px; font-weight: 750; color: #e2f57c">Have your yearly bill? Get the exact number →</a>
     </section>
 
     <section style="margin: 14px 16px 0">
@@ -185,7 +186,7 @@ a{color:#2a6a50}a:hover{color:#12442f}
     </section>
   </sc-if>
 
-  <p style="margin: 16px 20px 28px; font-size: 12px; line-height: 1.5; color: #687b73">Prototype with illustrative numbers; prices to buy are indicative and still to be checked. Typical use per home type; 350 units a year per panel; €0.26 per unit and €1.45 per m³ of gas, incl. tax; €370 a year fixed costs for a gas connection; the legal minimum payment for power you send back; fees of €0.08 (2026) and €0.055 (2027) per unit sent back. Battery 10 kWh, returns 600 units a year. Electric car 2,500 units a year; petrol saved: 900 litres at about €2.15 (Nov 2026). Hybrid heat pump: half the gas for heating. All-electric: no gas, gas connection cancelled. Electric boiler: replaces the gas for hot water, half of it heated with own solar power.</p>
+  <p style="margin: 16px 20px 28px; font-size: 12px; line-height: 1.5; color: #687b73">Prototype with illustrative numbers; prices to buy are indicative and still to be checked. Typical use per home type; 350 units a year per panel; €0.26 per unit and €1.45 per m³ of gas, incl. tax; €370 a year fixed costs for a gas connection; the legal minimum payment for power you send back; fees of €0.11 (2026) and €0.055 (2027) per unit sent back. Battery 10 kWh, returns 600 units a year. Electric car 2,500 units a year; petrol saved: 900 litres at about €2.15 (Nov 2026). Hybrid heat pump: half the gas for heating. All-electric: no gas, gas connection cancelled. Electric boiler: replaces the gas for hot water, half of it heated with own solar power.</p>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2700}}'>
@@ -199,7 +200,7 @@ class Component extends DCLogic {
     var BASE = { apartment: 2000, terraced: 2800, detached: 3600 };
     var GAS = { apartment: 900, terraced: 1200, detached: 1900 };
     var HW = { apartment: 180, terraced: 230, detached: 280 };
-    var RATE = 0.26, PAY = 0.5 * (0.26 / 1.21 - 0.088), FEE26 = 0.08, FEE27 = 0.055, FIXED_E = 49, GAS_PRICE = 1.45, GAS_FIXED = 370;
+    var RATE = 0.26, PAY = 0.5 * (0.26 / 1.21 - 0.088), FEE26 = 0.11, FEE27 = 0.055, FIXED_E = 49, GAS_PRICE = 1.45, GAS_FIXED = 370;
     var gas = GAS[type], hp = 0, eb = 0, hw = HW[type];
     if (o.heat === 'hybrid') { hp = (gas - hw) * 0.5 * 2.5; gas = hw + (gas - hw) * 0.5; }
     if (o.heat === 'electric') { hp = gas * 2.9; gas = 0; }
@@ -408,7 +409,7 @@ class Component extends DCLogic {
       setDay: function () { setPlan({ evDay: true }); }, setEvening: function () { setPlan({ evDay: false }); },
       today26: eur(t0.b26), today27: eur(t0.b27),
       nettingLine: today.solar
-        ? (nettingDelta > 0 ? 'From 2027 you pay about ' + eur(nettingDelta) + ' more a year, because your solar power no longer cancels out what you use.' : 'The 2027 rules hardly change your bill.')
+        ? (nettingDelta > 20 ? 'From 2027 you pay about ' + eur(nettingDelta) + ' more a year, because your solar power no longer cancels out what you use.' : nettingDelta < -20 ? 'From 2027 you may pay about ' + eur(-nettingDelta) + ' less a year: you send back so much that the lower fee for it outweighs the end of offsetting.' : 'The 2027 rules hardly change your bill.')
         : 'Without solar panels, the 2027 rules don’t change your bill much.',
       items: items, pins: pins, showData: s.showData, toggleData: function () { self.setState({ showData: !s.showData }); },
       typeWord: type === 'apartment' ? 'Dutch apartment' : type === 'terraced' ? 'Dutch terraced house' : 'detached house in the Netherlands',
