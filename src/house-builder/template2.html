@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Your home today, and what if</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#2a6a50}a:hover{color:#12442f}
+@keyframes wpulse{0%{box-shadow:0 0 0 0 rgba(226,245,124,.9)}70%{box-shadow:0 0 0 10px rgba(226,245,124,0)}100%{box-shadow:0 0 0 0 rgba(226,245,124,0)}}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 2700px; box-sizing: border-box; background: #f8f9f5; color: #153b32; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; display: flex; flex-direction: column">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #e2e9e2">
+    <span style="display: flex; align-items: center; gap: 9px; font-weight: 850; font-size: 20px; letter-spacing: -0.05em">
+      <span style="width: 30px; height: 30px; border-radius: 9px; background: #153b32; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.5 2.5 5.6 13h6.1l-1.1 8.5L19 10h-6z" stroke="#e2f57c" stroke-width="2.2" stroke-linejoin="round"></path></svg></span>wattsterdam
+    </span>
+    <span style="font-size: 12px; font-weight: 700; color: #527369; background: #ecf4e8; border-radius: 999px; padding: 6px 10px">Prototype</span>
+  </header>
+
+  <nav aria-label="Steps" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 14px 16px 0">
+    <button type="button" aria-current="{{ step1Current }}" onClick="{{ goStep1 }}" style="{{ step1Tab }}"><span style="font-size: 12px; font-weight: 700; opacity: .75">Step 1</span><span>Your home today</span></button>
+    <button type="button" aria-current="{{ step2Current }}" onClick="{{ goStep2 }}" style="{{ step2Tab }}"><span style="font-size: 12px; font-weight: 700; opacity: .75">Step 2</span><span>Try changes</span></button>
+  </nav>
+
+  <section style="padding: 16px 16px 12px; display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 800; letter-spacing: -0.04em">{{ title }}</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #52695f">{{ subtitle }}</p>
+  </section>
+
+  <div style="position: sticky; top: 0; z-index: 5; background: #f8f9f5; padding: 0 16px 10px">
+    <section style="border-radius: 24px; overflow: hidden; border: 1px solid #dfe6e0; background: #f1f5f2">
+      <div role="img" aria-label="{{ sceneLabel }}" style="position: relative; width: 358px; height: 260px">
+%%SCENE%%
+        <sc-if value="{{ showCurtail }}" hint-placeholder-val="{{ false }}">
+          <span style="position: absolute; left: 10px; top: 10px; background: #ffffff; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 750; box-shadow: 0 4px 12px rgba(21,59,50,0.12)">Auto switch-off on</span>
+        </sc-if>
+        <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ pins }}" as="pin" hint-placeholder-count="5">
+            <span style="{{ pin.line }}"></span>
+            <span style="{{ pin.spot }}"></span>
+          </sc-for>
+          <sc-for list="{{ pins }}" as="pin" hint-placeholder-count="5">
+            <button type="button" aria-pressed="{{ pin.pressed }}" aria-label="{{ pin.label }}" onClick="{{ pin.act }}" style="{{ pin.box }}"><span style="{{ pin.pill }}"><span style="{{ pin.dot }}">{{ pin.glyph }}</span>{{ pin.text }}</span></button>
+          </sc-for>
+        </sc-if>
+      </div>
+    </section>
+    <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top: 10px; background: #153b32; color: #ffffff; border-radius: 18px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px" aria-live="polite">
+        <span style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 12px; color: #bad0c3">Yearly bill, 2027 rules</span>
+          <span style="font-size: 16px; font-weight: 700; white-space: nowrap">{{ todayText }} <span style="color: #bad0c3">→</span> <span style="color: #e2f57c">{{ planText }}</span></span>
+        </span>
+        <span style="{{ deltaChip }}">{{ deltaChipText }}</span>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+    <section style="margin: 4px 16px 0; background: #ffffff; border: 1px solid #e2e9e2; border-radius: 24px; padding: 18px 16px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px" role="group" aria-label="Type of home">
+        <sc-for list="{{ types }}" as="t" hint-placeholder-count="3">
+          <button type="button" aria-pressed="{{ t.pressed }}" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; border-top: 1px solid #e2e9e2">
+        <sc-for list="{{ toggles }}" as="g" hint-placeholder-count="4">
+          <div style="border-bottom: 1px solid #e2e9e2; padding: 12px 0; display: flex; flex-direction: column; gap: 10px">
+            <button type="button" aria-pressed="{{ g.pressed }}" onClick="{{ g.flip }}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; border: 0; background: transparent; padding: 0; text-align: left; font-family: inherit; color: #153b32; cursor: pointer">
+              <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 760">{{ g.label }}</span><span style="font-size: 13px; color: #687b73">{{ g.note }}</span></span>
+              <span style="{{ g.track }}"><span style="{{ g.knob }}"></span></span>
+            </button>
+            <sc-if value="{{ g.isSolarOn }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 12px">
+                <button type="button" aria-label="Fewer panels" onClick="{{ todayFewer }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">−</button>
+                <output style="min-width: 40px; text-align: center; font-size: 26px; font-weight: 820">{{ todayPanels }}</output>
+                <button type="button" aria-label="More panels" onClick="{{ todayMore }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">+</button>
+                <span style="font-size: 13px; color: #687b73">panels now</span>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 16px; font-weight: 760">Heating today</span>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px" role="group" aria-label="Heating today">
+          <sc-for list="{{ todayHeats }}" as="h" hint-placeholder-count="3">
+            <button type="button" aria-pressed="{{ h.pressed }}" onClick="{{ h.pick }}" style="{{ h.style }}">{{ h.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin: 14px 16px 0; background: #153b32; color: #ffffff; border-radius: 24px; padding: 20px 18px; display: flex; flex-direction: column; gap: 10px">
+      <p style="margin: 0; font-size: 14px; color: #bad0c3">Your energy bill per year (electricity and gas)</p>
+      <div style="display: flex; justify-content: space-between; font-size: 15px"><span style="color: #d7e9dc">This year (2026 rules)</span><strong>{{ today26 }}</strong></div>
+      <div style="display: flex; justify-content: space-between; font-size: 15px"><span style="color: #d7e9dc">From 2027</span><strong style="color: #e2f57c">{{ today27 }}</strong></div>
+      <p style="margin: 4px 0 0; padding-top: 10px; border-top: 1px dashed #507065; font-size: 14px; line-height: 1.5; color: #d7e9dc">{{ nettingLine }}</p>
+    </section>
+
+    <section style="margin: 14px 16px 0">
+      <button type="button" onClick="{{ goStep2 }}" style="width: 100%; min-height: 56px; border-radius: 16px; border: 0; background: #e2f57c; color: #153b32; font-family: inherit; font-size: 17px; font-weight: 800; cursor: pointer">Next: try changes →</button>
+    </section>
+    <section style="margin: 14px 16px 0; background: #ffffff; border: 1px solid #e2e9e2; border-radius: 24px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px">
+      <span style="font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #527369">AVERAGE DUTCH HOME</span>
+      <p style="margin: 0; font-size: 16px; font-weight: 760; line-height: 1.35">These numbers are for a typical {{ typeWord }}. Want them for your own home?</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #52695f">Log in and share your smart-meter readings. We then use your real use, hour by hour, instead of an average.</p>
+      <button type="button" onClick="{{ toggleData }}" style="min-height: 48px; border-radius: 14px; border: 0; background: #153b32; color: #e2f57c; font-family: inherit; font-size: 16px; font-weight: 800; cursor: pointer">Use my own data</button>
+      <sc-if value="{{ showData }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 10px; background: #f4f7f1; border-radius: 16px; padding: 14px">
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">1</strong>Log in with your email</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">2</strong>Give permission to read your smart meter (takes about 2 minutes)</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">3</strong>Get your own report: your bill today, from 2027, and what each change saves you</span>
+          <span style="font-size: 12px; line-height: 1.5; color: #687b73">We only read your meter with your permission, and you can stop it at any time. Coming soon in this prototype.</span>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ true }}">
+    <section style="margin: 4px 16px 0; display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
+        <div style="{{ it.card }}">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+            <span style="display: flex; flex-direction: column; gap: 3px">
+              <span style="display: flex; align-items: center; gap: 8px"><span style="font-size: 17px; font-weight: 800">{{ it.title }}</span><span style="{{ it.badge }}">{{ it.badgeText }}</span></span>
+              <span style="font-size: 13px; line-height: 1.4; color: #687b73">{{ it.note }}</span>
+            </span>
+            <button type="button" aria-pressed="{{ it.pressed }}" onClick="{{ it.act }}" style="{{ it.btn }}">{{ it.btnText }}</button>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #f4f7f1; border-radius: 12px; padding: 8px 10px"><span style="font-size: 11px; color: #687b73">{{ it.k1 }}</span><strong style="font-size: 14px">{{ it.v1 }}</strong></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #f4f7f1; border-radius: 12px; padding: 8px 10px"><span style="font-size: 11px; color: #687b73">{{ it.k2 }}</span><strong style="font-size: 14px">{{ it.v2 }}</strong></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #f4f7f1; border-radius: 12px; padding: 8px 10px"><span style="font-size: 11px; color: #687b73">{{ it.k3 }}</span><strong style="font-size: 14px">{{ it.v3 }}</strong></span>
+          </div>
+          <sc-if value="{{ it.showStepper }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <button type="button" aria-label="Fewer panels" onClick="{{ planFewer }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">−</button>
+              <output style="min-width: 40px; text-align: center; font-size: 24px; font-weight: 820">{{ planPanels }}</output>
+              <button type="button" aria-label="More panels" onClick="{{ planMore }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">+</button>
+              <span style="font-size: 13px; color: #687b73">panels, up to {{ maxPanels }}</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ it.showHeat }}" hint-placeholder-val="{{ false }}">
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px" role="group" aria-label="Heating">
+              <sc-for list="{{ planHeats }}" as="h" hint-placeholder-count="3">
+                <button type="button" aria-pressed="{{ h.pressed }}" onClick="{{ h.pick }}" style="{{ h.style }}">{{ h.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ it.showEvTime }}" hint-placeholder-val="{{ false }}">
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px" role="group" aria-label="When the car charges">
+              <button type="button" aria-pressed="{{ evDayPressed }}" onClick="{{ setDay }}" style="{{ evDayStyle }}">Mostly daytime</button>
+              <button type="button" aria-pressed="{{ evEveningPressed }}" onClick="{{ setEvening }}" style="{{ evEveningStyle }}">Mostly evening</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </section>
+    <section style="margin: 14px 16px 0; background: #ffffff; border: 1px solid #e2e9e2; border-radius: 24px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px">
+      <span style="font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #527369">AVERAGE DUTCH HOME</span>
+      <p style="margin: 0; font-size: 16px; font-weight: 760; line-height: 1.35">These numbers are for a typical {{ typeWord }}. Want them for your own home?</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #52695f">Log in and share your smart-meter readings. We then use your real use, hour by hour, instead of an average.</p>
+      <button type="button" onClick="{{ toggleData }}" style="min-height: 48px; border-radius: 14px; border: 0; background: #153b32; color: #e2f57c; font-family: inherit; font-size: 16px; font-weight: 800; cursor: pointer">Use my own data</button>
+      <sc-if value="{{ showData }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 10px; background: #f4f7f1; border-radius: 16px; padding: 14px">
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">1</strong>Log in with your email</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">2</strong>Give permission to read your smart meter (takes about 2 minutes)</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">3</strong>Get your own report: your bill today, from 2027, and what each change saves you</span>
+          <span style="font-size: 12px; line-height: 1.5; color: #687b73">We only read your meter with your permission, and you can stop it at any time. Coming soon in this prototype.</span>
+        </div>
+      </sc-if>
+    </section>
+    <section style="margin: 14px 16px 0">
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <button type="button" onClick="{{ goStep1 }}" style="min-height: 48px; border-radius: 14px; border: 1px solid #d6e2d4; background: #ffffff; color: #153b32; font-family: inherit; font-size: 15px; font-weight: 720; cursor: pointer">← My home today</button>
+        <button type="button" onClick="{{ resetPlan }}" style="min-height: 48px; border-radius: 14px; border: 1px solid #d6e2d4; background: #ffffff; color: #153b32; font-family: inherit; font-size: 15px; font-weight: 720; cursor: pointer">Undo all changes</button>
+      </div>
+    </section>
+  </sc-if>
+
+  <p style="margin: 16px 20px 28px; font-size: 12px; line-height: 1.5; color: #687b73">Prototype with illustrative numbers; prices to buy are indicative and still to be checked. Typical use per home type; 350 units a year per panel; €0.26 per unit and €1.45 per m³ of gas, incl. tax; €370 a year fixed costs for a gas connection; the legal minimum payment for power you send back; fees of €0.08 (2026) and €0.055 (2027) per unit sent back. Battery 10 kWh, returns 600 units a year. Electric car 2,500 units a year; petrol saved: 900 litres at about €2.15 (Nov 2026). Hybrid heat pump: half the gas for heating. All-electric: no gas, gas connection cancelled. Electric boiler: replaces the gas for hot water, half of it heated with own solar power.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var today = { solar: true, panels: 10, battery: false, ev: false, evDay: true, heat: 'gas', curtail: false, ebo: false };
+    this.state = { step: 1, type: 'terraced', today: today, plan: null, showData: false };
+  }
+  model(type, o) {
+    var BASE = { apartment: 2000, terraced: 2800, detached: 3600 };
+    var GAS = { apartment: 900, terraced: 1200, detached: 1900 };
+    var HW = { apartment: 180, terraced: 230, detached: 280 };
+    var RATE = 0.26, PAY = 0.5 * (0.26 / 1.21 - 0.088), FEE26 = 0.08, FEE27 = 0.055, FIXED_E = 49, GAS_PRICE = 1.45, GAS_FIXED = 370;
+    var gas = GAS[type], hp = 0, eb = 0, hw = HW[type];
+    if (o.heat === 'hybrid') { hp = (gas - hw) * 0.5 * 2.5; gas = hw + (gas - hw) * 0.5; }
+    if (o.heat === 'electric') { hp = gas * 2.9; gas = 0; }
+    if (o.ebo && o.heat !== 'electric') { gas -= hw; eb = hw * 8; }
+    var base = BASE[type], evUse = o.ev ? 2500 : 0, use = base + evUse + hp + eb;
+    var made = o.solar ? o.panels * 350 : 0;
+    var direct = Math.min(made * 0.3, base * 0.5), surplus = made - direct;
+    var evSolar = o.ev ? Math.min(evUse * (o.evDay ? 0.35 : 0.05), surplus) : 0; surplus -= evSolar;
+    var hpSolar = Math.min(hp * 0.1, surplus); surplus -= hpSolar;
+    var ebSolar = Math.min(eb * 0.5, surplus); surplus -= ebSolar;
+    var exp = surplus, imp = use - direct - evSolar - hpSolar - ebSolar;
+    var batt = o.battery && made > 0 ? Math.min(exp * 0.9, imp, 600) : 0;
+    imp -= batt; exp -= batt / 0.9;
+    var gasCost = gas > 0.5 ? gas * GAS_PRICE + GAS_FIXED : 0;
+    var e26 = FIXED_E + Math.max(imp - exp, 0) * RATE - Math.max(exp - imp, 0) * PAY + exp * FEE26;
+    var e27 = FIXED_E + imp * RATE - exp * PAY + exp * FEE27 - (o.curtail && o.solar ? exp * 0.08 * 0.05 : 0);
+    return { b26: e26 + gasCost, b27: e27 + gasCost };
+  }
+  renderVals() {
+    var s = this.state, self = this, type = s.type;
+    var GEO = %%PANELGEO%%, g = GEO[type];
+    var DEF = { apartment: 6, terraced: 10, detached: 16 };
+    var today = s.today, plan = s.plan || s.today;
+    var step2 = s.step === 2;
+    function r10(x) { return Math.round(x / 10) * 10; }
+    function eur(x) { var v = r10(x); return (v < 0 ? '−€' : '€') + Math.abs(v).toLocaleString('en-GB'); }
+    function eurRaw(x) { return '€' + Math.round(x).toLocaleString('en-GB'); }
+    function copy(o, patch) { var n = {}; for (var k in o) n[k] = o[k]; for (var p in (patch || {})) n[p] = patch[p]; return n; }
+    function chip(on) {
+      return 'min-height: 44px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 720; line-height: 1.2; padding: 6px 4px; cursor: pointer; '
+        + (on ? 'background: #153b32; color: #ffffff; border: 1px solid #153b32;' : 'background: #ffffff; color: #153b32; border: 1px solid #d6e2d4;');
+    }
+    function tab(on) {
+      return 'display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 56px; padding: 8px 14px; border-radius: 14px; font-family: inherit; font-size: 15px; font-weight: 780; text-align: left; cursor: pointer; '
+        + (on ? 'background: #153b32; color: #ffffff; border: 1px solid #153b32;' : 'background: #ffffff; color: #153b32; border: 1px solid #d6e2d4;');
+    }
+    function setToday(patch) { self.setState({ today: copy(s.today, patch), plan: null }); }
+    function setPlan(patch) { self.setState({ plan: copy(plan, patch) }); }
+    var m = function (o) { return self.model(type, o); };
+
+    // ----- step 1 -----
+    var types = [['apartment', 'Apartment'], ['terraced', 'Terraced'], ['detached', 'Detached']].map(function (t) {
+      return { label: t[1], pressed: String(type === t[0]), style: chip(type === t[0]),
+        pick: function () { self.setState({ type: t[0], today: copy(s.today, { panels: Math.min(s.today.panels, GEO[t[0]].max) }), plan: null }); } };
+    });
+    function sw(on) {
+      return { track: 'flex: none; position: relative; width: 46px; height: 28px; border-radius: 999px; transition: background .2s; background: ' + (on ? '#153b32' : '#d6e2d4') + ';',
+        knob: 'position: absolute; top: 3px; left: ' + (on ? '21px' : '3px') + '; width: 22px; height: 22px; border-radius: 50%; transition: left .2s; background: ' + (on ? '#e2f57c' : '#ffffff') + ';' };
+    }
+    var toggles = [
+      { key: 'solar', label: 'Solar panels', note: 'Do you have them now?' },
+      { key: 'battery', label: 'Home battery', note: today.solar ? 'Do you have one now?' : 'Needs solar panels' },
+      { key: 'ev', label: 'Electric car', note: 'Charged at home' },
+      { key: 'ebo', label: 'Electric boiler for hot water', note: today.heat === 'electric' ? 'Your heat pump makes hot water' : 'Instead of gas for showers and taps' }
+    ].map(function (d) {
+      var on = !!today[d.key], k = sw(on);
+      return { label: d.label, note: d.note, pressed: String(on), track: k.track, knob: k.knob, isSolarOn: d.key === 'solar' && on,
+        flip: function () {
+          if (d.key === 'battery' && !today.solar) return;
+          if (d.key === 'ebo' && today.heat === 'electric') return;
+          var p = {}; p[d.key] = !today[d.key];
+          if (d.key === 'solar' && today.solar) { p.battery = false; p.curtail = false; }
+          if (d.key === 'solar' && !today.solar && !today.panels) p.panels = DEF[type];
+          setToday(p);
+        } };
+    });
+    function heatChips(o, setter) {
+      return [['gas', 'Gas boiler'], ['hybrid', 'Hybrid heat pump'], ['electric', 'All-electric heat pump']].map(function (h) {
+        return { label: h[1], pressed: String(o.heat === h[0]), style: chip(o.heat === h[0]), pick: function () { setter({ heat: h[0] }); } };
+      });
+    }
+    var t0 = m(today), p0 = m(plan);
+    var nettingDelta = r10(t0.b27 - t0.b26);
+
+    // ----- step 2 items -----
+    function saving(withO, withoutO) { return m(withoutO).b27 - m(withO).b27; }
+    function payback(lo, hi, sav) { return sav > 20 ? Math.round(lo / sav) + '–' + Math.round(hi / sav) + ' yrs' : 'not reached'; }
+    var isNew = {
+      solar: plan.solar && !today.solar, battery: plan.battery && !today.battery, ev: plan.ev && !today.ev,
+      heat: plan.heat !== today.heat, ebo: plan.ebo && !today.ebo && plan.heat !== 'electric', curtail: plan.curtail && !today.curtail, morePanels: plan.solar && today.solar && plan.panels > today.panels
+    };
+    function card(added, fresh) {
+      return 'background: #ffffff; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; border: '
+        + (fresh ? '2px solid #9bc53d; box-shadow: 0 0 0 4px #eef8cf;' : '1px solid #e2e9e2;');
+    }
+    function btn(added) {
+      return 'flex: none; min-height: 44px; min-width: 88px; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 780; cursor: pointer; padding: 0 16px; '
+        + (added ? 'background: #ffffff; color: #153b32; border: 1px solid #c7d4c5;' : 'background: #153b32; color: #e2f57c; border: 1px solid #153b32;');
+    }
+    function badge(fresh, had) {
+      if (fresh) return { b: 'font-size: 11px; font-weight: 800; letter-spacing: .04em; background: #e2f57c; color: #153b32; border-radius: 999px; padding: 3px 7px;', t: 'NEW' };
+      if (had) return { b: 'font-size: 11px; font-weight: 700; background: #ecf4e8; color: #527369; border-radius: 999px; padding: 3px 7px;', t: 'YOU HAVE' };
+      return { b: 'display: none;', t: '' };
+    }
+    var items = [];
+    // solar
+    (function () {
+      var on = plan.solar, panels = on ? plan.panels : DEF[type];
+      var withO = copy(plan, { solar: true, panels: panels, battery: false, curtail: false });
+      var withoutO = copy(plan, { solar: false, battery: false, curtail: false });
+      var sav = saving(withO, withoutO), b = badge(isNew.solar || isNew.morePanels, today.solar);
+      items.push({ title: 'Solar panels', note: on ? panels + ' panels on your roof' : 'Tap + on the roof, or add here', card: card(on, isNew.solar || isNew.morePanels), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on),
+        act: function () { setPlan(on ? { solar: false, battery: false, curtail: false } : { solar: true, panels: plan.panels || DEF[type] }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: eurRaw(panels * 400) + '+', k3: 'Pays back', v3: payback(panels * 400, panels * 550, sav),
+        showStepper: on, showHeat: false, showEvTime: false });
+    })();
+    // battery
+    (function () {
+      var on = plan.battery, ok = plan.solar;
+      var sav = ok ? saving(copy(plan, { battery: true }), copy(plan, { battery: false })) : 0, b = badge(isNew.battery, today.battery);
+      items.push({ title: 'Home battery', note: ok ? '10 kWh: keeps daytime solar power for the evening' : 'Needs solar panels: adding it adds panels too', card: card(on, isNew.battery), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on),
+        act: function () { setPlan(on ? { battery: false } : ok ? { battery: true } : { battery: true, solar: true, panels: plan.panels || DEF[type] }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: '€3,300+', k3: 'Pays back', v3: payback(3300, 7000, sav),
+        showStepper: false, showHeat: false, showEvTime: false });
+    })();
+    // heating
+    (function () {
+      var sav = saving(plan, copy(plan, { heat: today.heat })), b = badge(isNew.heat, false);
+      var cost = { gas: [0, 0], hybrid: [3000, 5000], electric: [8000, 15000] }[plan.heat];
+      items.push({ title: 'Heating', note: plan.heat === today.heat ? 'Pick a heat pump to compare with what you have' : 'Compared with your heating today', card: card(true, isNew.heat), badge: b.b, badgeText: b.t,
+        pressed: 'true', btnText: plan.heat === today.heat ? 'As today' : 'Undo', btn: btn(true) + (plan.heat === today.heat ? ' opacity: .45;' : ''),
+        act: function () { setPlan({ heat: today.heat }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: cost[0] ? eurRaw(cost[0]) + '+' : '—', k3: 'Pays back', v3: cost[0] ? payback(cost[0], cost[1], sav) : '—',
+        showStepper: false, showHeat: true, showEvTime: false });
+    })();
+    // e-boiler
+    (function () {
+      var ok = plan.heat !== 'electric', on = plan.ebo && ok;
+      var sav = ok ? saving(copy(plan, { ebo: true }), copy(plan, { ebo: false })) : 0, b = badge(isNew.ebo, today.ebo && ok);
+      items.push({ title: 'Electric boiler', note: !ok ? 'Not needed: your all-electric heat pump makes hot water' : plan.solar ? 'Hot water from electricity, heated at midday with your own solar power' : 'Hot water from electricity instead of gas. Pays off mainly with solar panels.', card: card(on, isNew.ebo), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on) + (ok ? '' : ' opacity: .45;'),
+        act: function () { if (ok) setPlan({ ebo: !on }); },
+        k1: sav >= 0 ? 'Saves' : 'Costs', v1: eur(Math.abs(sav)) + '/yr', k2: 'To buy', v2: '€800+', k3: 'Pays back', v3: ok ? payback(800, 1500, sav) : '—',
+        showStepper: false, showHeat: false, showEvTime: false });
+    })();
+    // ev
+    (function () {
+      var on = plan.ev, add = m(copy(plan, { ev: true })).b27 - m(copy(plan, { ev: false })).b27;
+      var dayGain = plan.solar ? m(copy(plan, { ev: true, evDay: false })).b27 - m(copy(plan, { ev: true, evDay: true })).b27 : 0, b = badge(isNew.ev, today.ev);
+      items.push({ title: 'Electric car', note: 'About 15,000 km a year, charged at home', card: card(on, isNew.ev), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on),
+        act: function () { setPlan({ ev: !on }); },
+        k1: 'Electricity', v1: '+' + eur(add) + '/yr', k2: 'Daytime charging', v2: plan.solar ? '−' + eur(dayGain) + '/yr' : 'needs solar', k3: 'Petrol saved', v3: '≈€1,900/yr',
+        showStepper: false, showHeat: false, showEvTime: on });
+    })();
+    // curtail
+    (function () {
+      var on = plan.curtail, ok = plan.solar;
+      var sav = ok ? saving(copy(plan, { curtail: true }), copy(plan, { curtail: false })) : 0, b = badge(isNew.curtail, today.curtail);
+      items.push({ title: 'Auto switch-off', note: ok ? 'Stops sending power back when prices go below zero. Only pays on an hourly-price contract.' : 'Needs solar panels', card: card(on, isNew.curtail), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on) + (ok ? '' : ' opacity: .45;'),
+        act: function () { if (ok) setPlan({ curtail: !on }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: 'often free', k3: 'Where', v3: 'inverter app',
+        showStepper: false, showHeat: false, showEvTime: false });
+    })();
+
+    // ----- scene -----
+    var shown = step2 ? plan : today;
+    var pw = (94 - 2 * (g.cols - 1)) / g.cols, ph = (94 - 2 * (g.rows - 1)) / g.rows;
+    var panelList = [];
+    for (var i = 0; i < Math.min(shown.panels, g.max); i++) {
+      var fresh = step2 && (isNew.solar || (today.solar && i >= today.panels));
+      panelList.push({ style: 'display: block; width: ' + pw.toFixed(1) + 'px; height: ' + ph.toFixed(1) + 'px; border-radius: 0.5px; background: #24384c; box-shadow: inset 0 0 0 ' + (fresh ? '1.4px #e2f57c' : '0.6px #7d97ad') + ';' });
+    }
+    function glow(on) { return 'position: absolute; left: 0; top: 0; width: 358px; height: 260px;' + (on ? ' filter: drop-shadow(0 0 3px #d4f05a) drop-shadow(0 0 6px #e2f57c);' : ''); }
+    function pin(key, text, added, act) {
+      var a = g.anchors[key], l = g.labels[key];
+      var dx = a[0] - l[0], dy = a[1] - l[1], len = Math.sqrt(dx * dx + dy * dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
+      var c = added ? '#153b32' : '#9aa6a1';
+      return { label: (added ? 'Remove ' : 'Add ') + text, pressed: String(added), text: text, glyph: added ? '✓' : '+',
+        act: act,
+        line: 'position: absolute; left: ' + l[0] + 'px; top: ' + l[1] + 'px; width: ' + len.toFixed(1) + 'px; height: 0; border-top: 1.5px ' + (added ? 'solid' : 'dashed') + ' ' + c + '; transform-origin: 0 0; transform: rotate(' + ang.toFixed(1) + 'deg); pointer-events: none;',
+        spot: 'position: absolute; left: ' + (a[0] - 4) + 'px; top: ' + (a[1] - 4) + 'px; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; ' + (added ? 'background: #e2f57c; border: 1.5px solid #153b32;' : 'background: #ffffff; border: 1.5px solid #9aa6a1;'),
+        box: 'position: absolute; left: ' + l[0] + 'px; top: ' + l[1] + 'px; transform: translate(-50%, -50%); min-height: 44px; padding: 0; border: 0; background: transparent; display: flex; align-items: center; cursor: pointer; font-family: inherit;',
+        pill: 'display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 10px 0 4px; border-radius: 999px; font-size: 12px; font-weight: 780; white-space: nowrap; transition: all .2s; '
+          + (added ? 'background: #e2f57c; color: #153b32; border: 1.5px solid #153b32; box-shadow: 0 0 0 4px rgba(226,245,124,.5), 0 4px 10px rgba(21,59,50,.25);'
+                   : 'background: rgba(255,255,255,.94); color: #5f6e68; border: 1.5px solid #c3ccc7; box-shadow: 0 2px 6px rgba(21,59,50,.12);'),
+        dot: 'display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; font-size: 14px; font-weight: 800; line-height: 1; '
+          + (added ? 'background: #153b32; color: #e2f57c;' : 'background: #e6ebe8; color: #5f6e68;') };
+    }
+    var pins = [
+      pin('roof', 'Solar panels', plan.solar, items[0].act),
+      pin('wall', 'Battery', plan.solar && plan.battery, items[1].act),
+      pin('garden', 'Heat pump', plan.heat !== 'gas', function () { setPlan({ heat: plan.heat === 'gas' ? (today.heat !== 'gas' ? today.heat : 'hybrid') : 'gas' }); }),
+      pin('eboiler', 'E-boiler', plan.ebo && plan.heat !== 'electric', function () { if (plan.heat === 'electric') setPlan({ heat: 'hybrid', ebo: true }); else setPlan({ ebo: !plan.ebo }); }),
+      pin('drive', 'Electric car', plan.ev, items[4].act)
+    ];
+    var delta = r10(p0.b27 - t0.b27);
+    var out = {
+      isStep1: !step2, isStep2: step2,
+      step1Current: String(!step2), step2Current: String(step2), step1Tab: tab(!step2), step2Tab: tab(step2),
+      goStep1: function () { self.setState({ step: 1 }); },
+      goStep2: function () { self.setState({ step: 2, plan: s.plan || copy(s.today) }); },
+      resetPlan: function () { self.setState({ plan: copy(s.today) }); },
+      title: step2 ? 'What if you…' : 'Will your energy bill go up in 2027?',
+      subtitle: step2 ? 'Tap a grey label on the house, or Add in the list below. What you add lights up, and the bill updates as you go.' : 'We started you with an average Dutch home. Change anything to match yours, then try changes in step 2.',
+      types: types, toggles: toggles, todayHeats: heatChips(today, setToday), planHeats: heatChips(plan, setPlan),
+      todayPanels: today.panels, planPanels: plan.panels, maxPanels: g.max,
+      todayFewer: function () { setToday({ panels: Math.max(today.panels - 1, 1) }); },
+      todayMore: function () { setToday({ panels: Math.min(today.panels + 1, g.max) }); },
+      planFewer: function () { setPlan({ panels: Math.max(plan.panels - 1, 1) }); },
+      planMore: function () { setPlan({ panels: Math.min(plan.panels + 1, g.max) }); },
+      evDayPressed: String(plan.evDay), evEveningPressed: String(!plan.evDay), evDayStyle: chip(plan.evDay), evEveningStyle: chip(!plan.evDay),
+      setDay: function () { setPlan({ evDay: true }); }, setEvening: function () { setPlan({ evDay: false }); },
+      today26: eur(t0.b26), today27: eur(t0.b27),
+      nettingLine: today.solar
+        ? (nettingDelta > 0 ? 'From 2027 you pay about ' + eur(nettingDelta) + ' more a year, because your solar power no longer cancels out what you use.' : 'The 2027 rules hardly change your bill.')
+        : 'Without solar panels, the 2027 rules don’t change your bill much.',
+      items: items, pins: pins, showData: s.showData, toggleData: function () { self.setState({ showData: !s.showData }); },
+      typeWord: type === 'apartment' ? 'Dutch apartment' : type === 'terraced' ? 'Dutch terraced house' : 'detached house in the Netherlands',
+      todayText: eur(t0.b27), planText: eur(p0.b27),
+      deltaChip: 'flex: none; border-radius: 999px; padding: 8px 12px; font-size: 15px; font-weight: 820; ' + (delta < 0 ? 'background: #e2f57c; color: #153b32;' : delta > 0 ? 'background: #f2b18b; color: #153b32;' : 'background: #2b5146; color: #d7e9dc;'),
+      deltaChipText: delta < 0 ? 'saves ' + eur(-delta) : delta > 0 ? '+' + eur(delta) + ' a year' : 'no change',
+      panelList: panelList, showCurtail: shown.solar && shown.curtail,
+      glow_battery: glow(step2 && isNew.battery), glow_ev: glow(step2 && isNew.ev), glow_heatpump: glow(step2 && isNew.heat && plan.heat !== 'gas'), glow_eboiler: glow(step2 && isNew.ebo),
+      sceneLabel: (type === 'apartment' ? 'An apartment building' : type === 'terraced' ? 'A terraced house' : 'A detached house')
+        + (shown.solar ? ' with ' + shown.panels + ' solar panels' : '') + (shown.solar && shown.battery ? ', a home battery' : '')
+        + (shown.heat !== 'gas' ? ', a heat pump' : '') + (shown.ebo && shown.heat !== 'electric' ? ', an electric boiler' : '') + (shown.ev ? ' and an electric car' : '')
+    };
+    ['apartment', 'terraced', 'detached'].forEach(function (t) {
+      var on = type === t;
+      out['is_' + t] = on;
+      out['solar_' + t] = on && shown.solar;
+      out['battery_' + t] = on && shown.solar && shown.battery;
+      out['ev_' + t] = on && shown.ev;
+      out['heatpump_' + t] = on && shown.heat !== 'gas';
+      out['eboiler_' + t] = on && shown.ebo && shown.heat !== 'electric';
+      out['chimney_' + t] = on && shown.heat !== 'electric';
+    });
+    return out;
+  }
+}
+</script>
+</body>
+</html>
