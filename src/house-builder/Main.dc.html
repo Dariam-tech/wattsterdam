@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Your home today, and what if</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#2a6a50}a:hover{color:#12442f}
+@keyframes wpulse{0%{box-shadow:0 0 0 0 rgba(226,245,124,.9)}70%{box-shadow:0 0 0 10px rgba(226,245,124,0)}100%{box-shadow:0 0 0 0 rgba(226,245,124,0)}}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 2700px; box-sizing: border-box; background: #f8f9f5; color: #153b32; font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif; display: flex; flex-direction: column">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #e2e9e2">
+    <span style="display: flex; align-items: center; gap: 9px; font-weight: 850; font-size: 20px; letter-spacing: -0.05em">
+      <span style="width: 30px; height: 30px; border-radius: 9px; background: #153b32; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13.5 2.5 5.6 13h6.1l-1.1 8.5L19 10h-6z" stroke="#e2f57c" stroke-width="2.2" stroke-linejoin="round"></path></svg></span>wattsterdam
+    </span>
+    <span style="font-size: 12px; font-weight: 700; color: #527369; background: #ecf4e8; border-radius: 999px; padding: 6px 10px">Prototype</span>
+  </header>
+
+  <nav aria-label="Steps" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 14px 16px 0">
+    <button type="button" aria-current="{{ step1Current }}" onClick="{{ goStep1 }}" style="{{ step1Tab }}"><span style="font-size: 12px; font-weight: 700; opacity: .75">Step 1</span><span>Your home today</span></button>
+    <button type="button" aria-current="{{ step2Current }}" onClick="{{ goStep2 }}" style="{{ step2Tab }}"><span style="font-size: 12px; font-weight: 700; opacity: .75">Step 2</span><span>Try changes</span></button>
+  </nav>
+
+  <section style="padding: 16px 16px 12px; display: flex; flex-direction: column; gap: 6px">
+    <h1 style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 800; letter-spacing: -0.04em">{{ title }}</h1>
+    <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #52695f">{{ subtitle }}</p>
+  </section>
+
+  <div style="position: sticky; top: 0; z-index: 5; background: #f8f9f5; padding: 0 16px 10px">
+    <section style="border-radius: 24px; overflow: hidden; border: 1px solid #dfe6e0; background: #f1f5f2">
+      <div role="img" aria-label="{{ sceneLabel }}" style="position: relative; width: 358px; height: 260px">
+<sc-if value="{{ is_detached }}" hint-placeholder-val="{{ false }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="153.6,69.8 331.6,172.6 204.4,246.0 26.4,143.2" fill="#dce8d7"></polygon><polygon points="217.1,165.2 272.3,197.1 196.0,241.1 140.9,209.3" fill="#cfd6cd"></polygon><polygon points="246.8,143.2 179.0,182.4 179.0,131.5 246.8,92.3" fill="#e2ddd2"></polygon><polygon points="246.8,92.3 179.0,131.5 212.9,76.6" fill="#e2ddd2"></polygon><polygon points="94.2,133.4 179.0,182.4 179.0,131.5 94.2,82.5" fill="#f3efe7"></polygon><polygon points="91.3,87.0 179.0,137.6 215.9,78.4 128.1,27.7" fill="#3b4a50"></polygon><polygon points="215.9,78.4 179.0,137.6 179.4,140.3 216.3,81.1" fill="#56656b"></polygon><polygon points="104.4,125.6 121.4,135.4 121.4,115.8 104.4,106.0" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="151.9,153.0 168.8,162.8 168.8,143.2 151.9,133.4" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="130.7,154.5 142.5,161.3 142.5,130.0 130.7,123.1" fill="#5b6f63"></polygon><polygon points="234.1,136.9 217.1,146.6 217.1,127.1 234.1,117.3" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon></svg></sc-if>
+<sc-if value="{{ chimney_detached }}" hint-placeholder-val="{{ false }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="156.1,46.8 149.3,50.7 149.3,31.1 156.1,27.2" fill="#76625a"></polygon><polygon points="142.5,46.8 149.3,50.7 149.3,31.1 142.5,27.2" fill="#8a7166"></polygon><polygon points="149.3,23.3 156.1,27.2 149.3,31.1 142.5,27.2" fill="#6c5a52"></polygon></svg></sc-if>
+<sc-if value="{{ solar_detached }}" hint-placeholder-val="{{ false }}"><div style="position: absolute; left: 0; top: 0; width: 100px; height: 100px; transform-origin: 0 0; transform: matrix(0.7630,0.4405,0.2967,-0.4846,98.5,86.9)"><div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px; padding: 3px; width: 100px; height: 100px; box-sizing: border-box"><sc-for list="{{ panelList }}" as="p" hint-placeholder-count="10"><span style="{{ p.style }}"></span></sc-for></div></div></sc-if>
+<sc-if value="{{ heatpump_detached }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_heatpump }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="250.2,153.0 231.6,163.8 231.6,150.1 250.2,139.3" fill="#b9bfc4"></polygon><polygon points="221.4,157.9 231.6,163.8 231.6,150.1 221.4,144.2" fill="#c9ced2"></polygon><polygon points="240.0,133.4 250.2,139.3 231.6,150.1 221.4,144.2" fill="#d9dde0"></polygon><polygon points="246.0,152.5 235.8,158.4 235.8,150.6 246.0,144.7" fill="#8a949b"></polygon></svg></div></sc-if>
+<sc-if value="{{ eboiler_detached }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_eboiler }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="221.4,164.8 213.8,169.2 213.8,149.6 221.4,145.2" fill="#d6d9d3"></polygon><polygon points="207.8,165.7 213.8,169.2 213.8,149.6 207.8,146.2" fill="#e9eae5"></polygon><polygon points="215.5,141.7 221.4,145.2 213.8,149.6 207.8,146.2" fill="#f7f7f3"></polygon><polygon points="221.4,150.1 213.8,154.5 213.8,153.0 221.4,148.6" fill="#e0703a"></polygon></svg></div></sc-if>
+<sc-if value="{{ battery_detached }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_battery }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="204.0,168.4 194.7,173.8 194.7,155.2 204.0,149.8" fill="#26343a"></polygon><polygon points="191.7,172.1 194.7,173.8 194.7,155.2 191.7,153.5" fill="#3d4c52"></polygon><polygon points="201.0,148.1 204.0,149.8 194.7,155.2 191.7,153.5" fill="#2d3b40"></polygon></svg></div></sc-if>
+<sc-if value="{{ ev_detached }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_ev }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="188.7,185.1 186.2,186.5 186.2,168.9 188.7,167.4" fill="#26343a"></polygon><polygon points="183.7,185.1 186.2,186.5 186.2,168.9 183.7,167.4" fill="#3d4c52"></polygon><polygon points="186.2,166.0 188.7,167.4 186.2,168.9 183.7,167.4" fill="#2d3b40"></polygon><polygon points="229.0,211.1 212.9,220.4 212.9,215.1 229.0,205.8" fill="#c9cfd6"></polygon><polygon points="227.7,208.9 214.2,216.7 214.2,215.7 227.7,207.9" fill="#c8423b"></polygon><polygon points="190.0,184.6 191.3,184.4 175.2,193.7 173.9,193.9" fill="#f2f3f5"></polygon><polygon points="191.3,184.4 199.8,188.0 183.7,197.3 175.2,193.7" fill="#f2f3f5"></polygon><polygon points="199.8,188.0 206.1,186.5 190.0,195.8 183.7,197.3" fill="#1d2731"></polygon><polygon points="206.1,186.5 215.5,191.5 199.3,200.8 190.0,195.8" fill="#1d2731"></polygon><polygon points="215.5,191.5 226.9,203.2 210.8,212.5 199.3,200.8" fill="#1d2731"></polygon><polygon points="226.9,203.2 229.0,205.8 212.9,215.1 210.8,212.5" fill="#f2f3f5"></polygon><polygon points="173.9,197.8 173.9,193.9 175.2,193.7 183.7,197.3 190.0,195.8 199.3,200.8 210.8,212.5 212.9,215.1 212.9,220.4" fill="#dfe3e8" stroke="#b9c1c9" stroke-width="0.6"></polygon><polygon points="184.9,197.5 190.4,196.8 198.9,201.4 207.4,210.3" fill="#1d2731"></polygon><polygon points="184.9,204.1 184.7,202.6 184.0,201.1 183.1,199.8 181.9,198.8 180.7,198.4 179.7,198.6 179.1,199.4 178.8,200.6 179.1,202.1 179.7,203.6 180.7,204.9 181.9,205.9 183.1,206.3 184.0,206.1 184.7,205.3" fill="#1b1f22"></polygon><polygon points="183.5,203.4 183.4,202.5 183.0,201.7 182.4,201.0 181.8,200.4 181.1,200.2 180.6,200.3 180.2,200.7 180.1,201.4 180.2,202.2 180.6,203.1 181.1,203.8 181.8,204.3 182.4,204.6 183.0,204.5 183.4,204.0" fill="#9aa3ab"></polygon><polygon points="207.8,217.3 207.6,215.8 206.9,214.3 205.9,213.0 204.8,212.0 203.6,211.6 202.6,211.8 202.0,212.6 201.7,213.8 202.0,215.3 202.6,216.8 203.6,218.1 204.8,219.1 205.9,219.5 206.9,219.3 207.6,218.5" fill="#1b1f22"></polygon><polygon points="206.4,216.6 206.3,215.8 205.9,214.9 205.3,214.2 204.7,213.6 204.0,213.4 203.5,213.5 203.1,214.0 203.0,214.6 203.1,215.4 203.5,216.3 204.0,217.0 204.7,217.6 205.3,217.8 205.9,217.7 206.3,217.3" fill="#9aa3ab"></polygon></svg></div></sc-if>
+<sc-if value="{{ is_terraced }}" hint-placeholder-val="{{ true }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="129.4,61.5 338.8,182.4 228.6,246.0 19.2,125.1" fill="#dce8d7"></polygon><polygon points="239.6,184.5 287.4,212.1 228.6,246.0 180.8,218.4" fill="#cfd6cd"></polygon><polygon points="70.6,112.4 118.4,140.0 118.4,95.9 70.6,68.3" fill="#e4e7e2"></polygon><polygon points="68.1,72.1 118.4,101.2 150.3,54.9 100.0,25.9" fill="#9aa6a8"></polygon><polygon points="76.5,103.9 89.7,111.6 89.7,94.6 76.5,87.0" fill="#c9d3d6" stroke="#b5c0c3" stroke-width="1"></polygon><polygon points="98.6,128.5 107.4,133.6 107.4,107.3 98.6,102.2" fill="#aab4ad"></polygon><polygon points="118.4,140.0 166.1,167.5 166.1,123.4 118.4,95.9" fill="#f3efe7"></polygon><polygon points="115.8,99.7 166.1,128.8 198.1,82.5 147.8,53.4" fill="#3b4a50"></polygon><polygon points="124.3,131.5 137.5,139.1 137.5,122.2 124.3,114.5" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="146.3,156.1 155.1,161.2 155.1,134.9 146.3,129.8" fill="#5b6f63"></polygon><polygon points="272.7,161.2 213.9,195.1 213.9,151.0 272.7,117.1" fill="#d5d9d3"></polygon><polygon points="272.7,117.1 213.9,151.0 243.3,108.6" fill="#d5d9d3"></polygon><polygon points="166.1,167.5 213.9,195.1 213.9,151.0 166.1,123.4" fill="#e4e7e2"></polygon><polygon points="163.6,127.3 213.9,156.3 245.9,110.1 195.5,81.0" fill="#9aa6a8"></polygon><polygon points="245.9,110.1 213.9,156.3 214.3,158.7 246.2,112.4" fill="#9aa6a8"></polygon><polygon points="172.0,159.1 185.2,166.7 185.2,149.7 172.0,142.1" fill="#c9d3d6" stroke="#b5c0c3" stroke-width="1"></polygon><polygon points="194.1,183.7 202.9,188.7 202.9,162.4 194.1,157.4" fill="#aab4ad"></polygon></svg></sc-if>
+<sc-if value="{{ chimney_terraced }}" hint-placeholder-val="{{ true }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="166.1,64.9 160.3,68.3 160.3,53.0 166.1,49.6" fill="#76625a"></polygon><polygon points="154.4,64.9 160.3,68.3 160.3,53.0 154.4,49.6" fill="#8a7166"></polygon><polygon points="160.3,46.2 166.1,49.6 160.3,53.0 154.4,49.6" fill="#6c5a52"></polygon></svg></sc-if>
+<sc-if value="{{ solar_terraced }}" hint-placeholder-val="{{ true }}"><div style="position: absolute; left: 0; top: 0; width: 100px; height: 100px; transform-origin: 0 0; transform: matrix(0.4187,0.2418,0.2571,-0.3775,120.6,98.8)"><div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px; padding: 3px; width: 100px; height: 100px; box-sizing: border-box"><sc-for list="{{ panelList }}" as="p" hint-placeholder-count="10"><span style="{{ p.style }}"></span></sc-for></div></div></sc-if>
+<sc-if value="{{ heatpump_terraced }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_heatpump }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="136.0,153.5 127.9,158.2 127.9,147.2 136.0,142.5" fill="#b9bfc4"></polygon><polygon points="111.8,148.9 127.9,158.2 127.9,147.2 111.8,137.8" fill="#c9ced2"></polygon><polygon points="119.9,133.2 136.0,142.5 127.9,147.2 111.8,137.8" fill="#d9dde0"></polygon><polygon points="115.5,148.4 124.3,153.5 124.3,147.6 115.5,142.5" fill="#8a949b"></polygon></svg></div></sc-if>
+<sc-if value="{{ eboiler_terraced }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_eboiler }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="144.8,155.2 139.7,158.2 139.7,142.1 144.8,139.1" fill="#d6d9d3"></polygon><polygon points="134.2,155.0 139.7,158.2 139.7,142.1 134.2,138.9" fill="#e9eae5"></polygon><polygon points="139.3,135.9 144.8,139.1 139.7,142.1 134.2,138.9" fill="#f7f7f3"></polygon><polygon points="134.2,143.1 139.7,146.3 139.7,145.1 134.2,141.9" fill="#e0703a"></polygon></svg></div></sc-if>
+<sc-if value="{{ battery_terraced }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_battery }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="162.5,162.9 160.3,164.1 160.3,149.7 162.5,148.4" fill="#26343a"></polygon><polygon points="153.7,160.3 160.3,164.1 160.3,149.7 153.7,145.9" fill="#3d4c52"></polygon><polygon points="155.9,144.6 162.5,148.4 160.3,149.7 153.7,145.9" fill="#2d3b40"></polygon></svg></div></sc-if>
+<sc-if value="{{ ev_terraced }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_ev }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="222.7,197.6 220.5,198.9 220.5,183.7 222.7,182.4" fill="#26343a"></polygon><polygon points="218.3,197.6 220.5,198.9 220.5,183.7 218.3,182.4" fill="#3d4c52"></polygon><polygon points="220.5,181.1 222.7,182.4 220.5,183.7 218.3,182.4" fill="#2d3b40"></polygon><polygon points="254.3,220.0 240.3,228.0 240.3,223.4 254.3,215.4" fill="#c9cfd6"></polygon><polygon points="253.2,218.0 241.4,224.8 241.4,224.0 253.2,217.2" fill="#c8423b"></polygon><polygon points="220.5,197.1 221.6,196.8 207.7,204.9 206.5,205.1" fill="#f2f3f5"></polygon><polygon points="221.6,196.8 229.0,200.0 215.0,208.0 207.7,204.9" fill="#f2f3f5"></polygon><polygon points="229.0,200.0 234.5,198.7 220.5,206.7 215.0,208.0" fill="#1d2731"></polygon><polygon points="234.5,198.7 242.5,203.0 228.6,211.1 220.5,206.7" fill="#1d2731"></polygon><polygon points="242.5,203.0 252.5,213.1 238.5,221.2 228.6,211.1" fill="#1d2731"></polygon><polygon points="252.5,213.1 254.3,215.4 240.3,223.4 238.5,221.2" fill="#f2f3f5"></polygon><polygon points="206.5,208.5 206.5,205.1 207.7,204.9 215.0,208.0 220.5,206.7 228.6,211.1 238.5,221.2 240.3,223.4 240.3,228.0" fill="#dfe3e8" stroke="#b9c1c9" stroke-width="0.6"></polygon><polygon points="216.1,208.3 220.9,207.6 228.2,211.6 235.6,219.3" fill="#1d2731"></polygon><polygon points="216.1,213.9 215.9,212.7 215.3,211.3 214.5,210.2 213.5,209.4 212.4,209.0 211.6,209.2 211.0,209.8 210.8,210.9 211.0,212.2 211.6,213.5 212.4,214.6 213.5,215.5 214.5,215.8 215.3,215.6 215.9,215.0" fill="#1b1f22"></polygon><polygon points="214.8,213.3 214.7,212.6 214.4,211.9 213.9,211.2 213.4,210.8 212.8,210.6 212.3,210.7 212.0,211.0 211.9,211.6 212.0,212.3 212.3,213.1 212.8,213.7 213.4,214.1 213.9,214.3 214.4,214.3 214.7,213.9" fill="#9aa3ab"></polygon><polygon points="235.9,225.4 235.7,224.1 235.2,222.8 234.3,221.6 233.3,220.8 232.3,220.5 231.4,220.6 230.8,221.3 230.6,222.3 230.8,223.6 231.4,224.9 232.3,226.1 233.3,226.9 234.3,227.3 235.2,227.1 235.7,226.4" fill="#1b1f22"></polygon><polygon points="234.7,224.8 234.6,224.0 234.3,223.3 233.8,222.7 233.2,222.2 232.7,222.0 232.2,222.1 231.9,222.5 231.7,223.1 231.9,223.8 232.2,224.5 232.7,225.1 233.2,225.6 233.8,225.8 234.3,225.7 234.6,225.3" fill="#9aa3ab"></polygon></svg></div></sc-if>
+<sc-if value="{{ is_apartment }}" hint-placeholder-val="{{ false }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="163.3,119.1 288.9,191.6 194.7,246.0 69.1,173.5" fill="#dce8d7"></polygon><polygon points="204.1,193.4 244.9,217.0 194.7,246.0 153.9,222.4" fill="#cfd6cd"></polygon><polygon points="232.4,173.5 182.1,202.5 182.1,93.8 232.4,64.8" fill="#e2ddd2"></polygon><polygon points="113.1,162.6 182.1,202.5 182.1,93.8 113.1,53.9" fill="#f3efe7"></polygon><polygon points="163.3,24.9 232.4,64.8 182.1,93.8 113.1,53.9" fill="#ece8df"></polygon><polygon points="234.9,64.8 182.1,95.2 182.1,92.3 234.9,61.8" fill="#c9c4ba"></polygon><polygon points="110.6,53.9 182.1,95.2 182.1,92.3 110.6,51.0" fill="#ddd8ce"></polygon><polygon points="163.3,20.5 234.9,61.8 182.1,92.3 110.6,51.0" fill="#cfcac0"></polygon><polygon points="119.4,155.4 133.2,163.3 133.2,148.8 119.4,140.9" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="140.7,167.7 154.5,175.7 154.5,161.2 140.7,153.2" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="162.0,180.0 175.9,188.0 175.9,173.5 162.0,165.5" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="224.2,167.3 211.0,174.9 211.0,160.4 224.2,152.8" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="203.5,179.3 190.3,186.9 190.3,172.4 203.5,164.8" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="119.4,130.7 133.2,138.7 133.2,124.2 119.4,116.2" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="140.7,143.1 154.5,151.0 154.5,136.5 140.7,128.6" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="162.0,155.4 175.9,163.3 175.9,148.8 162.0,140.9" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="224.2,142.7 211.0,150.3 211.0,135.8 224.2,128.2" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="203.5,154.7 190.3,162.3 190.3,147.8 203.5,140.2" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="119.4,106.1 133.2,114.0 133.2,99.5 119.4,91.6" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="140.7,118.4 154.5,126.4 154.5,111.9 140.7,103.9" fill="#e2f57c" stroke="#153b32" stroke-width="1.6"></polygon><polygon points="162.0,130.7 175.9,138.7 175.9,124.2 162.0,116.2" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="224.2,118.0 211.0,125.6 211.0,111.1 224.2,103.5" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="203.5,130.0 190.3,137.6 190.3,123.1 203.5,115.5" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="119.4,81.4 133.2,89.4 133.2,74.9 119.4,66.9" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="140.7,93.8 154.5,101.7 154.5,87.2 140.7,79.2" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="162.0,106.1 175.9,114.1 175.9,99.6 162.0,91.6" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="224.2,93.4 211.0,101.0 211.0,86.5 224.2,78.9" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="203.5,105.4 190.3,113.0 190.3,98.5 203.5,90.8" fill="#a9c3cf" stroke="#7f9aa6" stroke-width="1"></polygon><polygon points="142.0,179.3 153.3,185.8 153.3,167.0 142.0,160.4" fill="#5b6f63"></polygon></svg></sc-if>
+<sc-if value="{{ chimney_apartment }}" hint-placeholder-val="{{ false }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="139.4,50.2 134.4,53.1 134.4,42.3 139.4,39.4" fill="#76625a"></polygon><polygon points="129.4,50.2 134.4,53.1 134.4,42.3 129.4,39.4" fill="#8a7166"></polygon><polygon points="134.4,36.5 139.4,39.4 134.4,42.3 129.4,39.4" fill="#6c5a52"></polygon></svg></sc-if>
+<sc-if value="{{ solar_apartment }}" hint-placeholder-val="{{ false }}"><div style="position: absolute; left: 0; top: 0; width: 100px; height: 100px; transform-origin: 0 0; transform: matrix(0.5651,0.3262,-0.2386,0.1377,163.3,28.9)"><div style="display: flex; flex-wrap: wrap; align-content: flex-start; gap: 2px; padding: 3px; width: 100px; height: 100px; box-sizing: border-box"><sc-for list="{{ panelList }}" as="p" hint-placeholder-count="10"><span style="{{ p.style }}"></span></sc-for></div></div></sc-if>
+<sc-if value="{{ heatpump_apartment }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_heatpump }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="190.9,77.1 180.9,82.9 180.9,74.9 190.9,69.1" fill="#b9bfc4"></polygon><polygon points="167.1,74.9 180.9,82.9 180.9,74.9 167.1,66.9" fill="#c9ced2"></polygon><polygon points="177.1,61.1 190.9,69.1 180.9,74.9 167.1,66.9" fill="#d9dde0"></polygon></svg></div></sc-if>
+<sc-if value="{{ eboiler_apartment }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_eboiler }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="214.8,188.7 209.8,191.6 209.8,177.8 214.8,174.9" fill="#d6d9d3"></polygon><polygon points="205.4,189.1 209.8,191.6 209.8,177.8 205.4,175.3" fill="#e9eae5"></polygon><polygon points="210.4,172.4 214.8,174.9 209.8,177.8 205.4,175.3" fill="#f7f7f3"></polygon><polygon points="214.8,178.6 209.8,181.5 209.8,180.4 214.8,177.5" fill="#e0703a"></polygon></svg></div></sc-if>
+<sc-if value="{{ battery_apartment }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_battery }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="199.4,192.9 193.1,196.5 193.1,183.5 199.4,179.8" fill="#26343a"></polygon><polygon points="190.9,195.2 193.1,196.5 193.1,183.5 190.9,182.2" fill="#3d4c52"></polygon><polygon points="197.2,178.6 199.4,179.8 193.1,183.5 190.9,182.2" fill="#2d3b40"></polygon></svg></div></sc-if>
+<sc-if value="{{ ev_apartment }}" hint-placeholder-val="{{ false }}"><div style="{{ glow_ev }}"><svg width="358" height="260" viewBox="0 0 358 260" aria-hidden="true" style="position: absolute; left: 0; top: 0"><polygon points="189.7,204.7 187.8,205.8 187.8,192.7 189.7,191.6" fill="#26343a"></polygon><polygon points="185.9,204.7 187.8,205.8 187.8,192.7 185.9,191.6" fill="#3d4c52"></polygon><polygon points="187.8,190.5 189.7,191.6 187.8,192.7 185.9,191.6" fill="#2d3b40"></polygon><polygon points="216.7,223.7 204.7,230.6 204.7,226.7 216.7,219.8" fill="#c9cfd6"></polygon><polygon points="215.7,222.1 205.7,227.9 205.7,227.2 215.7,221.4" fill="#c8423b"></polygon><polygon points="187.8,204.2 188.7,204.0 176.8,210.9 175.9,211.1" fill="#f2f3f5"></polygon><polygon points="188.7,204.0 195.0,206.7 183.1,213.6 176.8,210.9" fill="#f2f3f5"></polygon><polygon points="195.0,206.7 199.7,205.5 187.8,212.4 183.1,213.6" fill="#1d2731"></polygon><polygon points="199.7,205.5 206.6,209.2 194.7,216.1 187.8,212.4" fill="#1d2731"></polygon><polygon points="206.6,209.2 215.1,217.9 203.2,224.8 194.7,216.1" fill="#1d2731"></polygon><polygon points="215.1,217.9 216.7,219.8 204.7,226.7 203.2,224.8" fill="#f2f3f5"></polygon><polygon points="175.9,214.0 175.9,211.1 176.8,210.9 183.1,213.6 187.8,212.4 194.7,216.1 203.2,224.8 204.7,226.7 204.7,230.6" fill="#dfe3e8" stroke="#b9c1c9" stroke-width="0.6"></polygon><polygon points="184.0,213.7 188.1,213.2 194.4,216.6 200.7,223.2" fill="#1d2731"></polygon><polygon points="184.0,218.6 183.9,217.5 183.4,216.4 182.6,215.4 181.8,214.7 180.9,214.4 180.2,214.5 179.7,215.1 179.5,216.0 179.7,217.1 180.2,218.2 180.9,219.2 181.8,219.9 182.6,220.2 183.4,220.1 183.9,219.5" fill="#1b1f22"></polygon><polygon points="183.0,218.1 182.9,217.4 182.6,216.8 182.2,216.3 181.7,215.9 181.2,215.7 180.8,215.8 180.5,216.1 180.4,216.6 180.5,217.2 180.8,217.8 181.2,218.4 181.7,218.8 182.2,218.9 182.6,218.9 182.9,218.6" fill="#9aa3ab"></polygon><polygon points="201.0,228.4 200.8,227.3 200.3,226.2 199.6,225.2 198.7,224.5 197.9,224.2 197.1,224.3 196.6,224.9 196.5,225.8 196.6,226.9 197.1,228.0 197.9,229.0 198.7,229.7 199.6,230.0 200.3,229.8 200.8,229.3" fill="#1b1f22"></polygon><polygon points="199.9,227.8 199.8,227.2 199.5,226.6 199.1,226.1 198.7,225.7 198.2,225.5 197.8,225.6 197.5,225.9 197.4,226.4 197.5,227.0 197.8,227.6 198.2,228.2 198.7,228.6 199.1,228.7 199.5,228.7 199.8,228.3" fill="#9aa3ab"></polygon></svg></div></sc-if>
+        <sc-if value="{{ showCurtail }}" hint-placeholder-val="{{ false }}">
+          <span style="position: absolute; left: 10px; top: 10px; background: #ffffff; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 750; box-shadow: 0 4px 12px rgba(21,59,50,0.12)">Auto switch-off on</span>
+        </sc-if>
+        <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ pins }}" as="pin" hint-placeholder-count="5">
+            <span style="{{ pin.line }}"></span>
+            <span style="{{ pin.spot }}"></span>
+          </sc-for>
+          <sc-for list="{{ pins }}" as="pin" hint-placeholder-count="5">
+            <button type="button" aria-pressed="{{ pin.pressed }}" aria-label="{{ pin.label }}" onClick="{{ pin.act }}" style="{{ pin.box }}"><span style="{{ pin.pill }}"><span style="{{ pin.dot }}">{{ pin.glyph }}</span>{{ pin.text }}</span></button>
+          </sc-for>
+        </sc-if>
+      </div>
+    </section>
+    <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top: 10px; background: #153b32; color: #ffffff; border-radius: 18px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px" aria-live="polite">
+        <span style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 12px; color: #bad0c3">Yearly bill, 2027 rules</span>
+          <span style="font-size: 16px; font-weight: 700; white-space: nowrap">{{ todayText }} <span style="color: #bad0c3">→</span> <span style="color: #e2f57c">{{ planText }}</span></span>
+        </span>
+        <span style="{{ deltaChip }}">{{ deltaChipText }}</span>
+      </div>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+    <section style="margin: 4px 16px 0; background: #ffffff; border: 1px solid #e2e9e2; border-radius: 24px; padding: 18px 16px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px" role="group" aria-label="Type of home">
+        <sc-for list="{{ types }}" as="t" hint-placeholder-count="3">
+          <button type="button" aria-pressed="{{ t.pressed }}" onClick="{{ t.pick }}" style="{{ t.style }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; border-top: 1px solid #e2e9e2">
+        <sc-for list="{{ toggles }}" as="g" hint-placeholder-count="4">
+          <div style="border-bottom: 1px solid #e2e9e2; padding: 12px 0; display: flex; flex-direction: column; gap: 10px">
+            <button type="button" aria-pressed="{{ g.pressed }}" onClick="{{ g.flip }}" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; border: 0; background: transparent; padding: 0; text-align: left; font-family: inherit; color: #153b32; cursor: pointer">
+              <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 16px; font-weight: 760">{{ g.label }}</span><span style="font-size: 13px; color: #687b73">{{ g.note }}</span></span>
+              <span style="{{ g.track }}"><span style="{{ g.knob }}"></span></span>
+            </button>
+            <sc-if value="{{ g.isSolarOn }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 12px">
+                <button type="button" aria-label="Fewer panels" onClick="{{ todayFewer }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">−</button>
+                <output style="min-width: 40px; text-align: center; font-size: 26px; font-weight: 820">{{ todayPanels }}</output>
+                <button type="button" aria-label="More panels" onClick="{{ todayMore }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">+</button>
+                <span style="font-size: 13px; color: #687b73">panels now</span>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <span style="font-size: 16px; font-weight: 760">Heating today</span>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px" role="group" aria-label="Heating today">
+          <sc-for list="{{ todayHeats }}" as="h" hint-placeholder-count="3">
+            <button type="button" aria-pressed="{{ h.pressed }}" onClick="{{ h.pick }}" style="{{ h.style }}">{{ h.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin: 14px 16px 0; background: #153b32; color: #ffffff; border-radius: 24px; padding: 20px 18px; display: flex; flex-direction: column; gap: 10px">
+      <p style="margin: 0; font-size: 14px; color: #bad0c3">Your energy bill per year (electricity and gas)</p>
+      <div style="display: flex; justify-content: space-between; font-size: 15px"><span style="color: #d7e9dc">This year (2026 rules)</span><strong>{{ today26 }}</strong></div>
+      <div style="display: flex; justify-content: space-between; font-size: 15px"><span style="color: #d7e9dc">From 2027</span><strong style="color: #e2f57c">{{ today27 }}</strong></div>
+      <p style="margin: 4px 0 0; padding-top: 10px; border-top: 1px dashed #507065; font-size: 14px; line-height: 1.5; color: #d7e9dc">{{ nettingLine }}</p>
+    </section>
+
+    <section style="margin: 14px 16px 0">
+      <button type="button" onClick="{{ goStep2 }}" style="width: 100%; min-height: 56px; border-radius: 16px; border: 0; background: #e2f57c; color: #153b32; font-family: inherit; font-size: 17px; font-weight: 800; cursor: pointer">Next: try changes →</button>
+    </section>
+    <section style="margin: 14px 16px 0; background: #ffffff; border: 1px solid #e2e9e2; border-radius: 24px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px">
+      <span style="font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #527369">AVERAGE DUTCH HOME</span>
+      <p style="margin: 0; font-size: 16px; font-weight: 760; line-height: 1.35">These numbers are for a typical {{ typeWord }}. Want them for your own home?</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #52695f">Log in and share your smart-meter readings. We then use your real use, hour by hour, instead of an average.</p>
+      <button type="button" onClick="{{ toggleData }}" style="min-height: 48px; border-radius: 14px; border: 0; background: #153b32; color: #e2f57c; font-family: inherit; font-size: 16px; font-weight: 800; cursor: pointer">Use my own data</button>
+      <sc-if value="{{ showData }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 10px; background: #f4f7f1; border-radius: 16px; padding: 14px">
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">1</strong>Log in with your email</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">2</strong>Give permission to read your smart meter (takes about 2 minutes)</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">3</strong>Get your own report: your bill today, from 2027, and what each change saves you</span>
+          <span style="font-size: 12px; line-height: 1.5; color: #687b73">We only read your meter with your permission, and you can stop it at any time. Coming soon in this prototype.</span>
+        </div>
+      </sc-if>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ true }}">
+    <section style="margin: 4px 16px 0; display: flex; flex-direction: column; gap: 12px">
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
+        <div style="{{ it.card }}">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px">
+            <span style="display: flex; flex-direction: column; gap: 3px">
+              <span style="display: flex; align-items: center; gap: 8px"><span style="font-size: 17px; font-weight: 800">{{ it.title }}</span><span style="{{ it.badge }}">{{ it.badgeText }}</span></span>
+              <span style="font-size: 13px; line-height: 1.4; color: #687b73">{{ it.note }}</span>
+            </span>
+            <button type="button" aria-pressed="{{ it.pressed }}" onClick="{{ it.act }}" style="{{ it.btn }}">{{ it.btnText }}</button>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #f4f7f1; border-radius: 12px; padding: 8px 10px"><span style="font-size: 11px; color: #687b73">{{ it.k1 }}</span><strong style="font-size: 14px">{{ it.v1 }}</strong></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #f4f7f1; border-radius: 12px; padding: 8px 10px"><span style="font-size: 11px; color: #687b73">{{ it.k2 }}</span><strong style="font-size: 14px">{{ it.v2 }}</strong></span>
+            <span style="display: flex; flex-direction: column; gap: 2px; background: #f4f7f1; border-radius: 12px; padding: 8px 10px"><span style="font-size: 11px; color: #687b73">{{ it.k3 }}</span><strong style="font-size: 14px">{{ it.v3 }}</strong></span>
+          </div>
+          <sc-if value="{{ it.showStepper }}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <button type="button" aria-label="Fewer panels" onClick="{{ planFewer }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">−</button>
+              <output style="min-width: 40px; text-align: center; font-size: 24px; font-weight: 820">{{ planPanels }}</output>
+              <button type="button" aria-label="More panels" onClick="{{ planMore }}" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6e2d4; background: #ffffff; font-size: 22px; color: #153b32; cursor: pointer">+</button>
+              <span style="font-size: 13px; color: #687b73">panels, up to {{ maxPanels }}</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ it.showHeat }}" hint-placeholder-val="{{ false }}">
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px" role="group" aria-label="Heating">
+              <sc-for list="{{ planHeats }}" as="h" hint-placeholder-count="3">
+                <button type="button" aria-pressed="{{ h.pressed }}" onClick="{{ h.pick }}" style="{{ h.style }}">{{ h.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ it.showEvTime }}" hint-placeholder-val="{{ false }}">
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px" role="group" aria-label="When the car charges">
+              <button type="button" aria-pressed="{{ evDayPressed }}" onClick="{{ setDay }}" style="{{ evDayStyle }}">Mostly daytime</button>
+              <button type="button" aria-pressed="{{ evEveningPressed }}" onClick="{{ setEvening }}" style="{{ evEveningStyle }}">Mostly evening</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </section>
+    <section style="margin: 14px 16px 0; background: #ffffff; border: 1px solid #e2e9e2; border-radius: 24px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px">
+      <span style="font-size: 12px; font-weight: 800; letter-spacing: .06em; color: #527369">AVERAGE DUTCH HOME</span>
+      <p style="margin: 0; font-size: 16px; font-weight: 760; line-height: 1.35">These numbers are for a typical {{ typeWord }}. Want them for your own home?</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #52695f">Log in and share your smart-meter readings. We then use your real use, hour by hour, instead of an average.</p>
+      <button type="button" onClick="{{ toggleData }}" style="min-height: 48px; border-radius: 14px; border: 0; background: #153b32; color: #e2f57c; font-family: inherit; font-size: 16px; font-weight: 800; cursor: pointer">Use my own data</button>
+      <sc-if value="{{ showData }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 10px; background: #f4f7f1; border-radius: 16px; padding: 14px">
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">1</strong>Log in with your email</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">2</strong>Give permission to read your smart meter (takes about 2 minutes)</span>
+          <span style="display: flex; gap: 10px; font-size: 14px; line-height: 1.4"><strong style="flex: none; width: 22px; height: 22px; border-radius: 50%; background: #e2f57c; display: flex; align-items: center; justify-content: center; font-size: 12px">3</strong>Get your own report: your bill today, from 2027, and what each change saves you</span>
+          <span style="font-size: 12px; line-height: 1.5; color: #687b73">We only read your meter with your permission, and you can stop it at any time. Coming soon in this prototype.</span>
+        </div>
+      </sc-if>
+    </section>
+    <section style="margin: 14px 16px 0">
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+        <button type="button" onClick="{{ goStep1 }}" style="min-height: 48px; border-radius: 14px; border: 1px solid #d6e2d4; background: #ffffff; color: #153b32; font-family: inherit; font-size: 15px; font-weight: 720; cursor: pointer">← My home today</button>
+        <button type="button" onClick="{{ resetPlan }}" style="min-height: 48px; border-radius: 14px; border: 1px solid #d6e2d4; background: #ffffff; color: #153b32; font-family: inherit; font-size: 15px; font-weight: 720; cursor: pointer">Undo all changes</button>
+      </div>
+    </section>
+  </sc-if>
+
+  <p style="margin: 16px 20px 28px; font-size: 12px; line-height: 1.5; color: #687b73">Prototype with illustrative numbers; prices to buy are indicative and still to be checked. Typical use per home type; 350 units a year per panel; €0.26 per unit and €1.45 per m³ of gas, incl. tax; €370 a year fixed costs for a gas connection; the legal minimum payment for power you send back; fees of €0.08 (2026) and €0.055 (2027) per unit sent back. Battery 10 kWh, returns 600 units a year. Electric car 2,500 units a year; petrol saved: 900 litres at about €2.15 (Nov 2026). Hybrid heat pump: half the gas for heating. All-electric: no gas, gas connection cancelled. Electric boiler: replaces the gas for hot water, half of it heated with own solar power.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":2700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var today = { solar: true, panels: 10, battery: false, ev: false, evDay: true, heat: 'gas', curtail: false, ebo: false };
+    this.state = { step: 1, type: 'terraced', today: today, plan: null, showData: false };
+  }
+  model(type, o) {
+    var BASE = { apartment: 2000, terraced: 2800, detached: 3600 };
+    var GAS = { apartment: 900, terraced: 1200, detached: 1900 };
+    var HW = { apartment: 180, terraced: 230, detached: 280 };
+    var RATE = 0.26, PAY = 0.5 * (0.26 / 1.21 - 0.088), FEE26 = 0.08, FEE27 = 0.055, FIXED_E = 49, GAS_PRICE = 1.45, GAS_FIXED = 370;
+    var gas = GAS[type], hp = 0, eb = 0, hw = HW[type];
+    if (o.heat === 'hybrid') { hp = (gas - hw) * 0.5 * 2.5; gas = hw + (gas - hw) * 0.5; }
+    if (o.heat === 'electric') { hp = gas * 2.9; gas = 0; }
+    if (o.ebo && o.heat !== 'electric') { gas -= hw; eb = hw * 8; }
+    var base = BASE[type], evUse = o.ev ? 2500 : 0, use = base + evUse + hp + eb;
+    var made = o.solar ? o.panels * 350 : 0;
+    var direct = Math.min(made * 0.3, base * 0.5), surplus = made - direct;
+    var evSolar = o.ev ? Math.min(evUse * (o.evDay ? 0.35 : 0.05), surplus) : 0; surplus -= evSolar;
+    var hpSolar = Math.min(hp * 0.1, surplus); surplus -= hpSolar;
+    var ebSolar = Math.min(eb * 0.5, surplus); surplus -= ebSolar;
+    var exp = surplus, imp = use - direct - evSolar - hpSolar - ebSolar;
+    var batt = o.battery && made > 0 ? Math.min(exp * 0.9, imp, 600) : 0;
+    imp -= batt; exp -= batt / 0.9;
+    var gasCost = gas > 0.5 ? gas * GAS_PRICE + GAS_FIXED : 0;
+    var e26 = FIXED_E + Math.max(imp - exp, 0) * RATE - Math.max(exp - imp, 0) * PAY + exp * FEE26;
+    var e27 = FIXED_E + imp * RATE - exp * PAY + exp * FEE27 - (o.curtail && o.solar ? exp * 0.08 * 0.05 : 0);
+    return { b26: e26 + gasCost, b27: e27 + gasCost };
+  }
+  renderVals() {
+    var s = this.state, self = this, type = s.type;
+    var GEO = {"detached": {"labels": {"roof": [70, 40], "wall": [110, 200], "drive": [290, 238], "garden": [300, 112], "eboiler": [305, 160]}, "cols": 7, "rows": 3, "max": 20, "anchors": {"roof": [152, 86], "wall": [196, 159], "drive": [203, 200], "garden": [236, 148], "eboiler": [215, 155]}}, "terraced": {"labels": {"roof": [95, 32], "wall": [60, 135], "drive": [305, 180], "garden": [55, 190], "eboiler": [110, 236]}, "cols": 4, "rows": 3, "max": 12, "anchors": {"roof": [155, 93], "wall": [159, 152], "drive": [232, 210], "garden": [124, 145], "eboiler": [139, 147]}}, "apartment": {"labels": {"roof": [85, 30], "wall": [300, 140], "drive": [295, 238], "garden": [275, 40], "eboiler": [305, 185]}, "cols": 4, "rows": 2, "max": 8, "anchors": {"roof": [170, 47], "wall": [194, 186], "drive": [197, 216], "garden": [179, 72], "eboiler": [210, 182]}}}, g = GEO[type];
+    var DEF = { apartment: 6, terraced: 10, detached: 16 };
+    var today = s.today, plan = s.plan || s.today;
+    var step2 = s.step === 2;
+    function r10(x) { return Math.round(x / 10) * 10; }
+    function eur(x) { var v = r10(x); return (v < 0 ? '−€' : '€') + Math.abs(v).toLocaleString('en-GB'); }
+    function eurRaw(x) { return '€' + Math.round(x).toLocaleString('en-GB'); }
+    function copy(o, patch) { var n = {}; for (var k in o) n[k] = o[k]; for (var p in (patch || {})) n[p] = patch[p]; return n; }
+    function chip(on) {
+      return 'min-height: 44px; border-radius: 12px; font-family: inherit; font-size: 14px; font-weight: 720; line-height: 1.2; padding: 6px 4px; cursor: pointer; '
+        + (on ? 'background: #153b32; color: #ffffff; border: 1px solid #153b32;' : 'background: #ffffff; color: #153b32; border: 1px solid #d6e2d4;');
+    }
+    function tab(on) {
+      return 'display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 56px; padding: 8px 14px; border-radius: 14px; font-family: inherit; font-size: 15px; font-weight: 780; text-align: left; cursor: pointer; '
+        + (on ? 'background: #153b32; color: #ffffff; border: 1px solid #153b32;' : 'background: #ffffff; color: #153b32; border: 1px solid #d6e2d4;');
+    }
+    function setToday(patch) { self.setState({ today: copy(s.today, patch), plan: null }); }
+    function setPlan(patch) { self.setState({ plan: copy(plan, patch) }); }
+    var m = function (o) { return self.model(type, o); };
+
+    // ----- step 1 -----
+    var types = [['apartment', 'Apartment'], ['terraced', 'Terraced'], ['detached', 'Detached']].map(function (t) {
+      return { label: t[1], pressed: String(type === t[0]), style: chip(type === t[0]),
+        pick: function () { self.setState({ type: t[0], today: copy(s.today, { panels: Math.min(s.today.panels, GEO[t[0]].max) }), plan: null }); } };
+    });
+    function sw(on) {
+      return { track: 'flex: none; position: relative; width: 46px; height: 28px; border-radius: 999px; transition: background .2s; background: ' + (on ? '#153b32' : '#d6e2d4') + ';',
+        knob: 'position: absolute; top: 3px; left: ' + (on ? '21px' : '3px') + '; width: 22px; height: 22px; border-radius: 50%; transition: left .2s; background: ' + (on ? '#e2f57c' : '#ffffff') + ';' };
+    }
+    var toggles = [
+      { key: 'solar', label: 'Solar panels', note: 'Do you have them now?' },
+      { key: 'battery', label: 'Home battery', note: today.solar ? 'Do you have one now?' : 'Needs solar panels' },
+      { key: 'ev', label: 'Electric car', note: 'Charged at home' },
+      { key: 'ebo', label: 'Electric boiler for hot water', note: today.heat === 'electric' ? 'Your heat pump makes hot water' : 'Instead of gas for showers and taps' }
+    ].map(function (d) {
+      var on = !!today[d.key], k = sw(on);
+      return { label: d.label, note: d.note, pressed: String(on), track: k.track, knob: k.knob, isSolarOn: d.key === 'solar' && on,
+        flip: function () {
+          if (d.key === 'battery' && !today.solar) return;
+          if (d.key === 'ebo' && today.heat === 'electric') return;
+          var p = {}; p[d.key] = !today[d.key];
+          if (d.key === 'solar' && today.solar) { p.battery = false; p.curtail = false; }
+          if (d.key === 'solar' && !today.solar && !today.panels) p.panels = DEF[type];
+          setToday(p);
+        } };
+    });
+    function heatChips(o, setter) {
+      return [['gas', 'Gas boiler'], ['hybrid', 'Hybrid heat pump'], ['electric', 'All-electric heat pump']].map(function (h) {
+        return { label: h[1], pressed: String(o.heat === h[0]), style: chip(o.heat === h[0]), pick: function () { setter({ heat: h[0] }); } };
+      });
+    }
+    var t0 = m(today), p0 = m(plan);
+    var nettingDelta = r10(t0.b27 - t0.b26);
+
+    // ----- step 2 items -----
+    function saving(withO, withoutO) { return m(withoutO).b27 - m(withO).b27; }
+    function payback(lo, hi, sav) { return sav > 20 ? Math.round(lo / sav) + '–' + Math.round(hi / sav) + ' yrs' : 'not reached'; }
+    var isNew = {
+      solar: plan.solar && !today.solar, battery: plan.battery && !today.battery, ev: plan.ev && !today.ev,
+      heat: plan.heat !== today.heat, ebo: plan.ebo && !today.ebo && plan.heat !== 'electric', curtail: plan.curtail && !today.curtail, morePanels: plan.solar && today.solar && plan.panels > today.panels
+    };
+    function card(added, fresh) {
+      return 'background: #ffffff; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; border: '
+        + (fresh ? '2px solid #9bc53d; box-shadow: 0 0 0 4px #eef8cf;' : '1px solid #e2e9e2;');
+    }
+    function btn(added) {
+      return 'flex: none; min-height: 44px; min-width: 88px; border-radius: 999px; font-family: inherit; font-size: 15px; font-weight: 780; cursor: pointer; padding: 0 16px; '
+        + (added ? 'background: #ffffff; color: #153b32; border: 1px solid #c7d4c5;' : 'background: #153b32; color: #e2f57c; border: 1px solid #153b32;');
+    }
+    function badge(fresh, had) {
+      if (fresh) return { b: 'font-size: 11px; font-weight: 800; letter-spacing: .04em; background: #e2f57c; color: #153b32; border-radius: 999px; padding: 3px 7px;', t: 'NEW' };
+      if (had) return { b: 'font-size: 11px; font-weight: 700; background: #ecf4e8; color: #527369; border-radius: 999px; padding: 3px 7px;', t: 'YOU HAVE' };
+      return { b: 'display: none;', t: '' };
+    }
+    var items = [];
+    // solar
+    (function () {
+      var on = plan.solar, panels = on ? plan.panels : DEF[type];
+      var withO = copy(plan, { solar: true, panels: panels, battery: false, curtail: false });
+      var withoutO = copy(plan, { solar: false, battery: false, curtail: false });
+      var sav = saving(withO, withoutO), b = badge(isNew.solar || isNew.morePanels, today.solar);
+      items.push({ title: 'Solar panels', note: on ? panels + ' panels on your roof' : 'Tap + on the roof, or add here', card: card(on, isNew.solar || isNew.morePanels), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on),
+        act: function () { setPlan(on ? { solar: false, battery: false, curtail: false } : { solar: true, panels: plan.panels || DEF[type] }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: eurRaw(panels * 400) + '+', k3: 'Pays back', v3: payback(panels * 400, panels * 550, sav),
+        showStepper: on, showHeat: false, showEvTime: false });
+    })();
+    // battery
+    (function () {
+      var on = plan.battery, ok = plan.solar;
+      var sav = ok ? saving(copy(plan, { battery: true }), copy(plan, { battery: false })) : 0, b = badge(isNew.battery, today.battery);
+      items.push({ title: 'Home battery', note: ok ? '10 kWh: keeps daytime solar power for the evening' : 'Needs solar panels: adding it adds panels too', card: card(on, isNew.battery), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on),
+        act: function () { setPlan(on ? { battery: false } : ok ? { battery: true } : { battery: true, solar: true, panels: plan.panels || DEF[type] }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: '€3,300+', k3: 'Pays back', v3: payback(3300, 7000, sav),
+        showStepper: false, showHeat: false, showEvTime: false });
+    })();
+    // heating
+    (function () {
+      var sav = saving(plan, copy(plan, { heat: today.heat })), b = badge(isNew.heat, false);
+      var cost = { gas: [0, 0], hybrid: [3000, 5000], electric: [8000, 15000] }[plan.heat];
+      items.push({ title: 'Heating', note: plan.heat === today.heat ? 'Pick a heat pump to compare with what you have' : 'Compared with your heating today', card: card(true, isNew.heat), badge: b.b, badgeText: b.t,
+        pressed: 'true', btnText: plan.heat === today.heat ? 'As today' : 'Undo', btn: btn(true) + (plan.heat === today.heat ? ' opacity: .45;' : ''),
+        act: function () { setPlan({ heat: today.heat }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: cost[0] ? eurRaw(cost[0]) + '+' : '—', k3: 'Pays back', v3: cost[0] ? payback(cost[0], cost[1], sav) : '—',
+        showStepper: false, showHeat: true, showEvTime: false });
+    })();
+    // e-boiler
+    (function () {
+      var ok = plan.heat !== 'electric', on = plan.ebo && ok;
+      var sav = ok ? saving(copy(plan, { ebo: true }), copy(plan, { ebo: false })) : 0, b = badge(isNew.ebo, today.ebo && ok);
+      items.push({ title: 'Electric boiler', note: !ok ? 'Not needed: your all-electric heat pump makes hot water' : plan.solar ? 'Hot water from electricity, heated at midday with your own solar power' : 'Hot water from electricity instead of gas. Pays off mainly with solar panels.', card: card(on, isNew.ebo), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on) + (ok ? '' : ' opacity: .45;'),
+        act: function () { if (ok) setPlan({ ebo: !on }); },
+        k1: sav >= 0 ? 'Saves' : 'Costs', v1: eur(Math.abs(sav)) + '/yr', k2: 'To buy', v2: '€800+', k3: 'Pays back', v3: ok ? payback(800, 1500, sav) : '—',
+        showStepper: false, showHeat: false, showEvTime: false });
+    })();
+    // ev
+    (function () {
+      var on = plan.ev, add = m(copy(plan, { ev: true })).b27 - m(copy(plan, { ev: false })).b27;
+      var dayGain = plan.solar ? m(copy(plan, { ev: true, evDay: false })).b27 - m(copy(plan, { ev: true, evDay: true })).b27 : 0, b = badge(isNew.ev, today.ev);
+      items.push({ title: 'Electric car', note: 'About 15,000 km a year, charged at home', card: card(on, isNew.ev), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on),
+        act: function () { setPlan({ ev: !on }); },
+        k1: 'Electricity', v1: '+' + eur(add) + '/yr', k2: 'Daytime charging', v2: plan.solar ? '−' + eur(dayGain) + '/yr' : 'needs solar', k3: 'Petrol saved', v3: '≈€1,900/yr',
+        showStepper: false, showHeat: false, showEvTime: on });
+    })();
+    // curtail
+    (function () {
+      var on = plan.curtail, ok = plan.solar;
+      var sav = ok ? saving(copy(plan, { curtail: true }), copy(plan, { curtail: false })) : 0, b = badge(isNew.curtail, today.curtail);
+      items.push({ title: 'Auto switch-off', note: ok ? 'Stops sending power back when prices go below zero. Only pays on an hourly-price contract.' : 'Needs solar panels', card: card(on, isNew.curtail), badge: b.b, badgeText: b.t,
+        pressed: String(on), btnText: on ? 'Remove' : 'Add', btn: btn(on) + (ok ? '' : ' opacity: .45;'),
+        act: function () { if (ok) setPlan({ curtail: !on }); },
+        k1: 'Saves', v1: eur(sav) + '/yr', k2: 'To buy', v2: 'often free', k3: 'Where', v3: 'inverter app',
+        showStepper: false, showHeat: false, showEvTime: false });
+    })();
+
+    // ----- scene -----
+    var shown = step2 ? plan : today;
+    var pw = (94 - 2 * (g.cols - 1)) / g.cols, ph = (94 - 2 * (g.rows - 1)) / g.rows;
+    var panelList = [];
+    for (var i = 0; i < Math.min(shown.panels, g.max); i++) {
+      var fresh = step2 && (isNew.solar || (today.solar && i >= today.panels));
+      panelList.push({ style: 'display: block; width: ' + pw.toFixed(1) + 'px; height: ' + ph.toFixed(1) + 'px; border-radius: 0.5px; background: #24384c; box-shadow: inset 0 0 0 ' + (fresh ? '1.4px #e2f57c' : '0.6px #7d97ad') + ';' });
+    }
+    function glow(on) { return 'position: absolute; left: 0; top: 0; width: 358px; height: 260px;' + (on ? ' filter: drop-shadow(0 0 3px #d4f05a) drop-shadow(0 0 6px #e2f57c);' : ''); }
+    function pin(key, text, added, act) {
+      var a = g.anchors[key], l = g.labels[key];
+      var dx = a[0] - l[0], dy = a[1] - l[1], len = Math.sqrt(dx * dx + dy * dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
+      var c = added ? '#153b32' : '#9aa6a1';
+      return { label: (added ? 'Remove ' : 'Add ') + text, pressed: String(added), text: text, glyph: added ? '✓' : '+',
+        act: act,
+        line: 'position: absolute; left: ' + l[0] + 'px; top: ' + l[1] + 'px; width: ' + len.toFixed(1) + 'px; height: 0; border-top: 1.5px ' + (added ? 'solid' : 'dashed') + ' ' + c + '; transform-origin: 0 0; transform: rotate(' + ang.toFixed(1) + 'deg); pointer-events: none;',
+        spot: 'position: absolute; left: ' + (a[0] - 4) + 'px; top: ' + (a[1] - 4) + 'px; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; ' + (added ? 'background: #e2f57c; border: 1.5px solid #153b32;' : 'background: #ffffff; border: 1.5px solid #9aa6a1;'),
+        box: 'position: absolute; left: ' + l[0] + 'px; top: ' + l[1] + 'px; transform: translate(-50%, -50%); min-height: 44px; padding: 0; border: 0; background: transparent; display: flex; align-items: center; cursor: pointer; font-family: inherit;',
+        pill: 'display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 10px 0 4px; border-radius: 999px; font-size: 12px; font-weight: 780; white-space: nowrap; transition: all .2s; '
+          + (added ? 'background: #e2f57c; color: #153b32; border: 1.5px solid #153b32; box-shadow: 0 0 0 4px rgba(226,245,124,.5), 0 4px 10px rgba(21,59,50,.25);'
+                   : 'background: rgba(255,255,255,.94); color: #5f6e68; border: 1.5px solid #c3ccc7; box-shadow: 0 2px 6px rgba(21,59,50,.12);'),
+        dot: 'display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; font-size: 14px; font-weight: 800; line-height: 1; '
+          + (added ? 'background: #153b32; color: #e2f57c;' : 'background: #e6ebe8; color: #5f6e68;') };
+    }
+    var pins = [
+      pin('roof', 'Solar panels', plan.solar, items[0].act),
+      pin('wall', 'Battery', plan.solar && plan.battery, items[1].act),
+      pin('garden', 'Heat pump', plan.heat !== 'gas', function () { setPlan({ heat: plan.heat === 'gas' ? (today.heat !== 'gas' ? today.heat : 'hybrid') : 'gas' }); }),
+      pin('eboiler', 'E-boiler', plan.ebo && plan.heat !== 'electric', function () { if (plan.heat === 'electric') setPlan({ heat: 'hybrid', ebo: true }); else setPlan({ ebo: !plan.ebo }); }),
+      pin('drive', 'Electric car', plan.ev, items[4].act)
+    ];
+    var delta = r10(p0.b27 - t0.b27);
+    var out = {
+      isStep1: !step2, isStep2: step2,
+      step1Current: String(!step2), step2Current: String(step2), step1Tab: tab(!step2), step2Tab: tab(step2),
+      goStep1: function () { self.setState({ step: 1 }); },
+      goStep2: function () { self.setState({ step: 2, plan: s.plan || copy(s.today) }); },
+      resetPlan: function () { self.setState({ plan: copy(s.today) }); },
+      title: step2 ? 'What if you…' : 'Will your energy bill go up in 2027?',
+      subtitle: step2 ? 'Tap a grey label on the house, or Add in the list below. What you add lights up, and the bill updates as you go.' : 'We started you with an average Dutch home. Change anything to match yours, then try changes in step 2.',
+      types: types, toggles: toggles, todayHeats: heatChips(today, setToday), planHeats: heatChips(plan, setPlan),
+      todayPanels: today.panels, planPanels: plan.panels, maxPanels: g.max,
+      todayFewer: function () { setToday({ panels: Math.max(today.panels - 1, 1) }); },
+      todayMore: function () { setToday({ panels: Math.min(today.panels + 1, g.max) }); },
+      planFewer: function () { setPlan({ panels: Math.max(plan.panels - 1, 1) }); },
+      planMore: function () { setPlan({ panels: Math.min(plan.panels + 1, g.max) }); },
+      evDayPressed: String(plan.evDay), evEveningPressed: String(!plan.evDay), evDayStyle: chip(plan.evDay), evEveningStyle: chip(!plan.evDay),
+      setDay: function () { setPlan({ evDay: true }); }, setEvening: function () { setPlan({ evDay: false }); },
+      today26: eur(t0.b26), today27: eur(t0.b27),
+      nettingLine: today.solar
+        ? (nettingDelta > 0 ? 'From 2027 you pay about ' + eur(nettingDelta) + ' more a year, because your solar power no longer cancels out what you use.' : 'The 2027 rules hardly change your bill.')
+        : 'Without solar panels, the 2027 rules don’t change your bill much.',
+      items: items, pins: pins, showData: s.showData, toggleData: function () { self.setState({ showData: !s.showData }); },
+      typeWord: type === 'apartment' ? 'Dutch apartment' : type === 'terraced' ? 'Dutch terraced house' : 'detached house in the Netherlands',
+      todayText: eur(t0.b27), planText: eur(p0.b27),
+      deltaChip: 'flex: none; border-radius: 999px; padding: 8px 12px; font-size: 15px; font-weight: 820; ' + (delta < 0 ? 'background: #e2f57c; color: #153b32;' : delta > 0 ? 'background: #f2b18b; color: #153b32;' : 'background: #2b5146; color: #d7e9dc;'),
+      deltaChipText: delta < 0 ? 'saves ' + eur(-delta) : delta > 0 ? '+' + eur(delta) + ' a year' : 'no change',
+      panelList: panelList, showCurtail: shown.solar && shown.curtail,
+      glow_battery: glow(step2 && isNew.battery), glow_ev: glow(step2 && isNew.ev), glow_heatpump: glow(step2 && isNew.heat && plan.heat !== 'gas'), glow_eboiler: glow(step2 && isNew.ebo),
+      sceneLabel: (type === 'apartment' ? 'An apartment building' : type === 'terraced' ? 'A terraced house' : 'A detached house')
+        + (shown.solar ? ' with ' + shown.panels + ' solar panels' : '') + (shown.solar && shown.battery ? ', a home battery' : '')
+        + (shown.heat !== 'gas' ? ', a heat pump' : '') + (shown.ebo && shown.heat !== 'electric' ? ', an electric boiler' : '') + (shown.ev ? ' and an electric car' : '')
+    };
+    ['apartment', 'terraced', 'detached'].forEach(function (t) {
+      var on = type === t;
+      out['is_' + t] = on;
+      out['solar_' + t] = on && shown.solar;
+      out['battery_' + t] = on && shown.solar && shown.battery;
+      out['ev_' + t] = on && shown.ev;
+      out['heatpump_' + t] = on && shown.heat !== 'gas';
+      out['eboiler_' + t] = on && shown.ebo && shown.heat !== 'electric';
+      out['chimney_' + t] = on && shown.heat !== 'electric';
+    });
+    return out;
+  }
+}
+</script>
+</body>
+</html>

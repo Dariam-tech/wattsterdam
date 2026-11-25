@@ -34,3 +34,4 @@
     .hero-amount.is-text{font-size:clamp(2.4rem,4vw,3.4rem);letter-spacing:-.05em;line-height:1.1}
     @media(max-width:760px){.hero-head .hero-foot{display:none}.calculator.in-hero{padding-top:14px}.panel{padding:20px 18px}.tabs{margin-bottom:18px}.q{margin-bottom:18px}}
     .wrap.hero-head{max-width:none}.hero-head h1{max-width:860px}
+
